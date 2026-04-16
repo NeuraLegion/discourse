@@ -1,0 +1,9 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: development
+      DISCOURSE_HOSTNAME: localhost
+    command: bash -lc "bundle exec rails server -b 0.0.0.0 -p 3000"
