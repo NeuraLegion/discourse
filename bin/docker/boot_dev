@@ -126,6 +126,15 @@ if [ "${initialize}" = "initialize" ]; then
     RAILS_ENV=test "${SCRIPTPATH}/rake" db:migrate
 
     echo "Creating admin user..."
-    "${SCRIPTPATH}/rake" admin:create
+    if docker exec discourse_dev test -f /src/config/discourse_developer.yml; then
+      admin_email=$(docker exec discourse_dev ruby -e 'require "yaml"; data = YAML.load_file("/src/config/discourse_developer.yml") || {}; puts(data["email"] || "")')
+      admin_name=$(docker exec discourse_dev ruby -e 'require "yaml"; data = YAML.load_file("/src/config/discourse_developer.yml") || {}; puts(data["name"] || "")')
+      admin_username=$(docker exec discourse_dev ruby -e 'require "yaml"; data = YAML.load_file("/src/config/discourse_developer.yml") || {}; puts(data["username"] || "")')
+    fi
+    if [ -n "$admin_email" ]; then
+      "${SCRIPTPATH}/exec" env RANDOM_PASSWORD=1 ruby -e 'email = ENV.fetch("ADMIN_EMAIL"); name = ENV["ADMIN_NAME"] || "Admin User"; username = ENV["ADMIN_USERNAME"]; require_relative "config/environment"; user = User.find_by_email(email) || User.new(email: email); user.username ||= username.presence || UserNameSuggester.suggest(email); user.name = name if user.name.blank?; password = SecureRandom.hex; user.password = password; user.active = true; user.save!; user.grant_admin!; user.change_trust_level!(1) if user.trust_level < 1; user.email_tokens.update_all confirmed: true; user.activate; puts "Admin user ensured: #{email}"' ADMIN_EMAIL="$admin_email" ADMIN_NAME="$admin_name" ADMIN_USERNAME="$admin_username"
+    else
+      echo "Skipping admin creation: no config/discourse_developer.yml present with email"
+    fi
 fi
 
