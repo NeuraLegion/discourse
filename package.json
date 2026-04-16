@@ -38,7 +38,7 @@
     "lint:css": "pnpm stylelint 'app/assets/stylesheets/**/*.scss' $(script/list_bundled_plugins '/assets/stylesheets/**/*.scss') 'themes/**/*.scss'",
     "lint:css:fix": "pnpm stylelint --fix 'app/assets/stylesheets/**/*.scss' $(script/list_bundled_plugins '/assets/stylesheets/**/*.scss') 'themes/**/*.scss'",
     "lint:js": "eslint ./frontend $(script/list_bundled_plugins) ./themes --cache --no-error-on-unmatched-pattern",
-    "lint:js:fix": "eslint --fix ./frontend $(script/list_bundled_plugins) ./themes --no-error-on-unmatched-pattern",
+    "lint:js:fix": "eslint --fix ./frontend $(script/list_bundled_plugins) ./themes --cache --no-error-on-unmatched-pattern",
     "lint:hbs": "ember-template-lint 'frontend/**/*.gjs' 'plugins/*/assets/javascripts/**/*.gjs' 'plugins/*/admin/assets/javascripts/**/*.gjs' 'themes/**/*.gjs'",
     "lint:hbs:fix": "ember-template-lint 'frontend/**/*.gjs' 'plugins/*/assets/javascripts/**/*.gjs' 'plugins/*/admin/assets/javascripts/**/*.gjs' 'themes/**/*.gjs' --fix",
     "lint:prettier": "pnpm pprettier --list-different 'app/assets/stylesheets/**/*.scss' 'frontend/**/*.{js,gjs,css}' $(script/list_bundled_plugins '/assets/stylesheets/**/*.scss') $(script/list_bundled_plugins '/{assets,admin/assets,test}/javascripts/**/*.{js,gjs}') 'themes/**/*.{js,gjs,scss}'",
@@ -50,7 +50,8 @@
     "lttf:output": "lint-to-the-future output -o ./lint-progress/",
     "lint-progress": "pnpm lttf:output && npx html-pages ./lint-progress --no-cache",
     "ember": "pnpm --dir=frontend/discourse ember",
-    "playwright-install": "playwright install --no-shell chromium"
+    "playwright-install": "playwright install --no-shell chromium",
+    "postinstall": "corepack enable pnpm >/dev/null 2>&1 || true"
   },
   "engines": {
     "node": ">= 20",
@@ -77,9 +78,7 @@
         "ember-this-fallback>ember-cli-htmlbars": "*",
         "@fullcalendar/moment-timezone>moment-timezone": "*"
       },
-      "ignoreMissing": [
-        "webpack"
-      ]
+      "ignoreMissing": ["webpack"]
     },
     "overrides": {
       "@ember/test-waiters": "4.1.1",
