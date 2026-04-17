@@ -1,0 +1,48 @@
+FROM ruby:3.4-slim
+
+ENV BUNDLE_GEMFILE="" \
+    BUNDLE_WITHOUT="development:test" \
+    RAILS_ENV=production \
+    RUBYOPT=-W0
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      build-essential \
+      ca-certificates \
+      git \
+      libpq-dev \
+      libxml2-dev \
+      libxslt1-dev \
+      pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN gem install --no-document \
+      sinatra \
+      json \
+      activesupport \
+      activerecord \
+      addressable \
+      mini_mime \
+      fastimage \
+      nokogiri \
+      excon \
+      pg \
+      rack \
+      rack-protection \
+      rate_limiter \
+    && gem install --no-document final_destination
+
+COPY harness.rb /app/harness.rb
+COPY lib/search.rb /app/lib/search.rb
+COPY lib/url_helper.rb /app/lib/url_helper.rb
+COPY lib/file_helper.rb /app/lib/file_helper.rb
+COPY lib/final_destination.rb /app/lib/final_destination.rb
+COPY lib/upload_creator.rb /app/lib/upload_creator.rb
+COPY app/services/wildcard_url_checker.rb /app/app/services/wildcard_url_checker.rb
+COPY app/services/search_indexer.rb /app/app/services/search_indexer.rb
+COPY app/services/tags/search.rb /app/app/services/tags/search.rb
+
+EXPOSE 3001
+
+CMD ["ruby", "harness.rb"]
