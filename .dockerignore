@@ -1,0 +1,4 @@
+# Added by bright-agent to avoid permission errors
+log/
+# Added by bright-agent to avoid permission errors
+tmp/
