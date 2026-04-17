@@ -1,0 +1,41 @@
+FROM ruby:3.4-slim
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    BUNDLE_GEMFILE="" \
+    RUBYLIB=/app/lib \
+    PORT=3001 \
+    RACKUP_HANDLER=puma
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      build-essential \
+      libpq-dev \
+      ca-certificates \
+      git \
+      curl \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN gem update --system --no-document && \
+    gem install --no-document \
+      sinatra \
+      rackup \
+      puma \
+      rails \
+      addressable \
+      activesupport \
+      activemodel \
+      activerecord \
+      railties \
+      mini_mime \
+      pg
+
+# Copy the whole project source to preserve any transitive require chains.
+COPY . /app
+
+# Copy the harness into the image root for `ruby harness.rb`
+COPY harness.rb /app/harness.rb
+
+EXPOSE 3001
+
+CMD ["ruby", "harness.rb"]
