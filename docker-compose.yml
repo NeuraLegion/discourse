@@ -1,0 +1,37 @@
+services:
+  postgres:
+    image: postgres:15-bookworm
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: discourse_development
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-bookworm
+
+  app:
+    build:
+      context: .
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      NODE_ENV: production
+      RAILS_ENV: production
+      DISCOURSE_HOSTNAME: localhost
+      DISCOURSE_DB_HOST: postgres
+      DISCOURSE_DB_NAME: discourse_development
+      DISCOURSE_DB_USERNAME: postgres
+      DISCOURSE_DB_PASSWORD: postgres
+      DISCOURSE_REDIS_HOST: redis
+      DISCOURSE_REDIS_PORT: 6379
+      DISCOURSE_SERVE_STATIC_ASSETS: "true"
+      SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+    ports:
+      - "3000:3000"
+    command: bundle exec rails server -b 0.0.0.0 -p 3000
+
+volumes:
+  postgres_data:

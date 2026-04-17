@@ -1,0 +1,25 @@
+FROM ruby:3.4-slim
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    BUNDLE_GEMFILE="" \
+    RUBYLIB=/app/lib \
+    PORT=3001
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      build-essential \
+      git \
+      libxml2-dev \
+      libxslt1-dev \
+      zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN gem install --no-document sinatra activesupport nokogiri loofah addressable mini_mime fastimage mustache
+
+COPY . /app
+COPY harness.rb /app/harness.rb
+
+EXPOSE 3001
+
+CMD ["ruby", "harness.rb"]
