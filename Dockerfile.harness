@@ -1,0 +1,20 @@
+FROM bright-app-local
+
+WORKDIR /app
+
+ENV BUNDLE_WITHOUT="" \
+    BUNDLE_FROZEN=false \
+    RAILS_ENV=production \
+    RACK_ENV=production \
+    PORT=3001
+
+COPY Gemfile Gemfile.lock /app/
+RUN bundle config set without "" \
+ && bundle install \
+ && bundle add sinatra
+
+COPY harness.rb /app/harness.rb
+
+EXPOSE 3001
+
+CMD ["bundle", "exec", "ruby", "harness.rb"]
