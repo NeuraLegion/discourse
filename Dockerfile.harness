@@ -1,0 +1,22 @@
+FROM bright-app-local
+
+WORKDIR /app
+
+ENV RAILS_ENV=production \
+    RACK_ENV=production \
+    BUNDLE_WITHOUT="development:test" \
+    BUNDLE_FROZEN=true \
+    PORT=3001
+
+COPY Gemfile Gemfile.lock /app/
+COPY harness.rb /app/harness.rb
+
+RUN gem install bundler -v 2.6.4 && \
+    bundle config set --local frozen true && \
+    bundle config set --local without 'development test' && \
+    bundle install && \
+    gem install sinatra -v 3.2.0
+
+EXPOSE 3001
+
+CMD ["bundle", "exec", "ruby", "harness.rb"]
