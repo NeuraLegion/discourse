@@ -1,0 +1,31 @@
+FROM ruby:3.4-slim
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    BUNDLE_GEMFILE="" \
+    RUBYLIB=/app/lib \
+    RACK_ENV=production \
+    PORT=3001
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      build-essential \
+      libpq-dev \
+      postgresql-client \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN gem install --no-document \
+      sinatra \
+      activerecord \
+      activesupport \
+      i18n \
+      pg \
+      rackup \
+      puma
+
+WORKDIR /app
+
+COPY . /app
+COPY harness.rb /app/harness.rb
+
+EXPOSE 3001
+
+CMD ["ruby", "harness.rb"]
