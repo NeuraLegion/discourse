@@ -1,0 +1,25 @@
+FROM bright-app-local
+
+WORKDIR /app
+
+ENV BUNDLE_GEMFILE=/app/Gemfile \
+    BUNDLE_PATH=/usr/local/bundle \
+    BUNDLE_WITHOUT="" \
+    RAILS_ENV=development \
+    RACK_ENV=development
+
+COPY Gemfile Gemfile.lock /app/
+
+RUN bundle install
+
+# Install only harness gems not already provided by the app bundle.
+# final_destination is part of the application codebase (lib/final_destination.rb),
+# not a published gem.
+RUN gem install --no-document sinatra -v 3.2.0
+
+COPY harness.rb /app/harness.rb
+
+EXPOSE 3001
+ENV PORT=3001
+
+CMD ["ruby", "harness.rb"]
