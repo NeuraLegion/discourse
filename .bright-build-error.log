@@ -1,0 +1,49 @@
+Application failed on port 3000: The app startup hits an unrecoverable dependency error because it cannot connect to Redis.
+
+Container logs:
+app-1  | => Booting Puma
+app-1  | => Rails 8.0.5 application starting in development 
+app-1  | => Run `bin/rails server --help` for more startup options
+app-1  | Starting CSS change watcher
+app-1  | Couldn't connect to Redis
+app-1  | Puma starting in single mode...
+app-1  | * Puma version: 7.1.0 ("Neon Witch")
+app-1  | * Ruby version: ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [x86_64-linux]
+app-1  | *  Min threads: 0
+app-1  | *  Max threads: 5
+app-1  | *  Environment: development
+app-1  | *          PID: 1
+app-1  | * Listening on http://0.0.0.0:3000
+app-1  | Use Ctrl-C to stop
+
+Container diagnostics:
+Port mappings:
+3000/tcp -> 0.0.0.0:3000
+3000/tcp -> [::]:3000
+
+Network port config:
+{"3000/tcp":[{"HostIp":"0.0.0.0","HostPort":"3000"},{"HostIp":"::","HostPort":"3000"}]}
+
+Processes inside container:
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1 84.5  0.4 2187084 299052 ?      Ssl  20:07   0:06 puma 7.1.0 (tcp://0.0.0.0:3000) [app]
+root         144 66.6  0.0   8552  4708 ?        Rs   20:07   0:00 ps aux
+
+Container stdout/stderr (last 50 lines):
+=> Booting Puma
+=> Rails 8.0.5 application starting in development 
+=> Run `bin/rails server --help` for more startup options
+Starting CSS change watcher
+Couldn't connect to Redis
+Puma starting in single mode...
+* Puma version: 7.1.0 ("Neon Witch")
+* Ruby version: ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [x86_64-linux]
+*  Min threads: 0
+*  Max threads: 5
+*  Environment: development
+*          PID: 1
+* Listening on http://0.0.0.0:3000
+Use Ctrl-C to stop
+
+Application logs inside container:
+=== /app/log/development.log ===
