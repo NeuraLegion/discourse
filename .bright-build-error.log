@@ -1,0 +1,74 @@
+spawnSync /bin/sh ETIMEDOUT
+Migrating user_search_data to new locale.
+-- execute("UPDATE user_search_data\n   SET locale = 'en'\n WHERE user_id IN (\n        SELECT user_id\n          FROM user_search_data\n         WHERE locale = 'en_US'\n         LIMIT 100000\n     )\n")
+   -> 0.0009s
+== 20210125100452 MigrateSearchDataAfterDefaultLocaleRename: migrated (0.0151s) 
+
+== 20210126222142 CreateShelvedNotifications: migrating =======================
+-- create_table(:shelved_notifications)
+   -> 0.0113s
+-- add_index(:shelved_notifications, [:notification_id], {name: "index_shelved_notifications_on_notification_id"})
+   -> 0.0021s
+== 20210126222142 CreateShelvedNotifications: migrated (0.0151s) ==============
+
+== 20210127013637 AddUploadSecurityLogColumns: migrating ======================
+-- add_column(:uploads, :security_last_changed_at, :timestamp, {null: true, precision: nil})
+   -> 0.0017s
+-- add_column(:uploads, :security_last_changed_reason, :string, {null: true})
+   -> 0.0004s
+== 20210127013637 AddUploadSecurityLogColumns: migrated (0.0035s) =============
+
+== 20210127140730 UndoAddProcessedToNotifications: migrating ==================
+-- execute("ALTER TABLE notifications DROP COLUMN IF EXISTS processed")
+   -> 0.0014s
+== 20210127140730 UndoAddProcessedToNotifications: migrated (0.0027s) =========
+
+== 20210128021147 AddAllowUnknownSenderTopicRepliesToGroup: migrating =========
+-- add_column(:groups, :allow_unknown_sender_topic_replies, :boolean, {default: false, null: false})
+   -> 0.0028s
+== 20210128021147 AddAllowUnknownSenderTopicRepliesToGroup: migrated (0.0041s) 
+
+== 20210131221311 CreateDismissedTopicUsersTable: migrating ===================
+-- create_table(:dismissed_topic_users)
+   -> 0.0039s
+-- add_index(:dismissed_topic_users, [:user_id, :topic_id], {unique: true, name: "index_dismissed_topic_users_on_user_id_and_topic_id"})
+   -> 0.0016s
+== 20210131221311 CreateDismissedTopicUsersTable: migrated (0.0072s) ==========
+
+== 20210201034048 MoveCategoryLastSeenAtToNewTable: migrating =================
+== 20210201034048 MoveCategoryLastSeenAtToNewTable: migrated (0.0157s) ========
+
+== 20210203031628 AddDurationMinutesToTopicTimer: migrating ===================
+-- add_column(:topic_timers, :duration_minutes, :integer)
+   -> 0.0014s
+== 20210203031628 AddDurationMinutesToTopicTimer: migrated (0.0032s) ==========
+Network discourse_default Creating 
+ Network discourse_default Created 
+ Container discourse-redis-1 Creating 
+ Container discourse-db-1 Creating 
+ Container discourse-redis-1 Created 
+ Container discourse-db-1 Created 
+ Container discourse-redis-1 Starting 
+ Container discourse-db-1 Starting 
+ Container discourse-redis-1 Started 
+ Container discourse-db-1 Started 
+ Container discourse-app-run-a2fec5f5bab0 Creating 
+ Container discourse-app-run-a2fec5f5bab0 Created 
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:64: warning: already initialized constant Gem::Platform::JAVA
+/usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:279: warning: previous definition of JAVA was here
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:65: warning: already initialized constant Gem::Platform::MSWIN
+/usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:280: warning: previous definition of MSWIN was here
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:66: warning: already initialized constant Gem::Platform::MSWIN64
+/usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:281: warning: previous definition of MSWIN64 was here
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:67: warning: already initialized constant Gem::Platform::MINGW
+/usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:282: warning: previous definition of MINGW was here
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:68: warning: already initialized constant Gem::Platform::X64_MINGW
+/usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:284: warning: previous definition of X64_MINGW was here
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:70: warning: already initialized constant Gem::Platform::UNIVERSAL_MINGW
+/usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:285: warning: previous definition of UNIVERSAL_MINGW was here
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:71: warning: already initialized constant Gem::Platform::WINDOWS
+/usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:286: warning: previous definition of WINDOWS was here
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:72: warning: already initialized constant Gem::Platform::X64_LINUX
+/usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:287: warning: previous definition of X64_LINUX was here
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:73: warning: already initialized constant Gem::Platform::X64_LINUX_MUSL
+/usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:288: warning: previous definition of X64_LINUX_MUSL was here
