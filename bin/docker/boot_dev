@@ -97,7 +97,18 @@ else
     docker pull discourse/discourse_dev:release
 fi
 
-docker run -d \
+if ! docker compose version >/dev/null 2>&1; then
+    echo "docker compose is required but not available" >&2
+    exit 1
+fi
+
+COMPOSE_FILE="${SOURCE_DIR}/compose.yml"
+if [ ! -f "$COMPOSE_FILE" ]; then
+    echo "No compose file found at $COMPOSE_FILE" >&2
+    exit 1
+fi
+
+COMPOSE_PROJECT_NAME=discourse_dev docker compose -f "$COMPOSE_FILE" up -d \
     -p $local_publish:8025:8025 \
     -p $local_publish:3000:3000 \
     -p $local_publish:4200:4200 \
@@ -128,4 +139,3 @@ if [ "${initialize}" = "initialize" ]; then
     echo "Creating admin user..."
     "${SCRIPTPATH}/rake" admin:create
 fi
-
