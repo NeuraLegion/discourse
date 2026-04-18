@@ -1,0 +1,48 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -lc "bundle exec rake db:create db:migrate && bundle exec rails server -b 0.0.0.0 -p 3000"
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: development
+      NODE_ENV: development
+      PORT: 3000
+      LOAD_PLUGINS: "1"
+      UNICORN_WORKERS: "1"
+      ROLLUP_PLUGIN_COMPILER: "0"
+      DISCOURSE_HOSTNAME: localhost
+      DISCOURSE_DB_HOST: postgres
+      DISCOURSE_DB_PORT: 5432
+      DISCOURSE_DEV_DB: discourse_development
+      DISCOURSE_DB_NAME: discourse_development
+      DISCOURSE_DB_USERNAME: postgres
+      DISCOURSE_DB_PASSWORD: postgres
+      DISCOURSE_REDIS_HOST: redis
+      DISCOURSE_REDIS_PORT: 6379
+      DISCOURSE_MESSAGE_BUS_REDIS_ENABLED: "true"
+      DISCOURSE_MESSAGE_BUS_REDIS_HOST: redis
+      DISCOURSE_MESSAGE_BUS_REDIS_PORT: 6379
+      DISCOURSE_SERVE_STATIC_ASSETS: "true"
+      DISCOURSE_SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+    volumes:
+      - ./config/discourse.conf:/app/config/discourse.conf:ro
+    depends_on:
+      postgres:
+        condition: service_started
+      redis:
+        condition: service_started
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: discourse_development
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
