@@ -1,0 +1,8 @@
+# Added by bright-agent to avoid permission errors
+log/
+# Added by bright-agent to avoid permission errors
+data/
+tmp/
+
+# Local runtime config for docker-compose app container
+config/discourse.conf

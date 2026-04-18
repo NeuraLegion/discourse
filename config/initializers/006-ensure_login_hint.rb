@@ -25,7 +25,8 @@ Rails.application.config.to_prepare do
         SiteSetting.has_login_hint = true
       end
     end
-  rescue ActiveRecord::NoDatabaseError
-    # Database might not have been created
+  rescue ActiveRecord::NoDatabaseError, ActiveRecord::ConnectionNotEstablished, ActiveRecord::DatabaseConnectionError, PG::Error
+    # Database might not have been created yet, or the current DB role may not exist
+    # during bootstrapping tasks like multisite test DB setup.
   end
 end

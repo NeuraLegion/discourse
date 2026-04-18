@@ -1,0 +1,15 @@
+services:
+  app:
+    command:
+      - bash
+      - -lc
+      - bundle exec rails server -b 0.0.0.0 -p 3000
+    environment:
+      PGHOST: postgres
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: postgres
+      DISCOURSE_DEV_DB: postgres
+      DISCOURSE_REDIS_HOST: redis
+      REDIS_HOST: redis
+      REDIS_URL: redis://redis:6379
