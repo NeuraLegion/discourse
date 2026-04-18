@@ -1,0 +1,33 @@
+Application did not start on port 3000 within 120s
+
+Container diagnostics:
+Network port config:
+{"5432/tcp":null}
+
+Processes inside container:
+PID   USER     TIME  COMMAND
+    1 postgres  0:00 postgres
+   27 postgres  0:00 postgres: checkpointer 
+   28 postgres  0:00 postgres: background writer 
+   30 postgres  0:00 postgres: walwriter 
+   31 postgres  0:00 postgres: autovacuum launcher 
+   32 postgres  0:00 postgres: logical replication launcher 
+  313 root      0:00 ps aux
+
+Container stdout/stderr (last 50 lines):
+PostgreSQL Database directory appears to contain a database; Skipping initialization
+
+2026-04-18 11:48:54.287 UTC [1] LOG:  starting PostgreSQL 15.17 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+2026-04-18 11:48:54.287 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2026-04-18 11:48:54.287 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+2026-04-18 11:48:54.288 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-04-18 11:48:54.291 UTC [29] LOG:  database system was shut down at 2026-04-18 11:48:35 UTC
+2026-04-18 11:48:54.294 UTC [1] LOG:  database system is ready to accept connections
+2026-04-18 11:49:23.373 UTC [68] FATAL:  database "discourse_development" does not exist
+2026-04-18 11:49:23.384 UTC [69] FATAL:  database "discourse_development" does not exist
+2026-04-18 11:49:23.478 UTC [70] FATAL:  database "discourse_development" does not exist
+2026-04-18 11:49:23.492 UTC [71] FATAL:  database "discourse_development" does not exist
+2026-04-18 11:50:12.780 UTC [144] FATAL:  database "discourse_development" does not exist
+2026-04-18 11:50:12.789 UTC [145] FATAL:  database "discourse_development" does not exist
+2026-04-18 11:50:12.891 UTC [146] FATAL:  database "discourse_development" does not exist
+2026-04-18 11:50:12.902 UTC [147] FATAL:  database "discourse_development" does not exist

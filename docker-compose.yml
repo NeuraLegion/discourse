@@ -1,0 +1,52 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: development
+      NODE_ENV: development
+      DISCOURSE_HOSTNAME: localhost
+      DISCOURSE_DB_HOST: postgres
+      DISCOURSE_DB_USERNAME: postgres
+      DISCOURSE_DB_PASSWORD: postgres
+      DISCOURSE_DB_NAME: discourse_development
+      DISCOURSE_REDIS_HOST: redis
+      UNICORN_BIND_ALL: "true"
+      UNICORN_PORT: "3000"
+    command: bash -lc "bundle exec rake db:create && bundle exec rake db:migrate && bundle exec pitchfork -c config/pitchfork.conf.rb -p 3000"
+
+volumes:
+  postgres-data:
+  redis-data:
