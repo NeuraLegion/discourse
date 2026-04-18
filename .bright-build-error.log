@@ -1,0 +1,89 @@
+Application did not start on port 3000 within 120s (last HTTP status: 500)
+
+Container diagnostics:
+Port mappings:
+3000/tcp -> 0.0.0.0:3000
+3000/tcp -> [::]:3000
+
+Network port config:
+{"3000/tcp":[{"HostIp":"0.0.0.0","HostPort":"3000"},{"HostIp":"::","HostPort":"3000"}]}
+
+Processes inside container:
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1 34.3  0.9 3252952 639484 ?      Ssl  12:44   0:41 puma 7.1.0 (tcp://0.0.0.0:3000) [app]
+root        1109  100  0.0   8552  4636 ?        Rs   12:46   0:00 ps aux
+
+Container stdout/stderr (last 50 lines):
+from /bundle/ruby/3.4.0/gems/redis-5.4.0/lib/redis.rb:151:in 'Redis#send_command'
+	from /bundle/ruby/3.4.0/gems/redis-5.4.0/lib/redis/commands/hashes.rb:75:in 'Redis::Commands::Hashes#hget'
+	from /app/lib/discourse_redis.rb:145:in 'Kernel#public_send'
+	from /app/lib/discourse_redis.rb:145:in 'block (3 levels) in <class:DiscourseRedis>'
+	from /app/lib/discourse_redis.rb:29:in 'DiscourseRedis.ignore_readonly'
+	from /app/lib/discourse_redis.rb:145:in 'block (2 levels) in <class:DiscourseRedis>'
+	from /bundle/ruby/3.4.0/gems/logster-2.20.1/lib/logster/redis_store.rb:26:in 'block in Logster::RedisStore#save'
+	from /bundle/ruby/3.4.0/gems/logster-2.20.1/lib/logster/redis_store.rb:26:in 'Array#each'
+	from /bundle/ruby/3.4.0/gems/logster-2.20.1/lib/logster/redis_store.rb:26:in 'Logster::RedisStore#save'
+	from /bundle/ruby/3.4.0/gems/logster-2.20.1/lib/logster/base_store.rb:223:in 'Logster::BaseStore#report'
+	from /bundle/ruby/3.4.0/gems/logster-2.20.1/lib/logster/logger.rb:167:in 'Logster::Logger#report_to_store'
+	from /bundle/ruby/3.4.0/gems/logster-2.20.1/lib/logster/defer_logger.rb:11:in 'block in Logster::DeferLogger#report_to_store'
+	from /bundle/ruby/3.4.0/gems/logster-2.20.1/lib/logster/scheduler.rb:43:in 'Logster::Deferer#do_work'
+	from /bundle/ruby/3.4.0/gems/logster-2.20.1/lib/logster/scheduler.rb:34:in 'block (2 levels) in Logster::Deferer#start_thread'
+/usr/local/lib/ruby/3.4.0/socket.rb:1639:in 'Socket#__connect_nonblock': Connection refused - connect(2) for 127.0.0.1:6379 (Errno::ECONNREFUSED)
+	from /usr/local/lib/ruby/3.4.0/socket.rb:1639:in 'Socket#connect_nonblock'
+	from /usr/local/lib/ruby/3.4.0/socket.rb:60:in 'Addrinfo#connect_internal'
+	from /usr/local/lib/ruby/3.4.0/socket.rb:141:in 'Addrinfo#connect'
+	from /usr/local/lib/ruby/3.4.0/socket.rb:753:in 'block in Socket.tcp_with_fast_fallback'
+	from <internal:kernel>:168:in 'Kernel#loop'
+	from /usr/local/lib/ruby/3.4.0/socket.rb:721:in 'Socket.tcp_with_fast_fallback'
+	from /usr/local/lib/ruby/3.4.0/socket.rb:661:in 'Socket.tcp'
+	from /bundle/ruby/3.4.0/gems/redis-client-0.28.0/lib/redis_client/ruby_connection.rb:122:in 'RedisClient::RubyConnection#connect'
+	from /bundle/ruby/3.4.0/gems/redis-client-0.28.0/lib/redis_client/ruby_connection.rb:48:in 'RedisClient::RubyConnection#initialize'
+	from /bundle/ruby/3.4.0/gems/redis-client-0.28.0/lib/redis_client.rb:849:in 'Class#new'
+	from /bundle/ruby/3.4.0/gems/redis-client-0.28.0/lib/redis_client.rb:849:in 'block in RedisClient#connect'
+	from /bundle/ruby/3.4.0/gems/redis-client-0.28.0/lib/redis_client/middlewares.rb:12:in 'RedisClient::BasicMiddleware#connect'
+	from /bundle/ruby/3.4.0/gems/redis-client-0.28.0/lib/redis_client.rb:848:in 'RedisClient#connect'
+	from /bundle/ruby/3.4.0/gems/redis-client-0.28.0/lib/redis_client.rb:824:in 'RedisClient#raw_connection'
+	from /bundle/ruby/3.4.0/gems/redis-client-0.28.0/lib/redis_client.rb:779:in 'RedisClient#ensure_connected'
+	from /bundle/ruby/3.4.0/gems/redis-client-0.28.0/lib/redis_client.rb:372:in 'RedisClient#call_v'
+	from /bundle/ruby/3.4.0/gems/redis-5.4.0/lib/redis/client.rb:90:in 'Redis::Client#call_v'
+	from /bundle/ruby/3.4.0/gems/rack-mini-profiler-4.0.1/lib/mini_profiler/profiling_methods.rb:90:in 'block in Redis::Client#profile_method'
+	from /bundle/ruby/3.4.0/gems/redis-5.4.0/lib/redis.rb:152:in 'block in Redis#send_command'
+	from /bundle/ruby/3.4.0/gems/redis-5.4.0/lib/redis.rb:151:in 'Monitor#synchronize'
+	from /bundle/ruby/3.4.0/gems/redis-5.4.0/lib/redis.rb:151:in 'Redis#send_command'
+	from /bundle/ruby/3.4.0/gems/redis-5.4.0/lib/redis/commands/hashes.rb:75:in 'Redis::Commands::Hashes#hget'
+	from /app/lib/discourse_redis.rb:145:in 'Kernel#public_send'
+	from /app/lib/discourse_redis.rb:145:in 'block (3 levels) in <class:DiscourseRedis>'
+	from /app/lib/discourse_redis.rb:29:in 'DiscourseRedis.ignore_readonly'
+	from /app/lib/discourse_redis.rb:145:in 'block (2 levels) in <class:DiscourseRedis>'
+	from /bundle/ruby/3.4.0/gems/logster-2.20.1/lib/logster/redis_store.rb:26:in 'block in Logster::RedisStore#save'
+	from /bundle/ruby/3.4.0/gems/logster-2.20.1/lib/logster/redis_store.rb:26:in 'Array#each'
+	from /bundle/ruby/3.4.0/gems/logster-2.20.1/lib/logster/redis_store.rb:26:in 'Logster::RedisStore#save'
+	from /bundle/ruby/3.4.0/gems/logster-2.20.1/lib/logster/base_store.rb:223:in 'Logster::BaseStore#report'
+	from /bundle/ruby/3.4.0/gems/logster-2.20.1/lib/logster/logger.rb:167:in 'Logster::Logger#report_to_store'
+	from /bundle/ruby/3.4.0/gems/logster-2.20.1/lib/logster/defer_logger.rb:11:in 'block in Logster::DeferLogger#report_to_store'
+	from /bundle/ruby/3.4.0/gems/logster-2.20.1/lib/logster/scheduler.rb:43:in 'Logster::Deferer#do_work'
+	from /bundle/ruby/3.4.0/gems/logster-2.20.1/lib/logster/scheduler.rb:34:in 'block (2 levels) in Logster::Deferer#start_thread'
+MiniProfiler storage failure: Connection refused - connect(2) for 127.0.0.1:6379 (redis://localhost:6379)
+
+Application logs inside container:
+=== /app/log/development.log ===
+Started GET "/" for 172.18.0.1 at 2026-04-18 12:46:02 +0000
+MiniProfiler storage failure: Connection refused - connect(2) for 127.0.0.1:6379 (redis://localhost:6379)
+Started GET "/" for 172.18.0.1 at 2026-04-18 12:46:05 +0000
+MiniProfiler storage failure: Connection refused - connect(2) for 127.0.0.1:6379 (redis://localhost:6379)
+Started GET "/" for 172.18.0.1 at 2026-04-18 12:46:08 +0000
+MiniProfiler storage failure: Connection refused - connect(2) for 127.0.0.1:6379 (redis://localhost:6379)
+Started GET "/" for 172.18.0.1 at 2026-04-18 12:46:10 +0000
+MiniProfiler storage failure: Connection refused - connect(2) for 127.0.0.1:6379 (redis://localhost:6379)
+Started GET "/" for 172.18.0.1 at 2026-04-18 12:46:13 +0000
+MiniProfiler storage failure: Connection refused - connect(2) for 127.0.0.1:6379 (redis://localhost:6379)
+Started GET "/" for 172.18.0.1 at 2026-04-18 12:46:16 +0000
+MiniProfiler storage failure: Connection refused - connect(2) for 127.0.0.1:6379 (redis://localhost:6379)
+Started GET "/" for 172.18.0.1 at 2026-04-18 12:46:19 +0000
+MiniProfiler storage failure: Connection refused - connect(2) for 127.0.0.1:6379 (redis://localhost:6379)
+Started GET "/" for 172.18.0.1 at 2026-04-18 12:46:21 +0000
+MiniProfiler storage failure: Connection refused - connect(2) for 127.0.0.1:6379 (redis://localhost:6379)
+Started GET "/" for 172.18.0.1 at 2026-04-18 12:46:24 +0000
+MiniProfiler storage failure: Connection refused - connect(2) for 127.0.0.1:6379 (redis://localhost:6379)
+Started GET "/" for 172.18.0.1 at 2026-04-18 12:46:27 +0000
+MiniProfiler storage failure: Connection refused - connect(2) for 127.0.0.1:6379 (redis://localhost:6379)

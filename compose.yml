@@ -1,0 +1,10 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: "development"
+      NODE_ENV: "development"
+      SKIP_DB_AND_REDIS: "1"
+      DISABLE_MINI_PROFILER: "1"
