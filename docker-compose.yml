@@ -1,0 +1,39 @@
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: discourse
+      POSTGRES_PASSWORD: discourse
+      POSTGRES_DB: discourse
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - redis
+      - db
+    ports:
+      - "3000:3000"
+    environment:
+      UNICORN_PORT: 3000
+      DISCOURSE_REDIS_HOST: redis
+      DISCOURSE_REDIS_PORT: 6379
+      DISCOURSE_DB_HOST: db
+      DISCOURSE_DB_PORT: 5432
+      DISCOURSE_DB_NAME: discourse
+      DISCOURSE_DB_USERNAME: discourse
+      DISCOURSE_DB_PASSWORD: discourse
+    command: bash -lc "bin/rails db:prepare && bin/rails server -b 0.0.0.0 -p ${UNICORN_PORT:-3000}"
+
+volumes:
+  postgres_data:
