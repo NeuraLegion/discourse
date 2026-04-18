@@ -1,0 +1,38 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: "production"
+      NODE_ENV: "development"
+      DISCOURSE_DB_HOST: "db"
+      DISCOURSE_DB_NAME: "discourse"
+      DISCOURSE_DB_USERNAME: "postgres"
+      DISCOURSE_DB_PASSWORD: "postgres"
+      DISCOURSE_REDIS_HOST: "redis"
+      DISCOURSE_REDIS_PORT: "6379"
+      DISCOURSE_HOSTNAME: "discourse.local"
+      DISCOURSE_DEVELOPER_EMAILS: "admin@example.com"
+      DISCOURSE_SERVE_STATIC_ASSETS: "true"
+      DISCOURSE_SECRET_KEY_BASE: "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+      RUBYOPT: "--disable-yjit"
+    depends_on:
+      - db
+      - redis
+    command: ["bin/rails", "server", "-e", "production", "-b", "0.0.0.0", "-p", "3000"]
+
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: "discourse"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-bookworm
+
+volumes:
+  postgres-data:
