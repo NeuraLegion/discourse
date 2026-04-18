@@ -71,13 +71,10 @@ echo "Using source in: ${SOURCE_DIR}"
 echo "Using data in:   ${DATA_DIR}"
 
 mkdir -p "${DATA_DIR}"
+rm -f "${SOURCE_DIR}/tmp/pids/server.pid"
 
 mount_plugin_symlinks=""
 for symlink in $(find $PLUGINS_DIR -maxdepth 1 -type l); do
-    # `readlink -f` doesn't work on macOS, to fix it you need to override the `readlink` with `greadlink`
-    # > brew install coreutils
-    # > ln -s "$(which greadlink)" "$(dirname "$(which greadlink)")/readlink"
-    # reference: https://meta.discourse.org/t/beginners-guide-to-install-discourse-for-development-using-docker/102009/124?u=aleber
     symlink_value=$(readlink -f $symlink)
     plugin_name=$(basename $symlink)
     mount_plugin_symlinks+=" -v ${symlink_value}:/src/plugins/${plugin_name}:delegated"
@@ -89,13 +86,16 @@ done
 # 9405 prometheus exporter
 
 if [ "$(uname -m)" == "aarch64" ]; then
-    # NOTE: we currently (2024-01-17) don’t build an aarch64 image, so one must be pre-built locally.
-    # Avoiding `docker pull` so we don't override that local image.
     ENV_ARGS+=" -e SE_MANAGER_PATH=/usr/local/bin/selenium-manager "
 else
-    # x86_64 environment - pull the latest image from dockerhub
     docker pull discourse/discourse_dev:release
 fi
+
+# Ensure postgres bootstrap service only runs when the data dir is actually uninitialized.
+# The container's /etc/runit/1.d/ensure-database script checks for PG_VERSION before copying
+# the pristine cluster into /shared/postgres_data. On an already-initialized host volume,
+# re-copying can be disruptive, so we disable the boot-time initializer by default.
+ENV_ARGS+=" -e CREATE_DB_ON_BOOT=0"
 
 docker run -d \
     -p $local_publish:8025:8025 \
@@ -128,4 +128,3 @@ if [ "${initialize}" = "initialize" ]; then
     echo "Creating admin user..."
     "${SCRIPTPATH}/rake" admin:create
 fi
-

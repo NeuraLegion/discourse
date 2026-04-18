@@ -1,0 +1,9 @@
+Application did not start on port 3000 within 180s
+
+Container logs:
+run-parts: executing /etc/runit/1.d/00-fix-var-logs
+run-parts: executing /etc/runit/1.d/anacron
+run-parts: executing /etc/runit/1.d/cleanup-pids
+Cleaning stale PID files
+run-parts: executing /etc/runit/1.d/ensure-database
+Started runsvdir, PID is 27
