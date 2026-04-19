@@ -1,0 +1,127 @@
+Application failed on port 3000: Startup reaches the web server, but a database error is unrecoverable because PostgreSQL reports the vector extension cannot be updated from 0.5.1 to 0.7.0. (last HTTP status: 500)
+
+HTTP response body:
+ActiveRecord::PendingMigrationError.new(pending_migrations: migrations) | ActiveRecord::PendingMigrationError | Action Controller: Exception caught
+Action Controller: Exception caught ActiveRecord::PendingMigrationError Migrations are pending. To resolve this issue, run: bin/rails db:migrate You have 226 pending migrations: db/migrate/20240612063735_add_field_type_enum_to_user_fields.rb db/migrate/20240612073116_swap_field_type_with_field_type_enum_on_user_fields.rb db/migrate/20240619123052_create_web_hook_events_daily_aggregates.rb db/migrate/20240620024938_add_back_field_type_enum_to_user_fields.rb db/migrate/20240627125112_remove_invali
+
+Container logs:
+redis-1  | 1:C 19 Apr 2026 12:26:29.140 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+redis-1  | 1:C 19 Apr 2026 12:26:29.140 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 1:C 19 Apr 2026 12:26:29.140 * Redis version=7.4.8, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1  | 1:C 19 Apr 2026 12:26:29.140 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis-1  | 1:M 19 Apr 2026 12:26:29.140 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+redis-1  | 1:M 19 Apr 2026 12:26:29.140 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 19 Apr 2026 12:26:29.141 * Running mode=standalone, port=6379.
+redis-1  | 1:M 19 Apr 2026 12:26:29.141 * Server initialized
+redis-1  | 1:M 19 Apr 2026 12:26:29.141 * Ready to accept connections tcp
+app-1    | Plugin name is 'discourse-ai', but plugin directory is named 'discourse-ai.disabled.off'
+app-1    | => Booting Puma
+app-1    | => Rails 8.0.5 application starting in development 
+app-1    | => Run `bin/rails server --help` for more startup options
+app-1    | Starting CSS change watcher
+app-1    | Puma starting in single mode...
+app-1    | * Puma version: 7.1.0 ("Neon Witch")
+app-1    | * Ruby version: ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [x86_64-linux]
+app-1    | *  Min threads: 0
+app-1    | *  Max threads: 5
+app-1    | *  Environment: development
+app-1    | *          PID: 1
+app-1    | * Listening on http://0.0.0.0:3000
+app-1    | Use Ctrl-C to stop
+app-1    | Started GET "/" for 172.18.0.1 at 2026-04-19 12:28:38 +0000
+app-1    |   ActiveRecord::SchemaMigration Load (0.7ms)  SELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC
+postgres-1  | 
+postgres-1  | initdb: warning: enabling "trust" authentication for local connections
+postgres-1  | initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+postgres-1  | 
+postgres-1  | Success. You can now start the database server using:
+postgres-1  | 
+postgres-1  |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+postgres-1  | 
+postgres-1  | waiting for server to start....2026-04-19 12:26:29.635 UTC [48] LOG:  starting PostgreSQL 15.4 (Debian 15.4-2.pgdg120+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+postgres-1  | 2026-04-19 12:26:29.636 UTC [48] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres-1  | 2026-04-19 12:26:29.639 UTC [51] LOG:  database system was shut down at 2026-04-19 12:26:29 UTC
+postgres-1  | 2026-04-19 12:26:29.642 UTC [48] LOG:  database system is ready to accept connections
+postgres-1  |  done
+postgres-1  | server started
+postgres-1  | CREATE DATABASE
+postgres-1  | 
+postgres-1  | 
+postgres-1  | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+postgres-1  | 
+postgres-1  | 2026-04-19 12:26:29.841 UTC [48] LOG:  received fast shutdown request
+postgres-1  | waiting for server to shut down....2026-04-19 12:26:29.841 UTC [48] LOG:  aborting any active transactions
+postgres-1  | 2026-04-19 12:26:29.843 UTC [48] LOG:  background worker "logical replication launcher" (PID 54) exited with exit code 1
+postgres-1  | 2026-04-19 12:26:29.843 UTC [49] LOG:  shutting down
+postgres-1  | 2026-04-19 12:26:29.844 UTC [49] LOG:  checkpoint starting: shutdown immediate
+postgres-1  | 2026-04-19 12:26:29.872 UTC [49] LOG:  checkpoint complete: wrote 918 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.011 s, sync=0.016 s, total=0.029 s; sync files=301, longest=0.001 s, average=0.001 s; distance=4223 kB, estimate=4223 kB
+postgres-1  | 2026-04-19 12:26:29.874 UTC [48] LOG:  database system is shut down
+postgres-1  |  done
+postgres-1  | server stopped
+postgres-1  | 
+postgres-1  | PostgreSQL init process complete; ready for start up.
+postgres-1  | 
+postgres-1  | 2026-04-19 12:26:29.955 UTC [1] LOG:  starting PostgreSQL 15.4 (Debian 15.4-2.pgdg120+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+postgres-1  | 2026-04-19 12:26:29.956 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgres-1  | 2026-04-19 12:26:29.956 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgres-1  | 2026-04-19 12:26:29.957 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres-1  | 2026-04-19 12:26:29.960 UTC [64] LOG:  database system was shut down at 2026-04-19 12:26:29 UTC
+postgres-1  | 2026-04-19 12:26:29.963 UTC [1] LOG:  database system is ready to accept connections
+postgres-1  | 2026-04-19 12:26:35.565 UTC [69] FATAL:  database "discourse_test" does not exist
+postgres-1  | 2026-04-19 12:28:38.247 UTC [80] ERROR:  extension "vector" has no update path from version "0.5.1" to version "0.7.0"
+postgres-1  | 2026-04-19 12:28:38.247 UTC [80] STATEMENT:  ALTER EXTENSION vector UPDATE TO '0.7.0';
+
+Container diagnostics:
+Port mappings:
+3000/tcp -> 0.0.0.0:3000
+3000/tcp -> [::]:3000
+
+Network port config:
+{"3000/tcp":[{"HostIp":"0.0.0.0","HostPort":"3000"},{"HostIp":"::","HostPort":"3000"}]}
+
+Processes inside container:
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  5.7  0.5 2989336 329572 ?      Ssl  12:26   0:07 puma 7.1.0 (tcp://0.0.0.0:3000) [app]
+root         353 43.3  0.0      0     0 ?        Z    12:28   0:02 [esbuild] <defunct>
+root         397 33.3  0.0   8552  4672 ?        Rs   12:28   0:00 ps aux
+
+Container stdout/stderr (last 50 lines):
+Plugin name is 'discourse-ai', but plugin directory is named 'discourse-ai.disabled.off'
+=> Booting Puma
+=> Rails 8.0.5 application starting in development 
+=> Run `bin/rails server --help` for more startup options
+Starting CSS change watcher
+Puma starting in single mode...
+* Puma version: 7.1.0 ("Neon Witch")
+* Ruby version: ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [x86_64-linux]
+*  Min threads: 0
+*  Max threads: 5
+*  Environment: development
+*          PID: 1
+* Listening on http://0.0.0.0:3000
+Use Ctrl-C to stop
+Started GET "/" for 172.18.0.1 at 2026-04-19 12:28:38 +0000
+  ActiveRecord::SchemaMigration Load (0.7ms)  SELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC
+
+Application logs inside container:
+=== /app/log/development.log ===
+        created_at
+      ) values (
+        20240610232546,
+        'b16f4ad12f24',
+        'CopyCustomSummarizationAllowedGroupsToAiCustomSummarizationAllowedGroups',
+        '3086708dc6ebad3777f9e951742fdf0e08034b9f',
+        0,
+        'up',
+        '8.0.5',
+        '2026-04-19 12:28:38.243382'
+      )
+
+  ActiveRecord::SchemaMigration Create (0.0ms)  INSERT INTO "schema_migrations" ("version") VALUES ('20240610232546') RETURNING "version"
+  TRANSACTION (1.7ms)  COMMIT
+Migrating to UpgradePgvector070 (20240611170904)
+  TRANSACTION (0.1ms)  BEGIN
+  TRANSACTION (0.1ms)  ROLLBACK
+   (0.1ms)  SELECT pg_advisory_unlock(8245631157040234860)
+Started GET "/" for 172.18.0.1 at 2026-04-19 12:28:38 +0000
+  ActiveRecord::SchemaMigration Load (0.7ms)  SELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC
