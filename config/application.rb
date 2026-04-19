@@ -74,6 +74,23 @@ module Discourse
     require "discourse"
     require "js_locale_helper"
 
+    # Load site setting support explicitly before initializers run. In this checkout,
+    # relying on Rails 8 autoloading is too late for production boot.
+    require_relative "../lib/enum_site_setting"
+    require_relative "../lib/global_path"
+    require_relative "../lib/site_settings/deprecated_settings"
+    require_relative "../lib/site_settings/validations"
+    require_relative "../lib/site_settings/yaml_loader"
+    require_relative "../lib/site_settings/defaults_provider"
+    require_relative "../lib/site_settings/dependency_graph"
+    require_relative "../lib/site_settings/hidden_provider"
+    require_relative "../lib/site_settings/label_formatter"
+    require_relative "../lib/site_settings/type_supervisor"
+    require_relative "../lib/site_settings/db_provider"
+    require_relative "../app/models/concerns/has_sanitizable_fields"
+    require_relative "../lib/site_setting_extension"
+    require_relative "../app/models/site_setting"
+
     # tiny file needed by site settings
     require "highlight_js"
 
@@ -106,6 +123,8 @@ module Discourse
     config.multisite_config_path = File.absolute_path(multisite_config_path, Rails.root)
 
     config.autoload_lib(ignore: %w[common_passwords emoji generators javascripts tasks])
+    config.autoload_paths << "#{root}/app/models"
+    config.autoload_paths << "#{root}/lib/site_settings"
     Rails.autoloaders.main.do_not_eager_load(config.root.join("lib"))
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths << "#{root}/lib/guardian"
