@@ -1,0 +1,62 @@
+=== discourse-app-1 ===
+Assets missing in /app/public/assets volume. Run: docker compose run --rm app bash -lc "bundle exec rake assets:precompile; cp -a tmp/final-build/public/. /app/public/assets/ 2>/dev/null || true; cp -a public/assets/. /app/public/assets/ 2>/dev/null || true; touch /app/public/assets/.precompiled"
+
+=== discourse-postgres-1 ===
+The files belonging to this database system will be owned by user "postgres".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.utf8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+fixing permissions on existing directory /var/lib/postgresql/data ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+
+Success. You can now start the database server using:
+
+    pg_ctl -D /var/lib/postgresql/data -l logfile start
+
+waiting for server to start....2026-04-19 16:52:39.484 UTC [48] LOG:  starting PostgreSQL 16.13 (Debian 16.13-1.pgdg12+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+2026-04-19 16:52:39.485 UTC [48] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-04-19 16:52:39.488 UTC [51] LOG:  database system was shut down at 2026-04-19 16:52:39 UTC
+2026-04-19 16:52:39.491 UTC [48] LOG:  database system is ready to accept connections
+ done
+server started
+CREATE DATABASE
+
+
+/usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+
+waiting for server to shut down....2026-04-19 16:52:39.643 UTC [48] LOG:  received fast shutdown request
+2026-04-19 16:52:39.644 UTC [48] LOG:  aborting any active transactions
+2026-04-19 16:52:39.646 UTC [48] LOG:  background worker "logical replication launcher" (PID 54) exited with exit code 1
+2026-04-19 16:52:39.646 UTC [49] LOG:  shutting down
+2026-04-19 16:52:39.647 UTC [49] LOG:  checkpoint starting: shutdown immediate
+2026-04-19 16:52:39.672 UTC [49] LOG:  checkpoint complete: wrote 922 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.008 s, sync=0.015 s, total=0.026 s; sync files=301, longest=0.001 s, average=0.001 s; distance=4255 kB, estimate=4255 kB; lsn=0/1912120, redo lsn=0/1912120
+2026-04-19 16:52:39.674 UTC [48] LOG:  database system is shut down
+ done
+server stopped
+
+PostgreSQL init process complete; ready for start up.
+
+=== discourse-redis-1 ===
+1:C 19 Apr 2026 16:52:39.061 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:C 19 Apr 2026 16:52:39.061 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 19 Apr 2026 16:52:39.061 * Redis version=7.4.8, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 19 Apr 2026 16:52:39.061 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+1:M 19 Apr 2026 16:52:39.061 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+1:M 19 Apr 2026 16:52:39.061 * monotonic clock: POSIX clock_gettime
+1:M 19 Apr 2026 16:52:39.062 * Running mode=standalone, port=6379.
+1:M 19 Apr 2026 16:52:39.062 * Server initialized
+1:M 19 Apr 2026 16:52:39.062 * Ready to accept connections tcp
