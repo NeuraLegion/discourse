@@ -1,0 +1,36 @@
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: discourse
+      POSTGRES_USER: discourse
+      POSTGRES_PASSWORD: discourse
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: "production"
+      NODE_ENV: "production"
+      DISCOURSE_DB_HOST: "postgres"
+      DISCOURSE_DB_NAME: "discourse"
+      DISCOURSE_DB_USERNAME: "discourse"
+      DISCOURSE_DB_PASSWORD: "discourse"
+      DISCOURSE_REDIS_HOST: "redis"
+      DISCOURSE_HOSTNAME: "discourse.local"
+      DISCOURSE_SERVE_STATIC_ASSETS: "true"
+      DISCOURSE_LOAD_MINI_PROFILER: "false"
+      SKIP_ENFORCE_HOSTNAME: "1"
+    depends_on:
+      - postgres
+      - redis
+    command: ["bash", "-lc", "bin/rails server -b 0.0.0.0 -p 3000"]
+
+volumes:
+  postgres_data:
