@@ -1,0 +1,37 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: "development"
+      DISCOURSE_RUNNING_IN_RACK: "1"
+      DISCOURSE_DB_HOST: "db"
+      DISCOURSE_DB_NAME: "discourse_development"
+      DISCOURSE_DB_USERNAME: "postgres"
+      DISCOURSE_DB_PASSWORD: "postgres"
+      DISCOURSE_DB_SOCKET: ""
+      DISCOURSE_HOSTNAME: "localhost"
+      DISCOURSE_REDIS_HOST: "redis"
+      DISCOURSE_SECRET_KEY_BASE: "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+      DISCOURSE_LOCAL_EMAIL_PORT: "1025"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  db:
+    image: postgres:16-bookworm
+    environment:
+      POSTGRES_DB: "discourse_development"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d discourse_development"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-bookworm
