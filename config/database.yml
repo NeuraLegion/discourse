@@ -1,8 +1,14 @@
 <%
+  require "json"
   db_variables =
     ENV
       .filter { |key, _| key.start_with?("DISCOURSE_DB_VARIABLES_") }
       .transform_keys { |key| key.slice(("DISCOURSE_DB_VARIABLES_".length)..).downcase }
+
+  dev_host = ENV["DISCOURSE_DB_HOST"] || ENV["PGHOST"]
+  dev_port = ENV["DISCOURSE_DB_PORT"] || ENV["PGPORT"]
+  dev_user = ENV["DISCOURSE_DB_USERNAME"] || ENV["PGUSER"]
+  dev_password = ENV["DISCOURSE_DB_PASSWORD"] || ENV["PGPASSWORD"]
 %>
 
 development:
@@ -12,6 +18,18 @@ development:
   min_messages: warning
   pool: 5
   checkout_timeout: <%= ENV['CHECKOUT_TIMEOUT'] || 5 %>
+  <% if dev_host.present? %>
+  host: <%= dev_host %>
+  <% end %>
+  <% if dev_port.present? %>
+  port: <%= dev_port %>
+  <% end %>
+  <% if dev_user.present? %>
+  username: <%= dev_user %>
+  <% end %>
+  <% if dev_password.present? %>
+  password: <%= dev_password %>
+  <% end %>
   host_names:
     ### Don't include the port number here. Change the "port" site setting instead, at /admin/site_settings.
     ### If you change this setting you will need to
