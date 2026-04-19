@@ -1,0 +1,16 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DISCOURSE_DEV_DB: "discourse_development"
+      DISCOURSE_HOSTNAME: "localhost"
+      DISCOURSE_REDIS_HOST: "host.docker.internal"
+      DISCOURSE_REDIS_PORT: "6379"
+      DISCOURSE_SECRET_KEY_BASE: "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+      RAILS_ENV: "development"
+      NODE_ENV: "development"
+      DISCOURSE_SKIP_POST_DEPLOYMENT_MIGRATIONS: "1"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

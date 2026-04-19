@@ -1,0 +1,7 @@
+docker compose --wait failed and port 3000 is not reachable. Original error: Process exited with code 1. Output:
+ERR:  Network discourse_default Creating 
+ERR:  Network discourse_default Created 
+ERR:  Container discourse-app-1 Creating 
+ERR:  Container discourse-app-1 Created 
+ERR:  Container discourse-app-1 Starting 
+ERR: Error response from daemon: failed to set up contai
