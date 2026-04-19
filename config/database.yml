@@ -3,12 +3,21 @@
     ENV
       .filter { |key, _| key.start_with?("DISCOURSE_DB_VARIABLES_") }
       .transform_keys { |key| key.slice(("DISCOURSE_DB_VARIABLES_".length)..).downcase }
+
+  db_host = ENV["DISCOURSE_DB_HOST"].presence || "127.0.0.1"
+  db_port = ENV["DISCOURSE_DB_PORT"].presence || 5432
+  db_user = ENV["DISCOURSE_DB_USERNAME"].presence || "postgres"
+  db_password = ENV["DISCOURSE_DB_PASSWORD"].presence || ""
 %>
 
 development:
   prepared_statements: false
   adapter: postgresql
   database: <%= ENV['DISCOURSE_DEV_DB'] || 'discourse_development' %>
+  username: <%= db_user %>
+  password: <%= db_password %>
+  host: <%= db_host %>
+  port: <%= db_port %>
   min_messages: warning
   pool: 5
   checkout_timeout: <%= ENV['CHECKOUT_TIMEOUT'] || 5 %>
@@ -40,6 +49,10 @@ test:
   prepared_statements: false
   adapter: postgresql
   database: <%= test_db %>
+  username: <%= db_user %>
+  password: <%= db_password %>
+  host: <%= db_host %>
+  port: <%= db_port %>
   min_messages: warning
   pool: 2
   reaping_frequency: 0
@@ -53,6 +66,10 @@ profile:
   prepared_statements: false
   adapter: postgresql
   database: discourse_profile
+  username: <%= db_user %>
+  password: <%= db_password %>
+  host: <%= db_host %>
+  port: <%= db_port %>
   min_messages: warning
   pool: 5
   host_names:
