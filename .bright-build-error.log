@@ -1,0 +1,148 @@
+Application failed on port 3000: Startup hits an unrecoverable Rails runner error after migrations and seeding, ending with `undefined method 'homepage=' for class SiteSetting`.
+
+Container logs:
+db-1  | The files belonging to this database system will be owned by user "postgres".
+db-1  | This user must also own the server process.
+db-1  | 
+db-1  | The database cluster will be initialized with locale "en_US.utf8".
+db-1  | The default database encoding has accordingly been set to "UTF8".
+db-1     | The default text search configuration will be set to "english".
+db-1     | 
+redis-1  | 1:C 19 Apr 2026 19:34:46.032 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+db-1     | Data page checksums are disabled.
+db-1     | 
+redis-1  | 1:C 19 Apr 2026 19:34:46.033 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+db-1     | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+redis-1  | 1:C 19 Apr 2026 19:34:46.033 * Redis version=7.4.8, bits=64, commit=00000000, modified=0, pid=1, just started
+db-1     | creating subdirectories ... ok
+redis-1  | 1:C 19 Apr 2026 19:34:46.033 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+db-1     | selecting dynamic shared memory implementation ... posix
+redis-1  | 1:M 19 Apr 2026 19:34:46.033 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+db-1     | selecting default max_connections ... 100
+redis-1  | 1:M 19 Apr 2026 19:34:46.033 * monotonic clock: POSIX clock_gettime
+db-1     | selecting default shared_buffers ... 128MB
+redis-1  | 1:M 19 Apr 2026 19:34:46.034 * Running mode=standalone, port=6379.
+db-1     | selecting default time zone ... UTC
+redis-1  | 1:M 19 Apr 2026 19:34:46.034 * Server initialized
+redis-1  | 1:M 19 Apr 2026 19:34:46.034 * Ready to accept connections tcp
+redis-1  | 1:M 19 Apr 2026 19:35:47.070 * 10000 changes in 60 seconds. Saving...
+redis-1  | 1:M 19 Apr 2026 19:35:47.071 * Background saving started by pid 21
+redis-1  | 21:C 19 Apr 2026 19:35:47.112 * DB saved on disk
+redis-1  | 21:C 19 Apr 2026 19:35:47.113 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+redis-1  | 1:M 19 Apr 2026 19:35:47.173 * Background saving terminated with success
+app-1    | == 20000225050318 AddSchemaMigrationDetails: migrating ========================
+app-1    | -- create_table(:schema_migration_details, {id: :integer})
+app-1    |    -> 0.0038s
+app-1    | -- add_index(:schema_migration_details, [:version], {name: "index_schema_migration_details_on_version"})
+app-1    |    -> 0.0015s
+app-1    | -- execute("INSERT INTO schema_migration_details(version, created_at)\n             SELECT version, current_timestamp\n             FROM schema_migrations\n             ORDER BY version\n            ")
+db-1     | creating configuration files ... ok
+db-1     | running bootstrap script ... ok
+db-1     | sh: locale: not found
+db-1     | 2026-04-19 19:34:46.304 UTC [35] WARNING:  no usable system locales were found
+db-1     | performing post-bootstrap initialization ... ok
+
+... (15794 lines omitted) ...
+
+app-1    | 
+app-1    | == 20260319054731 DropPermissionFromCategoryPostingReviewGroups: migrating ====
+app-1    | == 20260319054731 DropPermissionFromCategoryPostingReviewGroups: migrated (0.0032s) 
+app-1    | 
+app-1    | == 20260319120000 AddNotifyOnSolvedToUserOptions: migrating ===================
+app-1    | -- add_column(:user_options, :notify_on_solved, :boolean, {default: true, null: false})
+app-1    |    -> 0.0016s
+app-1    | == 20260319120000 AddNotifyOnSolvedToUserOptions: migrated (0.0024s) ==========
+app-1    | 
+app-1    | == 20260323145627 AddLimitColorSchemesToThemeModifier: migrating ==============
+app-1    | -- add_column(:theme_modifier_sets, :only_theme_color_schemes, :boolean, {null: true})
+app-1    |    -> 0.0009s
+app-1    | == 20260323145627 AddLimitColorSchemesToThemeModifier: migrated (0.0017s) =====
+app-1    | 
+app-1    | == 20260324004457 RemoveFlowdockChatIntegration: migrating ====================
+app-1    | -- execute("DELETE FROM site_settings WHERE name = 'chat_integration_flowdock_enabled';\nDELETE FROM site_settings WHERE name = 'chat_integration_flowdock_excerpt_length';\n")
+app-1    |    -> 0.0010s
+app-1    | == 20260324004457 RemoveFlowdockChatIntegration: migrated (0.0020s) ===========
+app-1    | 
+app-1    | == 20260324200000 AddTopicIdCreatedAtIndexToTopicVotingVotes: migrating =======
+app-1    | -- remove_index(:topic_voting_votes, [:topic_id, :created_at], {if_exists: true})
+app-1    |    -> 0.0020s
+app-1    | -- add_index(:topic_voting_votes, [:topic_id, :created_at], {algorithm: :concurrently})
+app-1    |    -> 0.0027s
+app-1    | == 20260324200000 AddTopicIdCreatedAtIndexToTopicVotingVotes: migrated (0.0058s) 
+app-1    | 
+app-1    | == 20260407093145 AddShowOriginalContentToUserOptions: migrating ==============
+app-1    | -- add_column(:user_options, :show_original_content, :boolean, {default: false, null: false})
+app-1    |    -> 0.0016s
+app-1    | == 20260407093145 AddShowOriginalContentToUserOptions: migrated (0.0022s) =====
+app-1    | 
+app-1    | Seeding theme and color schemes
+app-1    | pngquant worker: `pngquant` not found; please provide proper binary or disable this worker (--no-pngquant argument or `:pngquant => false` through options)
+app-1    | oxipng worker: `oxipng` not found; please provide proper binary or disable this worker (--no-oxipng argument or `:oxipng => false` through options)
+app-1    | jhead worker: `jhead` not found, `jpegtran` not found; please provide proper binary or disable this worker (--no-jhead argument or `:jhead => false` through options)
+app-1    | jpegoptim worker: `jpegoptim` not found; please provide proper binary or disable this worker (--no-jpegoptim argument or `:jpegoptim => false` through options)
+app-1    | Please specify a valid ruby command or the path of a script to run.
+app-1    | Run 'bin/rails runner -h' for help.
+app-1    | 
+app-1    | undefined method 'homepage=' for class SiteSetting
+
+Container diagnostics:
+Network port config:
+{}
+
+Processes inside container:
+Error response from daemon: container e998dd3f71e982884a641f66eedc3e392a5c1de5d235c5cb7e2d4897dd9d9c67 is not running
+
+Container stdout/stderr (last 50 lines):
+-- execute("UPDATE category_settings\nSET topic_posting_review_mode = 1\nWHERE category_id IN (\n  SELECT category_id FROM category_posting_review_groups\n  WHERE group_id = 0 AND permission = 1 AND post_type = 0\n)\n")
+   -> 0.0007s
+-- execute("UPDATE category_settings\nSET reply_posting_review_mode = 1\nWHERE category_id IN (\n  SELECT category_id FROM category_posting_review_groups\n  WHERE group_id = 0 AND permission = 1 AND post_type = 1\n)\n")
+   -> 0.0005s
+== 20260319054026 AddPostingReviewModesToCategorySettings: migrated (0.0098s) =
+
+== 20260319054730 DeleteRedundantEveryonePostingReviewGroups: migrating =======
+-- execute("DELETE FROM category_posting_review_groups\nWHERE group_id = 0 AND permission = 1\n")
+   -> 0.0006s
+== 20260319054730 DeleteRedundantEveryonePostingReviewGroups: migrated (0.0013s) 
+
+== 20260319054731 DropPermissionFromCategoryPostingReviewGroups: migrating ====
+== 20260319054731 DropPermissionFromCategoryPostingReviewGroups: migrated (0.0032s) 
+
+== 20260319120000 AddNotifyOnSolvedToUserOptions: migrating ===================
+-- add_column(:user_options, :notify_on_solved, :boolean, {default: true, null: false})
+   -> 0.0016s
+== 20260319120000 AddNotifyOnSolvedToUserOptions: migrated (0.0024s) ==========
+
+== 20260323145627 AddLimitColorSchemesToThemeModifier: migrating ==============
+-- add_column(:theme_modifier_sets, :only_theme_color_schemes, :boolean, {null: true})
+   -> 0.0009s
+== 20260323145627 AddLimitColorSchemesToThemeModifier: migrated (0.0017s) =====
+
+== 20260324004457 RemoveFlowdockChatIntegration: migrating ====================
+-- execute("DELETE FROM site_settings WHERE name = 'chat_integration_flowdock_enabled';\nDELETE FROM site_settings WHERE name = 'chat_integration_flowdock_excerpt_length';\n")
+   -> 0.0010s
+== 20260324004457 RemoveFlowdockChatIntegration: migrated (0.0020s) ===========
+
+== 20260324200000 AddTopicIdCreatedAtIndexToTopicVotingVotes: migrating =======
+-- remove_index(:topic_voting_votes, [:topic_id, :created_at], {if_exists: true})
+   -> 0.0020s
+-- add_index(:topic_voting_votes, [:topic_id, :created_at], {algorithm: :concurrently})
+   -> 0.0027s
+== 20260324200000 AddTopicIdCreatedAtIndexToTopicVotingVotes: migrated (0.0058s) 
+
+== 20260407093145 AddShowOriginalContentToUserOptions: migrating ==============
+-- add_column(:user_options, :show_original_content, :boolean, {default: false, null: false})
+   -> 0.0016s
+== 20260407093145 AddShowOriginalContentToUserOptions: migrated (0.0022s) =====
+
+Seeding theme and color schemes
+pngquant worker: `pngquant` not found; please provide proper binary or disable this worker (--no-pngquant argument or `:pngquant => false` through options)
+oxipng worker: `oxipng` not found; please provide proper binary or disable this worker (--no-oxipng argument or `:oxipng => false` through options)
+jhead worker: `jhead` not found, `jpegtran` not found; please provide proper binary or disable this worker (--no-jhead argument or `:jhead => false` through options)
+jpegoptim worker: `jpegoptim` not found; please provide proper binary or disable this worker (--no-jpegoptim argument or `:jpegoptim => false` through options)
+Please specify a valid ruby command or the path of a script to run.
+Run 'bin/rails runner -h' for help.
+
+undefined method 'homepage=' for class SiteSetting
+
+Application logs inside container:
+Error response from daemon: container e998dd3f71e982884a641f66eedc3e392a5c1de5d235c5cb7e2d4897dd9d9c67 is not running
