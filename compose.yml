@@ -1,0 +1,40 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: "development"
+      NODE_ENV: "development"
+      UNICORN_BIND_ALL: "true"
+      DISCOURSE_REDIS_HOST: "redis"
+      DISCOURSE_REDIS_PORT: "6379"
+      DISCOURSE_DB_HOST: "db"
+      DISCOURSE_DB_NAME: "discourse_development"
+      DISCOURSE_DB_USERNAME: "postgres"
+      DISCOURSE_DB_PASSWORD: "postgres"
+      DISCOURSE_DB_PORT: "5432"
+      DISCOURSE_DEVELOPER_EMAILS: "admin@example.com"
+    depends_on:
+      redis:
+        condition: service_started
+      db:
+        condition: service_started
+    command:
+      - bash
+      - -lc
+      - >-
+        rm -rf plugins/discourse-ai.disabled &&
+        bundle exec rails db:migrate &&
+        bundle exec rails runner 'SiteSetting.wizard_enabled = false; SiteSetting.bypass_wizard_check = true; SiteSetting.has_login_hint = false; SiteSetting.global_notice = ""; allowed_email = ENV["DISCOURSE_DEVELOPER_EMAILS"].to_s.split(",").map(&:strip).find(&:present?); if allowed_email && User.where(admin: true).human_users.count == 0; username = allowed_email.split("@").first.gsub(/[^a-zA-Z0-9_\-]/, "").presence || "admin"; existing = User.find_by_email(allowed_email); if existing; existing.update_columns(admin: true, moderator: true, active: true, approved: true, staged: false); else; user = User.new(email: allowed_email, username: username, name: "Admin"); user.password = "Password123!"; user.active = true; user.approved = true; user.admin = true; user.moderator = true; user.staged = false; user.save!(validate: false); end; Group.refresh_automatic_groups!(:staff, :admins); end; SiteSetting.has_login_hint = false; SiteSetting.global_notice = ""' &&
+        bundle exec rails server -b 0.0.0.0 -p 3000
+
+  redis:
+    image: redis:7-alpine
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: "discourse_development"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
