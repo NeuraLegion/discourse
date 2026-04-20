@@ -1,0 +1,126 @@
+Application failed on port 3000: The database becomes ready, but the app container has already failed during Rails startup with an error ending at bin/rails, indicating an unrecoverable application-side startup failure rather than on
+
+Container logs:
+db-1  | The files belonging to this database system will be owned by user "postgres".
+db-1  | This user must also own the server process.
+db-1  | 
+db-1  | The database cluster will be initialized with locale "en_US.utf8".
+db-1  | The default database encoding has accordingly been set to "UTF8".
+db-1  | The default text search configuration will be set to "english".
+db-1  | 
+db-1  | Data page checksums are disabled.
+db-1  | 
+db-1  | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+db-1  | creating subdirectories ... ok
+db-1  | selecting dynamic shared memory implementation ... posix
+db-1  | selecting default max_connections ... 100
+db-1  | selecting default shared_buffers ... 128MB
+db-1  | selecting default time zone ... Etc/UTC
+db-1  | creating configuration files ... ok
+db-1  | running bootstrap script ... ok
+db-1  | performing post-bootstrap initialization ... ok
+db-1  | syncing data to disk ... ok
+db-1  | 
+db-1  | 
+db-1   | Success. You can now start the database server using:
+app-1  | bin/rails aborted!
+db-1   | 
+db-1   |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+db-1   | 
+db-1   | initdb: warning: enabling "trust" authentication for local connections
+db-1   | initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+db-1   | waiting for server to start....2026-04-20 09:39:06.570 UTC [48] LOG:  starting PostgreSQL 16.13 (Debian 16.13-1.pgdg12+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+app-1  | ArgumentError: same file: /app/tmp/2d92fdebd224bf1b1d02e1105aab0898 and /app/public/plugins/discourse-graphviz (ArgumentError)
+db-1   | 2026-04-20 09:39:06.571 UTC [48] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+app-1  | 
+app-1    |       raise ArgumentError, "same file: #{s} and #{d}" if fu_same?(s, d)
+db-1   | 2026-04-20 09:39:06.579 UTC [51] LOG:  database system was shut down at 2026-04-20 09:39:06 UTC
+app-1    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+redis-1  | 1:C 20 Apr 2026 09:39:06.100 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+app-1    | /app/lib/discourse.rb:116:in 'Discourse::Utils.atomic_ln_s'
+db-1     | 2026-04-20 09:39:06.587 UTC [48] LOG:  database system is ready to accept connections
+db-1     |  done
+db-1     | server started
+
+... (13 lines omitted) ...
+
+app-1    | /app/lib/plugin.rb:6:in 'Plugin.initialization_guard'
+db-1     | waiting for server to shut down....2026-04-20 09:39:06.746 UTC [48] LOG:  aborting any active transactions
+db-1     | 2026-04-20 09:39:06.749 UTC [48] LOG:  background worker "logical replication launcher" (PID 54) exited with exit code 1
+db-1     | 2026-04-20 09:39:06.749 UTC [49] LOG:  shutting down
+db-1     | 2026-04-20 09:39:06.752 UTC [49] LOG:  checkpoint starting: shutdown immediate
+redis-1  | 1:C 20 Apr 2026 09:39:06.100 * Configuration loaded
+app-1    | /app/config/application.rb:196:in '<class:Application>'
+redis-1  | 1:M 20 Apr 2026 09:39:06.100 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+redis-1  | 1:M 20 Apr 2026 09:39:06.100 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 20 Apr 2026 09:39:06.101 * Running mode=standalone, port=6379.
+redis-1  | 1:M 20 Apr 2026 09:39:06.101 * Server initialized
+redis-1  | 1:M 20 Apr 2026 09:39:06.101 * Ready to accept connections tcp
+db-1     | 2026-04-20 09:39:06.801 UTC [49] LOG:  checkpoint complete: wrote 922 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.017 s, sync=0.025 s, total=0.053 s; sync files=301, longest=0.004 s, average=0.001 s; distance=4255 kB, estimate=4255 kB; lsn=0/1912120, redo lsn=0/1912120
+app-1    | /app/config/application.rb:61:in '<module:Discourse>'
+app-1    | /app/config/application.rb:60:in '<main>'
+app-1    | /bundle/ruby/3.4.0/gems/bootsnap-1.23.0/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:33:in 'Kernel#require'
+app-1    | /app/Rakefile:7:in '<main>'
+app-1    | /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/rake/rake_command.rb:43:in 'block in Rails::Command::RakeCommand.with_rake'
+app-1    | /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/rake/rake_command.rb:41:in 'Rails::Command::RakeCommand.with_rake'
+app-1    | /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/rake/rake_command.rb:20:in 'Rails::Command::RakeCommand.perform'
+app-1    | /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:150:in 'Rails::Command.invoke_rake'
+app-1    | /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:67:in 'block in Rails::Command.invoke'
+db-1     | 2026-04-20 09:39:06.804 UTC [48] LOG:  database system is shut down
+db-1     |  done
+db-1     | server stopped
+db-1     | 
+db-1     | PostgreSQL init process complete; ready for start up.
+db-1     | 
+db-1     | 2026-04-20 09:39:06.861 UTC [1] LOG:  starting PostgreSQL 16.13 (Debian 16.13-1.pgdg12+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+db-1     | 2026-04-20 09:39:06.861 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+db-1     | 2026-04-20 09:39:06.861 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+app-1    | /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:143:in 'Rails::Command.with_argv'
+db-1     | 2026-04-20 09:39:06.864 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+app-1    | /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:63:in 'Rails::Command.invoke'
+app-1    | /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands.rb:18:in '<main>'
+app-1    | /bundle/ruby/3.4.0/gems/bootsnap-1.23.0/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:33:in 'Kernel#require'
+app-1    | bin/rails:18:in '<main>'
+app-1    | (See full trace by running task with --trace)
+db-1     | 2026-04-20 09:39:06.872 UTC [64] LOG:  database system was shut down at 2026-04-20 09:39:06 UTC
+db-1     | 2026-04-20 09:39:06.880 UTC [1] LOG:  database system is ready to accept connections
+
+Container diagnostics:
+Network port config:
+{}
+
+Processes inside container:
+Error response from daemon: container f55b628152afb22ae13f475c96f1e4efaa78b1e4fca074246c638b0df2b659c0 is not running
+
+Container stdout/stderr (last 50 lines):
+bin/rails aborted!
+ArgumentError: same file: /app/tmp/2d92fdebd224bf1b1d02e1105aab0898 and /app/public/plugins/discourse-graphviz (ArgumentError)
+
+      raise ArgumentError, "same file: #{s} and #{d}" if fu_same?(s, d)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/app/lib/discourse.rb:116:in 'Discourse::Utils.atomic_ln_s'
+/app/lib/plugin/instance.rb:875:in 'Plugin::Instance#activate!'
+/app/lib/discourse.rb:350:in 'block in Discourse.activate_plugins!'
+/app/lib/discourse.rb:347:in 'Array#each'
+/app/lib/discourse.rb:347:in 'Discourse.activate_plugins!'
+/app/config/application.rb:196:in 'block in <class:Application>'
+/app/lib/plugin.rb:6:in 'Plugin.initialization_guard'
+/app/config/application.rb:196:in '<class:Application>'
+/app/config/application.rb:61:in '<module:Discourse>'
+/app/config/application.rb:60:in '<main>'
+/bundle/ruby/3.4.0/gems/bootsnap-1.23.0/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:33:in 'Kernel#require'
+/app/Rakefile:7:in '<main>'
+/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/rake/rake_command.rb:43:in 'block in Rails::Command::RakeCommand.with_rake'
+/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/rake/rake_command.rb:41:in 'Rails::Command::RakeCommand.with_rake'
+/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/rake/rake_command.rb:20:in 'Rails::Command::RakeCommand.perform'
+/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:150:in 'Rails::Command.invoke_rake'
+/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:67:in 'block in Rails::Command.invoke'
+/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:143:in 'Rails::Command.with_argv'
+/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:63:in 'Rails::Command.invoke'
+/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands.rb:18:in '<main>'
+/bundle/ruby/3.4.0/gems/bootsnap-1.23.0/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:33:in 'Kernel#require'
+bin/rails:18:in '<main>'
+(See full trace by running task with --trace)
+
+Application logs inside container:
+Error response from daemon: container f55b628152afb22ae13f475c96f1e4efaa78b1e4fca074246c638b0df2b659c0 is not running
