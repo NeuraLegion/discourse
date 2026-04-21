@@ -1,0 +1,121 @@
+Application failed on port 3000: PostgreSQL is up, but the startup is failing on missing schema/database objects, including a fatal error that the required database "discourse_test" does not exist.
+
+Container logs:
+redis-1  | 1:C 21 Apr 2026 12:47:07.910 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+redis-1  | 1:C 21 Apr 2026 12:47:07.910 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+db-1     | The files belonging to this database system will be owned by user "postgres".
+db-1     | This user must also own the server process.
+db-1     | 
+db-1     | The database cluster will be initialized with locale "en_US.utf8".
+db-1     | The default database encoding has accordingly been set to "UTF8".
+app-1    | Created database 'discourse_test'
+app-1    | == 20000225050318 AddSchemaMigrationDetails: migrating ========================
+app-1    | -- create_table(:schema_migration_details, {id: :integer})
+app-1    |    -> 0.0045s
+app-1    | -- add_index(:schema_migration_details, [:version], {name: "index_schema_migration_details_on_version"})
+app-1    |    -> 0.0017s
+app-1    | -- execute("INSERT INTO schema_migration_details(version, created_at)\n             SELECT version, current_timestamp\n             FROM schema_migrations\n             ORDER BY version\n            ")
+app-1    |    -> 0.0007s
+app-1    | == 20000225050318 AddSchemaMigrationDetails: migrated (0.0094s) ===============
+redis-1  | 1:C 21 Apr 2026 12:47:07.910 * Redis version=7.4.8, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1  | 1:C 21 Apr 2026 12:47:07.910 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+db-1     | The default text search configuration will be set to "english".
+db-1     | 
+app-1    | 
+db-1     | Data page checksums are disabled.
+db-1     | 
+redis-1  | 1:M 21 Apr 2026 12:47:07.910 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+redis-1  | 1:M 21 Apr 2026 12:47:07.910 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 21 Apr 2026 12:47:07.910 * Running mode=standalone, port=6379.
+redis-1  | 1:M 21 Apr 2026 12:47:07.910 * Server initialized
+redis-1  | 1:M 21 Apr 2026 12:47:07.910 * Ready to accept connections tcp
+db-1     | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+app-1    | == 20120311163914 CreateForumThreads: migrating ===============================
+app-1    | -- create_table(:forum_threads, {id: :integer})
+app-1    |    -> 0.0044s
+app-1    | == 20120311163914 CreateForumThreads: migrated (0.0062s) ======================
+app-1    | 
+app-1    | bin/rails aborted!
+app-1    | ActiveRecord::ConcurrentMigrationError:  (ActiveRecord::ConcurrentMigrationError)
+app-1    | 
+app-1    | Cannot run migrations because another migration process is currently running.
+app-1    | 
+db-1     | creating subdirectories ... ok
+
+... (39 lines omitted) ...
+
+db-1     | 
+db-1     | PostgreSQL init process complete; ready for start up.
+db-1     | 
+db-1     | 2026-04-21 12:47:08.753 UTC [1] LOG:  starting PostgreSQL 16.13 (Debian 16.13-1.pgdg12+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+db-1     | 2026-04-21 12:47:08.753 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+db-1     | 2026-04-21 12:47:08.753 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+db-1     | 2026-04-21 12:47:08.755 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1     | 2026-04-21 12:47:08.758 UTC [64] LOG:  database system was shut down at 2026-04-21 12:47:08 UTC
+db-1     | 2026-04-21 12:47:08.761 UTC [1] LOG:  database system is ready to accept connections
+db-1     | 2026-04-21 12:47:18.664 UTC [78] ERROR:  relation "translation_overrides" does not exist at character 523
+db-1     | 2026-04-21 12:47:18.664 UTC [78] STATEMENT:  SELECT a.attname, format_type(a.atttypid, a.atttypmod),
+db-1     | 	       pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod,
+db-1     | 	       c.collname, col_description(a.attrelid, a.attnum) AS comment,
+db-1     | 	       attidentity AS identity,
+db-1     | 	       attgenerated as attgenerated
+db-1     | 	  FROM pg_attribute a
+db-1     | 	  LEFT JOIN pg_attrdef d ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+db-1     | 	  LEFT JOIN pg_type t ON a.atttypid = t.oid
+db-1     | 	  LEFT JOIN pg_collation c ON a.attcollation = c.oid AND a.attcollation <> t.typcollation
+db-1     | 	 WHERE a.attrelid = '"translation_overrides"'::regclass
+db-1     | 	   AND a.attnum > 0 AND NOT a.attisdropped
+db-1     | 	 ORDER BY a.attnum
+db-1     | 	
+db-1     | 2026-04-21 12:47:18.731 UTC [79] ERROR:  relation "translation_overrides" does not exist at character 523
+db-1     | 2026-04-21 12:47:18.731 UTC [79] STATEMENT:  SELECT a.attname, format_type(a.atttypid, a.atttypmod),
+db-1     | 	       pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod,
+db-1     | 	       c.collname, col_description(a.attrelid, a.attnum) AS comment,
+db-1     | 	       attidentity AS identity,
+db-1     | 	       attgenerated as attgenerated
+db-1     | 	  FROM pg_attribute a
+db-1     | 	  LEFT JOIN pg_attrdef d ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+db-1     | 	  LEFT JOIN pg_type t ON a.atttypid = t.oid
+db-1     | 	  LEFT JOIN pg_collation c ON a.attcollation = c.oid AND a.attcollation <> t.typcollation
+db-1     | 	 WHERE a.attrelid = '"translation_overrides"'::regclass
+db-1     | 	   AND a.attnum > 0 AND NOT a.attisdropped
+db-1     | 	 ORDER BY a.attnum
+db-1     | 	
+db-1     | 2026-04-21 12:47:19.104 UTC [80] FATAL:  database "discourse_test" does not exist
+db-1     | 2026-04-21 12:47:19.868 UTC [78] LOG:  could not receive data from client: Connection reset by peer
+db-1     | 2026-04-21 12:47:19.868 UTC [78] LOG:  unexpected EOF on client connection with an open transaction
+
+Container diagnostics:
+Network port config:
+{}
+
+Processes inside container:
+Error response from daemon: container abdd9832f9739bdc3421752922056dc2314c3c5ba114af42b713f3866e4524a3 is not running
+
+Container stdout/stderr (last 50 lines):
+Created database 'discourse_test'
+== 20000225050318 AddSchemaMigrationDetails: migrating ========================
+-- create_table(:schema_migration_details, {id: :integer})
+   -> 0.0045s
+-- add_index(:schema_migration_details, [:version], {name: "index_schema_migration_details_on_version"})
+   -> 0.0017s
+-- execute("INSERT INTO schema_migration_details(version, created_at)\n             SELECT version, current_timestamp\n             FROM schema_migrations\n             ORDER BY version\n            ")
+   -> 0.0007s
+== 20000225050318 AddSchemaMigrationDetails: migrated (0.0094s) ===============
+
+== 20120311163914 CreateForumThreads: migrating ===============================
+-- create_table(:forum_threads, {id: :integer})
+   -> 0.0044s
+== 20120311163914 CreateForumThreads: migrated (0.0062s) ======================
+
+bin/rails aborted!
+ActiveRecord::ConcurrentMigrationError:  (ActiveRecord::ConcurrentMigrationError)
+
+Cannot run migrations because another migration process is currently running.
+
+/app/lib/migration/safe_migrate.rb:53:in 'Migration::SafeMigrate::NiceErrors#migrate'
+Tasks: TOP => db:prepare
+(See full trace by running task with --trace)
+
+Application logs inside container:
+Error response from daemon: container abdd9832f9739bdc3421752922056dc2314c3c5ba114af42b713f3866e4524a3 is not running
