@@ -1,0 +1,146 @@
+Application failed on port 3000: The app is hitting unrecoverable database schema errors with missing tables and columns (for example relations "flags", "reviewables", "bookmarks" and column post_search_data.private_message), so it w (last HTTP status: 500)
+
+HTTP response body:
+ActiveRecord::PendingMigrationError.new(pending_migrations: migrations) | ActiveRecord::PendingMigrationError | Action Controller: Exception caught
+Action Controller: Exception caught ActiveRecord::PendingMigrationError Migrations are pending. To resolve this issue, run: bin/rails db:migrate You have 263 pending migrations: db/migrate/20240201170412_fix_tag_topic_allowed_groups_setting.rb db/migrate/20240202032242_add_json_value_to_theme_settings.rb db/migrate/20240202052058_drop_badge_image_column.rb db/migrate/20240202204030_fix_here_mention_allowed_groups_setting.rb db/migrate/20240204204532_add_user_to_permalink.rb db/migrate/2024021203
+
+Container logs:
+app-1  | => Booting Puma
+app-1  | => Rails 8.0.5 application starting in development 
+app-1  | => Run `bin/rails server --help` for more startup options
+app-1  | Starting CSS change watcher
+app-1  | Puma starting in single mode...
+app-1  | * Puma version: 7.1.0 ("Neon Witch")
+app-1  | * Ruby version: ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [x86_64-linux]
+app-1  | *  Min threads: 0
+app-1  | *  Max threads: 5
+app-1  | *  Environment: development
+app-1  | *          PID: 1
+app-1  | * Listening on http://0.0.0.0:3000
+app-1  | Use Ctrl-C to stop
+app-1  | Started GET "/srv/status" for 172.18.0.1 at 2026-04-21 08:32:44 +0000
+app-1  |   ActiveRecord::SchemaMigration Load (0.6ms)  SELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC
+app-1  | Started GET "/srv/status" for 172.18.0.1 at 2026-04-21 08:32:46 +0000
+app-1  |   ActiveRecord::SchemaMigration Load (0.5ms)  SELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC
+worker-1  | 2026-04-21T08:30:46.818Z pid=1 tid=2gp INFO: Booted Rails 8.0.5 application in development environment
+worker-1  | 2026-04-21T08:30:46.818Z pid=1 tid=2gp INFO: Running in ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [x86_64-linux]
+worker-1  | 2026-04-21T08:30:46.818Z pid=1 tid=2gp INFO: See LICENSE and the LGPL-3.0 for licensing details.
+worker-1  | 2026-04-21T08:30:46.819Z pid=1 tid=2gp INFO: Upgrade to Sidekiq Pro for more features and support: https://sidekiq.org
+worker-1  | 2026-04-21T08:30:46.819Z pid=1 tid=2gp INFO: Sidekiq 7.3.10 connecting to Redis with options {size: 10, pool_name: "internal", host: "redis", port: 6379, db: 1, url: nil}
+worker-1  | 2026-04-21T08:30:46.821Z pid=1 tid=2gp INFO: Sidekiq 7.3.10 connecting to Redis with options {size: 5, pool_name: "default", host: "redis", port: 6379, db: 1, url: nil}
+worker-1  | 2026-04-21T08:30:47.024Z pid=1 tid=2gp INFO: Starting processing, hit Ctrl-C to stop
+redis-1   | 1:C 21 Apr 2026 08:30:37.186 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+worker-1  | 2026-04-21T08:31:40.679Z pid=1 tid=cxl WARN: Clearing Active Record cache, this can happen if schema changed while site is running or in a multisite various databases are running different schemas. Consider running rake multisite:migrate.
+db-1      | The files belonging to this database system will be owned by user "postgres".
+db-1      | This user must also own the server process.
+db-1      | 
+db-1      | The database cluster will be initialized with locale "en_US.utf8".
+redis-1   | 1:C 21 Apr 2026 08:30:37.186 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1   | 1:C 21 Apr 2026 08:30:37.186 * Redis version=7.4.8, bits=64, commit=00000000, modified=0, pid=1, just started
+db-1      | The default database encoding has accordingly been set to "UTF8".
+db-1      | The default text search configuration will be set to "english".
+redis-1   | 1:C 21 Apr 2026 08:30:37.186 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+db-1      | 
+redis-1   | 1:M 21 Apr 2026 08:30:37.187 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+db-1      | Data page checksums are disabled.
+db-1      | 
+db-1      | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+
+... (384 lines omitted) ...
+
+db-1      | 	 WHERE uccm.user_id IS NULL
+db-1      | 	RETURNING chat_channel_id, user_id
+db-1      | 	
+db-1      | 2026-04-21 08:31:39.677 UTC [79] ERROR:  relation "flags" does not exist at character 523
+db-1      | 2026-04-21 08:31:39.677 UTC [79] STATEMENT:  SELECT a.attname, format_type(a.atttypid, a.atttypmod),
+db-1      | 	       pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod,
+db-1      | 	       c.collname, col_description(a.attrelid, a.attnum) AS comment,
+db-1      | 	       attidentity AS identity,
+db-1      | 	       attgenerated as attgenerated
+db-1      | 	  FROM pg_attribute a
+db-1      | 	  LEFT JOIN pg_attrdef d ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+db-1      | 	  LEFT JOIN pg_type t ON a.atttypid = t.oid
+db-1      | 	  LEFT JOIN pg_collation c ON a.attcollation = c.oid AND a.attcollation <> t.typcollation
+db-1      | 	 WHERE a.attrelid = '"flags"'::regclass
+db-1      | 	   AND a.attnum > 0 AND NOT a.attisdropped
+db-1      | 	 ORDER BY a.attnum
+db-1      | 	
+db-1      | 2026-04-21 08:31:40.678 UTC [79] ERROR:  column post_search_data.private_message does not exist at character 47
+db-1      | 2026-04-21 08:31:40.678 UTC [79] STATEMENT:  SELECT 1 AS one FROM "post_search_data" WHERE "post_search_data"."private_message" = FALSE LIMIT 1 OFFSET 199999
+db-1      | 2026-04-21 08:31:42.683 UTC [79] ERROR:  relation "reviewables" does not exist at character 523
+db-1      | 2026-04-21 08:31:42.683 UTC [79] STATEMENT:  SELECT a.attname, format_type(a.atttypid, a.atttypmod),
+db-1      | 	       pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod,
+db-1      | 	       c.collname, col_description(a.attrelid, a.attnum) AS comment,
+db-1      | 	       attidentity AS identity,
+db-1      | 	       attgenerated as attgenerated
+db-1      | 	  FROM pg_attribute a
+db-1      | 	  LEFT JOIN pg_attrdef d ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+db-1      | 	  LEFT JOIN pg_type t ON a.atttypid = t.oid
+db-1      | 	  LEFT JOIN pg_collation c ON a.attcollation = c.oid AND a.attcollation <> t.typcollation
+db-1      | 	 WHERE a.attrelid = '"reviewables"'::regclass
+db-1      | 	   AND a.attnum > 0 AND NOT a.attisdropped
+db-1      | 	 ORDER BY a.attnum
+db-1      | 	
+db-1      | 2026-04-21 08:31:46.418 UTC [79] ERROR:  relation "bookmarks" does not exist at character 13
+db-1      | 2026-04-21 08:31:46.418 UTC [79] STATEMENT:  DELETE FROM bookmarks b
+db-1      | 	USING topics t, posts p
+db-1      | 	WHERE t.id = p.topic_id AND b.bookmarkable_id = p.id AND b.bookmarkable_type = 'Post'
+db-1      | 	AND (t.deleted_at < '2026-04-18 08:31:46.418426' OR p.deleted_at < '2026-04-18 08:31:46.418426')
+db-1      | 	RETURNING t.id AS topic_id
+db-1      |
+
+Container diagnostics:
+Port mappings:
+3000/tcp -> 0.0.0.0:3000
+3000/tcp -> [::]:3000
+
+Network port config:
+{"3000/tcp":[{"HostIp":"0.0.0.0","HostPort":"3000"},{"HostIp":"::","HostPort":"3000"}]}
+
+Processes inside container:
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  4.0  0.5 2866680 348844 pts/0  Ssl+ 08:30   0:05 puma 7.1.0 (tcp://0.0.0.0:3000) [app]
+root          41 96.1  0.5 1793972 336696 ?      Rsl  08:30   2:00 /usr/local/bin/ruby bin/rails db:prepare
+root         211 50.0  0.0   8552  4632 ?        Rs   08:32   0:00 ps aux
+
+Container stdout/stderr (last 50 lines):
+=> Booting Puma
+=> Rails 8.0.5 application starting in development 
+=> Run `bin/rails server --help` for more startup options
+Starting CSS change watcher
+Puma starting in single mode...
+* Puma version: 7.1.0 ("Neon Witch")
+* Ruby version: ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [x86_64-linux]
+*  Min threads: 0
+*  Max threads: 5
+*  Environment: development
+*          PID: 1
+* Listening on http://0.0.0.0:3000
+Use Ctrl-C to stop
+Started GET "/srv/status" for 172.18.0.1 at 2026-04-21 08:32:44 +0000
+  ActiveRecord::SchemaMigration Load (0.6ms)  SELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC
+Started GET "/srv/status" for 172.18.0.1 at 2026-04-21 08:32:46 +0000
+  ActiveRecord::SchemaMigration Load (0.5ms)  SELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC
+
+Application logs inside container:
+=== /app/log/development.log ===
+        hostname,
+        name,
+        git_version,
+        duration,
+        direction,
+        rails_version,
+        created_at
+      ) values (
+        20240327000440,
+        '3e97e778e730',
+        'ReplacePostReplyIndex',
+        '61872e599505eb1a7254aa7189a47cdd21bd59d1',
+        6,
+        'up',
+        '8.0.5',
+        '2026-04-21 08:32:48.829082'
+      )
+
+  ActiveRecord::SchemaMigration Create (0.4ms)  INSERT INTO "schema_migrations" ("version") VALUES ('20240327000440') RETURNING "version"
+   (0.1ms)  SELECT pg_advisory_unlock(8245631157040234860)
