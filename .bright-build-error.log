@@ -1,0 +1,203 @@
+Application did not start on port 3000 within 1200s (extended 5x from 300s because app was progressing)
+
+Container logs (last 40 lines):
+app-1    | Created database 'discourse_test'
+redis-1  | 1:C 21 Apr 2026 10:14:01.163 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+app-1    | == 20000225050318 AddSchemaMigrationDetails: migrating ========================
+app-1    | -- create_table(:schema_migration_details, {id: :integer})
+app-1    |    -> 0.0065s
+app-1    | -- add_index(:schema_migration_details, [:version], {name: "index_schema_migration_details_on_version"})
+redis-1  | 1:C 21 Apr 2026 10:14:01.163 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 1:C 21 Apr 2026 10:14:01.163 * Redis version=7.4.8, bits=64, commit=00000000, modified=0, pid=1, just started
+app-1    |    -> 0.0025s
+app-1    | -- execute("INSERT INTO schema_migration_details(version, created_at)\n             SELECT version, current_timestamp\n             FROM schema_migrations\n             ORDER BY version\n            ")
+app-1    |    -> 0.0011s
+app-1    | == 20000225050318 AddSchemaMigrationDetails: migrated (0.0135s) ===============
+app-1    | 
+app-1    | == 20120311163914 CreateForumThreads: migrating ===============================
+redis-1  | 1:C 21 Apr 2026 10:14:01.163 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis-1  | 1:M 21 Apr 2026 10:14:01.163 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+redis-1  | 1:M 21 Apr 2026 10:14:01.163 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 21 Apr 2026 10:14:01.164 * Running mode=standalone, port=6379.
+redis-1  | 1:M 21 Apr 2026 10:14:01.164 * Server initialized
+redis-1  | 1:M 21 Apr 2026 10:14:01.164 * Ready to accept connections tcp
+redis-1  | 1:M 21 Apr 2026 10:15:02.046 * 10000 changes in 60 seconds. Saving...
+app-1    | -- create_table(:forum_threads, {id: :integer})
+app-1    |    -> 0.0045s
+app-1    | == 20120311163914 CreateForumThreads: migrated (0.0053s) ======================
+app-1    | 
+app-1    | == 20120311164326 CreatePosts: migrating ======================================
+app-1    | -- create_table(:posts, {id: :integer})
+app-1    |    -> 0.0050s
+app-1    | -- add_index(:posts, [:forum_thread_id, :created_at], {name: "index_posts_on_forum_thread_id_and_created_at"})
+app-1    |    -> 0.0012s
+app-1    | == 20120311164326 CreatePosts: migrated (0.0070s) =============================
+app-1    | 
+app-1    | == 20120311170118 CreateUsers: migrating ======================================
+app-1    | -- create_table(:users, {id: :integer})
+app-1    |    -> 0.0039s
+app-1    | == 20120311170118 CreateUsers: migrated (0.0046s) =============================
+app-1    | 
+app-1    | == 20120311201341 CreateForums: migrating =====================================
+app-1    | -- create_table(:forums, {id: :integer})
+redis-1  | 1:M 21 Apr 2026 10:15:02.047 * Background saving started by pid 92
+
+... (31631 lines omitted) ...
+
+app-1    | [0m[1][0m /app/config/initializers/999-themes.rb:13:in 'block in Watcher#watch'
+app-1    | [0m[1][0m /bundle/ruby/3.4.0/gems/listen-3.10.0/lib/listen/event/config.rb:27:in 'Listen::Event::Config#call'
+app-1    | [0m[1][0m /bundle/ruby/3.4.0/gems/listen-3.10.0/lib/listen/event/processor.rb:119:in 'block in Listen::Event::Processor#_process_changes'
+app-1    | [0m[1][0m /bundle/ruby/3.4.0/gems/listen-3.10.0/lib/listen/thread.rb:26:in 'Listen::Thread.rescue_and_log'
+app-1    | [0m[1][0m /bundle/ruby/3.4.0/gems/listen-3.10.0/lib/listen/event/processor.rb:118:in 'Listen::Event::Processor#_process_changes'
+app-1    | [0m[1][0m /bundle/ruby/3.4.0/gems/listen-3.10.0/lib/listen/event/processor.rb:25:in 'block in Listen::Event::Processor#loop_for'
+app-1    | [0m[1][0m <internal:kernel>:168:in 'Kernel#loop'
+app-1    | [0m[1][0m /bundle/ruby/3.4.0/gems/listen-3.10.0/lib/listen/event/processor.rb:20:in 'Listen::Event::Processor#loop_for'
+app-1    | [0m[1][0m /bundle/ruby/3.4.0/gems/listen-3.10.0/lib/listen/event/loop.rb:83:in 'Listen::Event::Loop#_process_changes'
+app-1    | [0m[1][0m /bundle/ruby/3.4.0/gems/listen-3.10.0/lib/listen/event/loop.rb:49:in 'block in Listen::Event::Loop#start'
+app-1    | [0m[1][0m /bundle/ruby/3.4.0/gems/listen-3.10.0/lib/listen/thread.rb:26:in 'Listen::Thread.rescue_and_log'
+app-1    | [0m[1][0m /bundle/ruby/3.4.0/gems/listen-3.10.0/lib/listen/thread.rb:18:in 'block in Listen::Thread.new'
+app-1    | [0m[0][0m 
+app-1    | [0m[0][0m [33m╭ Warning ─────────────────────────────────────────────────────────────────────╮[39m
+app-1    | [0m[0][0m [33m│[39m                                                                              [33m│[39m
+app-1    | [0m[0][0m [33m│[39m   Ignored build scripts: core-js@2.6.12, core-js@3.49.0, esbuild@0.27.7.     [33m│[39m
+app-1    | [0m[0][0m [33m│[39m   Run "pnpm approve-builds" to pick which dependencies should be allowed     [33m│[39m
+app-1    | [0m[0][0m [33m│[39m   to run scripts.                                                            [33m│[39m
+app-1    | [0m[0][0m [33m│[39m                                                                              [33m│[39m
+app-1    | [0m[0][0m [33m╰──────────────────────────────────────────────────────────────────────────────╯[39m
+app-1    | [0m[0][0m Done in 7.8s using pnpm v10.28.0
+app-1    | [0m[0][0m Proxying to http://localhost:3000
+app-1    | [0m[0][0m [32mbuilding... [39m
+app-1    | [0m[0][0m ...[ConfigLoader]
+app-1    | [0m[0][0m ...[Babel: ember-tracked-storage-polyfill > applyPatches]
+app-1    | [0m[0][0m ...[Babel: pretty-text > applyPatches]
+app-1    | [0m[0][0m ...[Babel: @ember/render-modifiers > applyPatches]
+app-1    | [0m[0][0m ...[Babel: ember-this-fallback > applyPatches]
+app-1    | [0m[0][0m ...[@embroider/compat/app]
+app-1    | [0m[0][0m ...[@embroider/webpack]
+app-1    | [0m[0][0m ...[@embroider/webpack]
+app-1    | [0m[0][0m ...[@embroider/webpack]
+app-1    | [0m[0][0m ...[Babel: discourse > applyPatches]
+app-1    | [0m[0][0m 
+app-1    | [0m[0][0m [32mBuild successful (26236ms)[39m – Serving on http://localhost:4200/
+app-1    | [0m[0][0m 
+app-1    | [0m[0][0m Slowest Nodes (totalTime >= 5%) | Total (avg)
+app-1    | [0m[0][0m -+-
+app-1    | [0m[0][0m @embroider/webpack (1) | 22598ms
+app-1    | [0m[0][0m
+
+Container diagnostics:
+Port mappings:
+3000/tcp -> 0.0.0.0:3000
+3000/tcp -> [::]:3000
+3035/tcp -> 0.0.0.0:3035
+3035/tcp -> [::]:3035
+
+Network port config:
+{"3000/tcp":[{"HostIp":"0.0.0.0","HostPort":"3000"},{"HostIp":"::","HostPort":"3000"}],"3035/tcp":[{"HostIp":"0.0.0.0","HostPort":"3035"},{"HostIp":"::","HostPort":"3035"}]}
+
+Processes inside container:
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0   4360  3408 pts/0    Ss+  10:14   0:00 bash -lc if [ -d plugins/discourse-ai ]; then   mv plugins/discourse-ai plugins/.discourse-ai.disabled   trap 'if [ -d plugins/.discourse-ai.disabled ]; then mv plugins/.discourse-ai.disabled plugins/discourse-ai; fi' EXIT fi bundle exec rails db:prepare && pnpm dev 
+root        2238  0.0  0.1 1348648 95564 pts/0   Sl+  10:19   0:00 node /usr/bin/pnpm dev
+root        2250  0.0  0.0   2592  1784 pts/0    S+   10:19   0:00 sh -c concurrently "bin/ember-cli server --environment=development" "RAILS_ENV=development bin/rails server"
+root        2251  0.0  0.0 1015584 60600 pts/0   Sl+  10:19   0:00 node /app/node_modules/.bin/../.pnpm/concurrently@9.2.1/node_modules/concurrently/dist/bin/concurrently.js bin/ember-cli server --environment=development RAILS_ENV=development bin/rails server
+root        2263  0.0  0.0   2592  1696 pts/0    S+   10:19   0:00 /bin/sh -c bin/ember-cli server --environment=development
+root        2264  0.0  0.1 1349720 106852 pts/0  Sl+  10:19   0:00 node /usr/bin/pnpm --dir=frontend/discourse ember server server --environment=development --proxy http://localhost:3000
+root        2265  0.0  0.0   2592  1708 pts/0    S+   10:19   0:00 /bin/sh -c RAILS_ENV=development bin/rails server
+root        2266  0.4  0.4 1899440 294784 pts/0  Sl+  10:19   0:03 puma 7.1.0 (tcp://localhost:3000) [app]
+root        2392  5.7  3.8 68555332 2511512 pts/0 Sl+ 10:19   0:49 ember
+root        2431  1.2  0.2 1398856 158636 ?      Ssl  10:19   0:10 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root        2437  1.0  0.2 1384988 144076 ?      Ssl  10:19   0:08 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root        2443  0.9  0.2 1377140 136732 ?      Ssl  10:19   0:07 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root        2450  0.9  0.2 1375596 132460 ?      Ssl  10:19   0:07 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root        2454  0.9  0.2 1376076 131828 ?      Ssl  10:19   0:08 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root        2468  0.9  0.2 1375828 135604 ?      Ssl  10:19   0:07 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root        2483  0.9  0.2 1383720 141656 ?      Ssl  10:19   0:08 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root        2494  0.9  0.2 1377204 135224 ?      Ssl  10:19   0:07 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root        2502  1.0  0.2 1376668 134052 ?      Ssl  10:19   0:08 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root        2517  0.9  0.2 1377872 134884 ?      Ssl  10:19   0:07 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root        2531  0.9  0.2 1379880 141412 ?      Ssl  10:19   0:07 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root        2538  0.9  0.2 1379328 140756 ?      Ssl  10:19   0:07 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root        2545  0.8  0.2 1375744 134400 ?      Ssl  10:19   0:07 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root        2557  0.9  0.2 1381252 142244 ?      Ssl  10:19   0:07 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root        2568  0.8  0.2 1376236 135332 ?      Ssl  10:19   0:07 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root        2583  0.7  0.2 1374724 132580 ?      Ssl  10:19   0:06 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root        2594  0.7  0.1 1375452 130744 ?      Ssl  10:19   0:06 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root        2604  0.9  0.2 1375492 135136 ?      Ssl  10:19   0:07 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root        2616  0.8  0.2 1379804 141532 ?      Ssl  10:19   0:07 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root        2659 66.6  0.0   8684  4784 ?        Rs   10:34   0:00 ps aux
+
+Container stdout/stderr (last 50 lines):
+[0m[0][0m Progress: resolved [96m2004[39m, reused [96m868[39m, downloaded [96m1042[39m, added [96m0[39m
+[0m[0][0m [43m[30m WARN [39m[49m [31m2 deprecated subdependencies found:[39m basic-ftp@5.2.0, tar@6.2.1
+[0m[0][0m Packages: [32m+1042[39m
+[0m[0][0m [32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m[32m+[39m
+[0m[0][0m Progress: resolved [96m2004[39m, reused [96m868[39m, downloaded [96m1042[39m, added [96m1[39m
+[0m[0][0m Progress: resolved [96m2004[39m, reused [96m868[39m, downloaded [96m1042[39m, added [96m1042[39m, done
+[0m[1][0m   Theme Load (0.5ms)  SELECT "themes".* FROM "themes" WHERE "themes"."id" = -2 LIMIT 1
+[0m[1][0m E, [2026-04-21T10:19:39.450889 #2266] ERROR -- : Exception rescued in _process_changes:
+[0m[1][0m ActiveRecord::RecordNotFound: Couldn't find Theme with 'id'=-2
+[0m[1][0m /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/core.rb:280:in 'ActiveRecord::Core::ClassMethods#find'
+[0m[1][0m /app/config/initializers/999-themes.rb:13:in 'block in Watcher#watch'
+[0m[1][0m /bundle/ruby/3.4.0/gems/listen-3.10.0/lib/listen/event/config.rb:27:in 'Listen::Event::Config#call'
+[0m[1][0m /bundle/ruby/3.4.0/gems/listen-3.10.0/lib/listen/event/processor.rb:119:in 'block in Listen::Event::Processor#_process_changes'
+[0m[1][0m /bundle/ruby/3.4.0/gems/listen-3.10.0/lib/listen/thread.rb:26:in 'Listen::Thread.rescue_and_log'
+[0m[1][0m /bundle/ruby/3.4.0/gems/listen-3.10.0/lib/listen/event/processor.rb:118:in 'Listen::Event::Processor#_process_changes'
+[0m[1][0m /bundle/ruby/3.4.0/gems/listen-3.10.0/lib/listen/event/processor.rb:25:in 'block in Listen::Event::Processor#loop_for'
+[0m[1][0m <internal:kernel>:168:in 'Kernel#loop'
+[0m[1][0m /bundle/ruby/3.4.0/gems/listen-3.10.0/lib/listen/event/processor.rb:20:in 'Listen::Event::Processor#loop_for'
+[0m[1][0m /bundle/ruby/3.4.0/gems/listen-3.10.0/lib/listen/event/loop.rb:83:in 'Listen::Event::Loop#_process_changes'
+[0m[1][0m /bundle/ruby/3.4.0/gems/listen-3.10.0/lib/listen/event/loop.rb:49:in 'block in Listen::Event::Loop#start'
+[0m[1][0m /bundle/ruby/3.4.0/gems/listen-3.10.0/lib/listen/thread.rb:26:in 'Listen::Thread.rescue_and_log'
+[0m[1][0m /bundle/ruby/3.4.0/gems/listen-3.10.0/lib/listen/thread.rb:18:in 'block in Listen::Thread.new'
+[0m[0][0m 
+[0m[0][0m [33m╭ Warning ─────────────────────────────────────────────────────────────────────╮[39m
+[0m[0][0m [33m│[39m                                                                              [33m│[39m
+[0m[0][0m [33m│[39m   Ignored build scripts: core-js@2.6.12, core-js@3.49.0, esbuild@0.27.7.     [33m│[39m
+[0m[0][0m [33m│[39m   Run "pnpm approve-builds" to pick which dependencies should be allowed     [33m│[39m
+[0m[0][0m [33m│[39m   to run scripts.                                                            [33m│[39m
+[0m[0][0m [33m│[39m                                                                              [33m│[39m
+[0m[0][0m [33m╰──────────────────────────────────────────────────────────────────────────────╯[39m
+[0m[0][0m Done in 7.8s using pnpm v10.28.0
+[0m[0][0m Proxying to http://localhost:3000
+[0m[0][0m [32mbuilding... [39m
+[0m[0][0m ...[ConfigLoader]
+[0m[0][0m ...[Babel: ember-tracked-storage-polyfill > applyPatches]
+[0m[0][0m ...[Babel: pretty-text > applyPatches]
+[0m[0][0m ...[Babel: @ember/render-modifiers > applyPatches]
+[0m[0][0m ...[Babel: ember-this-fallback > applyPatches]
+[0m[0][0m ...[@embroider/compat/app]
+[0m[0][0m ...[@embroider/webpack]
+[0m[0][0m ...[@embroider/webpack]
+[0m[0][0m ...[@embroider/webpack]
+[0m[0][0m ...[Babel: discourse > applyPatches]
+[0m[0][0m 
+[0m[0][0m [32mBuild successful (26236ms)[39m – Serving on http://localhost:4200/
+[0m[0][0m 
+[0m[0][0m Slowest Nodes (totalTime >= 5%) | Total (avg)
+[0m[0][0m -+-
+[0m[0][0m @embroider/webpack (1) | 22598ms
+[0m[0][0m
+
+Application logs inside container:
+=== /app/log/development.log ===
+  SiteSetting Load (1.2ms)  SELECT "site_settings".* FROM "site_settings" WHERE "site_settings"."name" = 'vapid_private_key' LIMIT 1
+  TRANSACTION (1.0ms)  BEGIN
+  SiteSetting Create (2.7ms)  INSERT INTO "site_settings" ("name", "data_type", "value", "created_at", "updated_at") VALUES ('vapid_private_key', 1, 'SNfrUSWVBgvNkHqE_WaDqgy0yL0VSQr-I0IMAHT9Ym8=', '2026-04-21 10:19:34.078617', '2026-04-21 10:19:34.078617') RETURNING "id"
+  TRANSACTION (1.0ms)  COMMIT
+  SiteSetting Load (0.5ms)  SELECT "site_settings".* FROM "site_settings" WHERE "site_settings"."name" = 'vapid_public_key_bytes' LIMIT 1
+  TRANSACTION (0.2ms)  BEGIN
+  SiteSetting Create (0.8ms)  INSERT INTO "site_settings" ("name", "data_type", "value", "created_at", "updated_at") VALUES ('vapid_public_key_bytes', 1, '4|220|81|244|52|82|130|145|9|29|109|73|57|146|22|85|242|30|77|37|140|185|161|73|26|243|3|249|101|1|151|16|3|168|123|165|205|179|68|33|225|0|227|182|175|77|245|4|226|165|1|44|147|249|105|65|137|84|199|168|27|35|79|124|123', '2026-04-21 10:19:34.085921', '2026-04-21 10:19:34.085921') RETURNING "id"
+  TRANSACTION (0.6ms)  COMMIT
+  SiteSetting Load (0.6ms)  SELECT "site_settings".* FROM "site_settings" WHERE "site_settings"."name" = 'vapid_base_url' LIMIT 1
+  PushSubscription Delete All (0.4ms)  DELETE FROM "push_subscriptions"
+  SiteSetting Load (1.2ms)  SELECT "site_settings".* FROM "site_settings" WHERE "site_settings"."name" = 'send_welcome_message' LIMIT 1
+  TRANSACTION (1.3ms)  BEGIN
+  SiteSetting Create (2.9ms)  INSERT INTO "site_settings" ("name", "data_type", "value", "created_at", "updated_at") VALUES ('send_welcome_message', 5, 'f', '2026-04-21 10:19:34.504680', '2026-04-21 10:19:34.504680') RETURNING "id"
+  TRANSACTION (9.0ms)  COMMIT
+  SiteSetting Load (0.8ms)  SELECT "site_settings".* FROM "site_settings" WHERE "site_settings"."name" = 'allowed_iframes' LIMIT 1
+  TRANSACTION (1.1ms)  BEGIN
+  SiteSetting Create (2.2ms)  INSERT INTO "site_settings" ("name", "data_type", "value", "created_at", "updated_at") VALUES ('allowed_iframes', 8, 'https://www.google.com/maps/embed?|https://www.openstreetmap.org/export/embed.html?|https://calendar.google.com/calendar/embed?|https://codepen.io/*/embed/preview/|https://www.instagram.com/|https://open.spotify.com/|http://localhost:3000/discobot/certificate.svg', '2026-04-21 10:19:34.520633', '2026-04-21 10:19:34.520633') RETURNING "id"
+  TRANSACTION (0.9ms)  COMMIT
+  TranslationOverride Pluck (0.6ms)  SELECT "translation_overrides"."translation_key", "translation_overrides"."value" FROM "translation_overrides" WHERE "translation_overrides"."locale" = 'en'
+  Theme Load (0.5ms)  SELECT "themes".* FROM "themes" WHERE "themes"."id" = -2 LIMIT 1

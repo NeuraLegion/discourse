@@ -1,0 +1,72 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: discourse_development
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+      - "3035:3035"
+    environment:
+      RAILS_ENV: development
+      DISCOURSE_DEV_DB: discourse_development
+      DISCOURSE_HOSTNAME: localhost
+      CHECKOUT_TIMEOUT: "5"
+      DISCOURSE_SKIP_CSS_WATCHER: "1"
+      DISCOURSE_SKIP_ENFORCE_HOSTNAME: "1"
+      DISCOURSE_DB_HOST: db
+      DISCOURSE_DB_PORT: "5432"
+      DISCOURSE_DB_USERNAME: postgres
+      DISCOURSE_DB_PASSWORD: postgres
+      DISCOURSE_REDIS_HOST: redis
+      DISCOURSE_REDIS_PORT: "6379"
+      DATABASE_HOST: db
+      DATABASE_PORT: "5432"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    command:
+      - bash
+      - -lc
+      - |
+        if [ -d plugins/discourse-ai ]; then
+          mv plugins/discourse-ai plugins/.discourse-ai.disabled
+          trap 'if [ -d plugins/.discourse-ai.disabled ]; then mv plugins/.discourse-ai.disabled plugins/discourse-ai; fi' EXIT
+        fi
+        bundle exec rails db:prepare && pnpm exec concurrently "bin/ember-cli server --environment=development" "RAILS_ENV=development bin/rails server -b 0.0.0.0"
+
+volumes:
+  db-data:
+  redis-data:
