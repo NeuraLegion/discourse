@@ -1,0 +1,148 @@
+Application failed on port 3000: The startup failed unrecoverably during asset precompile because webpack/embroider cannot resolve the required module '../state', causing pnpm and rails to exit with code 1.
+
+Container logs:
+app-1  | == 20120423140906 AddPostsCountToForumThreads: migrating ======================
+app-1  | -- add_column(:forum_threads, :posts_count, :integer, {default: 0, null: false})
+app-1  |    -> 0.0019s
+app-1  | -- execute("UPDATE forum_threads SET posts_count = (SELECT count(*) FROM posts WHERE posts.forum_thread_id = forum_threads.id)")
+app-1  |    -> 0.0025s
+app-1  | == 20120423140906 AddPostsCountToForumThreads: migrated (0.0066s) =============
+app-1  | 
+app-1  | == 20120423142820 FixPostIndices: migrating ===================================
+app-1  | -- remove_index(:posts, [:forum_thread_id, :created_at], {name: "index_posts_on_forum_thread_id_and_created_at"})
+app-1  |    -> 0.0037s
+app-1  | -- add_index(:posts, [:forum_thread_id, :post_number], {name: "index_posts_on_forum_thread_id_and_post_number"})
+app-1  |    -> 0.0021s
+app-1  | == 20120423142820 FixPostIndices: migrated (0.0081s) ==========================
+app-1  | 
+app-1  | == 20120423151548 RemoveLastPostId: migrating =================================
+app-1  | -- remove_column(:forum_threads, :last_post_id)
+app-1  |    -> 0.0005s
+app-1  | == 20120423151548 RemoveLastPostId: migrated (0.0011s) ========================
+app-1  | 
+app-1  | == 20120425145456 AddDisplayUsernameToUsers: migrating ========================
+app-1  | -- add_column(:users, :display_username, :string)
+app-1  |    -> 0.0004s
+app-1  | -- execute("UPDATE users SET display_username = username")
+app-1  |    -> 0.0004s
+app-1  | -- execute("UPDATE users SET username = REPLACE(username, ' ', '')")
+app-1  |    -> 0.0003s
+app-1    | -- add_index(:users, :username, {unique: true, name: "index_users_on_username"})
+app-1    |    -> 0.0014s
+app-1    | == 20120425145456 AddDisplayUsernameToUsers: migrated (0.0047s) ===============
+app-1    | 
+app-1    | == 20120427150624 AddUserIdIndexToPosts: migrating ============================
+redis-1  | 1:C 21 Apr 2026 19:32:45.258 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+db-1     | The files belonging to this database system will be owned by user "postgres".
+db-1     | This user must also own the server process.
+db-1     | 
+db-1     | The database cluster will be initialized with locale "en_US.utf8".
+app-1    | -- add_index(:posts, :user_id, {name: "index_posts_on_user_id"})
+db-1     | The default database encoding has accordingly been set to "UTF8".
+app-1    |    -> 0.0011s
+redis-1  | 1:C 21 Apr 2026 19:32:45.258 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+
+... (13571 lines omitted) ...
+
+app-1    |     at eval (eval at create (/app/node_modules/.pnpm/tapable@2.3.2/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:10:1)
+app-1    |     at /app/node_modules/.pnpm/webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0/node_modules/webpack/lib/NormalModuleFactory.js:347:22
+app-1    |     at eval (eval at create (/app/node_modules/.pnpm/tapable@2.3.2/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:24:1)
+app-1    |     at /app/node_modules/.pnpm/@embroider+webpack@4.1.0_@embroider+core@3.5.9_@glint+template@1.7.7__webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/@embroider/webpack/src/webpack-resolver-plugin.js:50:29
+app-1    |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+app-1    |   - code: [undefined]
+app-1    |   - codeFrame: Module not found: Error: Can't resolve '../state' in '/app/frontend/discourse/node_modules/.embroider/rewritten-app/static/dev-tools/block-debug/patch.js'
+app-1    |   - errorMessage: static/dev-tools/block-debug/patch.js: Module not found: Error: Can't resolve '../state' in '/app/frontend/discourse/node_modules/.embroider/rewritten-app/static/dev-tools/block-debug/patch.js'
+app-1    |         at PackagerRunner (@embroider/webpack)
+app-1    |   - errorType: Build Error
+app-1    |   - location:
+app-1    |     - column: [undefined]
+app-1    |     - file: static/dev-tools/block-debug/patch.js
+app-1    |     - line: [null]
+app-1    |     - treeDir: [undefined]
+app-1    |   - message: static/dev-tools/block-debug/patch.js: Module not found: Error: Can't resolve '../state' in '/app/frontend/discourse/node_modules/.embroider/rewritten-app/static/dev-tools/block-debug/patch.js'
+app-1    |         at PackagerRunner (@embroider/webpack)
+app-1    |   - name: Error
+app-1    |   - nodeAnnotation: @embroider/webpack
+app-1    |   - nodeName: PackagerRunner
+app-1    |   - originalErrorMessage: Module not found: Error: Can't resolve '../state' in '/app/frontend/discourse/node_modules/.embroider/rewritten-app/static/dev-tools/block-debug/patch.js'
+app-1    |   - stack: ModuleNotFoundError: Module not found: Error: Can't resolve '../state' in '/app/frontend/discourse/node_modules/.embroider/rewritten-app/static/dev-tools/block-debug/patch.js'
+app-1    |     at /app/node_modules/.pnpm/webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0/node_modules/webpack/lib/Compilation.js:2230:28
+app-1    |     at /app/node_modules/.pnpm/webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0/node_modules/webpack/lib/NormalModuleFactory.js:933:13
+app-1    |     at eval (eval at create (/app/node_modules/.pnpm/tapable@2.3.2/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:10:1)
+app-1    |     at /app/node_modules/.pnpm/webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0/node_modules/webpack/lib/NormalModuleFactory.js:347:22
+app-1    |     at eval (eval at create (/app/node_modules/.pnpm/tapable@2.3.2/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:24:1)
+app-1    |     at /app/node_modules/.pnpm/@embroider+webpack@4.1.0_@embroider+core@3.5.9_@glint+template@1.7.7__webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/@embroider/webpack/src/webpack-resolver-plugin.js:50:29
+app-1    |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+app-1    | 
+app-1    | =================================================================================
+app-1    | 
+app-1    | /app/script/assemble_ember_build.rb:164:in 'Kernel#system': [1mCommand failed with exit 1: pnpm ([1;4mRuntimeError[m[1m)[m
+app-1    | 	from /app/script/assemble_ember_build.rb:164:in '<main>'
+app-1    | bin/rails aborted!
+app-1    | Command failed with exit 1: EMBER_ENV=production /app/script/assemble_ember_build.rb
+app-1    | /app/lib/tasks/assets.rake:20:in 'Kernel#system'
+app-1    | /app/lib/tasks/assets.rake:20:in 'block in <main>'
+app-1    | Tasks: TOP => assets:precompile => assets:precompile:before => assets:precompile:build
+app-1    | (See full trace by running task with --trace)
+
+Container diagnostics:
+Network port config:
+{}
+
+Processes inside container:
+Error response from daemon: container 6d26e56ae248af48054f7310aae0331b52b55ae1014e456974a1331e48ab1272 is not running
+
+Container stdout/stderr (last 50 lines):
+- uv: 1.46.0
+  - uvwasi: 0.0.23
+  - v8: 11.3.244.8-node.38
+  - zlib: 1.3.1-e00f703
+
+ERROR Summary:
+
+  - broccoliBuilderErrorStack: ModuleNotFoundError: Module not found: Error: Can't resolve '../state' in '/app/frontend/discourse/node_modules/.embroider/rewritten-app/static/dev-tools/block-debug/patch.js'
+    at /app/node_modules/.pnpm/webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0/node_modules/webpack/lib/Compilation.js:2230:28
+    at /app/node_modules/.pnpm/webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0/node_modules/webpack/lib/NormalModuleFactory.js:933:13
+    at eval (eval at create (/app/node_modules/.pnpm/tapable@2.3.2/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:10:1)
+    at /app/node_modules/.pnpm/webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0/node_modules/webpack/lib/NormalModuleFactory.js:347:22
+    at eval (eval at create (/app/node_modules/.pnpm/tapable@2.3.2/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:24:1)
+    at /app/node_modules/.pnpm/@embroider+webpack@4.1.0_@embroider+core@3.5.9_@glint+template@1.7.7__webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/@embroider/webpack/src/webpack-resolver-plugin.js:50:29
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+  - code: [undefined]
+  - codeFrame: Module not found: Error: Can't resolve '../state' in '/app/frontend/discourse/node_modules/.embroider/rewritten-app/static/dev-tools/block-debug/patch.js'
+  - errorMessage: static/dev-tools/block-debug/patch.js: Module not found: Error: Can't resolve '../state' in '/app/frontend/discourse/node_modules/.embroider/rewritten-app/static/dev-tools/block-debug/patch.js'
+        at PackagerRunner (@embroider/webpack)
+  - errorType: Build Error
+  - location:
+    - column: [undefined]
+    - file: static/dev-tools/block-debug/patch.js
+    - line: [null]
+    - treeDir: [undefined]
+  - message: static/dev-tools/block-debug/patch.js: Module not found: Error: Can't resolve '../state' in '/app/frontend/discourse/node_modules/.embroider/rewritten-app/static/dev-tools/block-debug/patch.js'
+        at PackagerRunner (@embroider/webpack)
+  - name: Error
+  - nodeAnnotation: @embroider/webpack
+  - nodeName: PackagerRunner
+  - originalErrorMessage: Module not found: Error: Can't resolve '../state' in '/app/frontend/discourse/node_modules/.embroider/rewritten-app/static/dev-tools/block-debug/patch.js'
+  - stack: ModuleNotFoundError: Module not found: Error: Can't resolve '../state' in '/app/frontend/discourse/node_modules/.embroider/rewritten-app/static/dev-tools/block-debug/patch.js'
+    at /app/node_modules/.pnpm/webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0/node_modules/webpack/lib/Compilation.js:2230:28
+    at /app/node_modules/.pnpm/webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0/node_modules/webpack/lib/NormalModuleFactory.js:933:13
+    at eval (eval at create (/app/node_modules/.pnpm/tapable@2.3.2/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:10:1)
+    at /app/node_modules/.pnpm/webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0/node_modules/webpack/lib/NormalModuleFactory.js:347:22
+    at eval (eval at create (/app/node_modules/.pnpm/tapable@2.3.2/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:24:1)
+    at /app/node_modules/.pnpm/@embroider+webpack@4.1.0_@embroider+core@3.5.9_@glint+template@1.7.7__webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/@embroider/webpack/src/webpack-resolver-plugin.js:50:29
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+=================================================================================
+
+/app/script/assemble_ember_build.rb:164:in 'Kernel#system': [1mCommand failed with exit 1: pnpm ([1;4mRuntimeError[m[1m)[m
+	from /app/script/assemble_ember_build.rb:164:in '<main>'
+bin/rails aborted!
+Command failed with exit 1: EMBER_ENV=production /app/script/assemble_ember_build.rb
+/app/lib/tasks/assets.rake:20:in 'Kernel#system'
+/app/lib/tasks/assets.rake:20:in 'block in <main>'
+Tasks: TOP => assets:precompile => assets:precompile:before => assets:precompile:build
+(See full trace by running task with --trace)
+
+Application logs inside container:
+Error response from daemon: container 6d26e56ae248af48054f7310aae0331b52b55ae1014e456974a1331e48ab1272 is not running
