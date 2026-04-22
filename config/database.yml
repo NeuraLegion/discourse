@@ -3,6 +3,11 @@
     ENV
       .filter { |key, _| key.start_with?("DISCOURSE_DB_VARIABLES_") }
       .transform_keys { |key| key.slice(("DISCOURSE_DB_VARIABLES_".length)..).downcase }
+
+  discourse_db_host = ENV["DISCOURSE_DB_HOST"]
+  discourse_db_port = ENV["DISCOURSE_DB_PORT"]
+  discourse_db_username = ENV["DISCOURSE_DB_USERNAME"]
+  discourse_db_password = ENV["DISCOURSE_DB_PASSWORD"]
 %>
 
 development:
@@ -12,12 +17,24 @@ development:
   min_messages: warning
   pool: 5
   checkout_timeout: <%= ENV['CHECKOUT_TIMEOUT'] || 5 %>
+  <% if discourse_db_host.present? %>
+  host: <%= discourse_db_host %>
+  <% end %>
+  <% if discourse_db_port.present? %>
+  port: <%= discourse_db_port %>
+  <% end %>
+  <% if discourse_db_username.present? %>
+  username: <%= discourse_db_username %>
+  <% end %>
+  <% if discourse_db_password.present? %>
+  password: <%= discourse_db_password %>
+  <% end %>
   host_names:
     ### Don't include the port number here. Change the "port" site setting instead, at /admin/site_settings.
     ### If you change this setting you will need to
     ###   - restart sidekiq if you change this setting
     ###   - rebake all to posts using: `RAILS_ENV=production bundle exec rake posts:rebake`
-    - "<%= ENV['DISCOURSE_HOSTNAME'] || 'localhost' %>"
+    - "<%= ENV['DISCOURSE_HOSTNAME'] || discourse_db_host || 'localhost' %>"
   variables: <%= db_variables.to_json %>
 
 # Warning: The database defined as "test" will be erased and
@@ -44,6 +61,18 @@ test:
   pool: 2
   reaping_frequency: 0
   checkout_timeout: <%= ENV["CHECKOUT_TIMEOUT"] || 5 %>
+  <% if discourse_db_host.present? %>
+  host: <%= discourse_db_host %>
+  <% end %>
+  <% if discourse_db_port.present? %>
+  port: <%= discourse_db_port %>
+  <% end %>
+  <% if discourse_db_username.present? %>
+  username: <%= discourse_db_username %>
+  <% end %>
+  <% if discourse_db_password.present? %>
+  password: <%= discourse_db_password %>
+  <% end %>
   host_names:
     - test.localhost
   variables: <%= db_variables.to_json %>
@@ -55,6 +84,18 @@ profile:
   database: discourse_profile
   min_messages: warning
   pool: 5
+  <% if discourse_db_host.present? %>
+  host: <%= discourse_db_host %>
+  <% end %>
+  <% if discourse_db_port.present? %>
+  port: <%= discourse_db_port %>
+  <% end %>
+  <% if discourse_db_username.present? %>
+  username: <%= discourse_db_username %>
+  <% end %>
+  <% if discourse_db_password.present? %>
+  password: <%= discourse_db_password %>
+  <% end %>
   host_names:
     - "localhost"
 # You may be surprised production is not here, it is sourced from application.rb using a monkey patch

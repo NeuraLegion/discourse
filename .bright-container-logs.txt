@@ -1,0 +1,64 @@
+=== discourse-redis-1 ===
+1:C 22 Apr 2026 14:08:46.228 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:C 22 Apr 2026 14:08:46.228 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 22 Apr 2026 14:08:46.228 * Redis version=7.4.8, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 22 Apr 2026 14:08:46.228 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+1:M 22 Apr 2026 14:08:46.228 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+1:M 22 Apr 2026 14:08:46.228 * monotonic clock: POSIX clock_gettime
+1:M 22 Apr 2026 14:08:46.228 * Running mode=standalone, port=6379.
+1:M 22 Apr 2026 14:08:46.228 * Server initialized
+1:M 22 Apr 2026 14:08:46.228 * Ready to accept connections tcp
+1:M 22 Apr 2026 14:13:47.036 * 100 changes in 300 seconds. Saving...
+1:M 22 Apr 2026 14:13:47.036 * Background saving started by pid 378
+378:C 22 Apr 2026 14:13:47.082 * DB saved on disk
+378:C 22 Apr 2026 14:13:47.082 * Fork CoW for RDB: current 1 MB, peak 1 MB, average 1 MB
+1:M 22 Apr 2026 14:13:47.137 * Background saving terminated with success
+
+=== discourse-db-1 ===
+The files belonging to this database system will be owned by user "postgres".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.utf8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+fixing permissions on existing directory /var/lib/postgresql/data ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+
+Success. You can now start the database server using:
+
+    pg_ctl -D /var/lib/postgresql/data -l logfile start
+
+waiting for server to start....2026-04-22 14:08:46.762 UTC [48] LOG:  starting PostgreSQL 16.13 (Debian 16.13-1.pgdg12+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+2026-04-22 14:08:46.763 UTC [48] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-04-22 14:08:46.766 UTC [51] LOG:  database system was shut down at 2026-04-22 14:08:46 UTC
+2026-04-22 14:08:46.770 UTC [48] LOG:  database system is ready to accept connections
+ done
+server started
+CREATE DATABASE
+
+
+/usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+
+2026-04-22 14:08:46.935 UTC [48] LOG:  received fast shutdown request
+waiting for server to shut down....2026-04-22 14:08:46.936 UTC [48] LOG:  aborting any active transactions
+2026-04-22 14:08:46.937 UTC [48] LOG:  background worker "logical replication launcher" (PID 54) exited with exit code 1
+2026-04-22 14:08:46.937 UTC [49] LOG:  shutting down
+2026-04-22 14:08:46.938 UTC [49] LOG:  checkpoint starting: shutdown immediate
+2026-04-22 14:08:46.965 UTC [49] LOG:  checkpoint complete: wrote 922 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.009 s, sync=0.016 s, total=0.028 s; sync files=301, longest=0.001 s, average=0.001 s; distance=4255 kB, estimate=4255 kB; lsn=0/1912118, redo lsn=0/1912118
+2026-04-22 14:08:46.968 UTC [48] LOG:  database system is shut down
+ done
+server stopped
+
+PostgreSQL init process complete; ready for start up.
