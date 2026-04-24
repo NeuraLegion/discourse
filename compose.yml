@@ -1,0 +1,54 @@
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: discourse_development
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  app:
+    build: .
+    ports:
+      - "4200:4200"
+    environment:
+      RAILS_ENV: development
+      DISCOURSE_DEV_DB: discourse_development
+      DISCOURSE_HOSTNAME: localhost
+      DISCOURSE_DB_HOST: db
+      DATABASE_URL: postgres://postgres:postgres@db:5432/discourse_development
+      DISCOURSE_REDIS_HOST: redis
+      DISCOURSE_REDIS_PORT: 6379
+      DISCOURSE_MESSAGE_BUS_REDIS_HOST: redis
+      DISCOURSE_MESSAGE_BUS_REDIS_PORT: 6379
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/app
+
+volumes:
+  db-data:
+  redis-data:
