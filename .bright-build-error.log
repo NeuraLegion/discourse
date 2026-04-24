@@ -1,0 +1,174 @@
+Application failed on port 3000: The app hit unrecoverable database migration errors, including a missing relation and a duplicate schema_migrations table creation, indicating startup will not complete successfully without interventi
+
+Container logs:
+redis-1  | 1:C 24 Apr 2026 06:45:18.326 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+redis-1  | 1:C 24 Apr 2026 06:45:18.326 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 1:C 24 Apr 2026 06:45:18.326 * Redis version=7.4.8, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1  | 1:C 24 Apr 2026 06:45:18.326 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis-1  | 1:M 24 Apr 2026 06:45:18.326 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+redis-1  | 1:M 24 Apr 2026 06:45:18.326 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 24 Apr 2026 06:45:18.326 * Running mode=standalone, port=6379.
+redis-1  | 1:M 24 Apr 2026 06:45:18.327 * Server initialized
+redis-1  | 1:M 24 Apr 2026 06:45:18.327 * Ready to accept connections tcp
+app-1    | Plugin name is 'discourse-ai', but plugin directory is named 'discourse-ai.disabled'
+app-1    | == 20000225050318 AddSchemaMigrationDetails: migrating ========================
+app-1    | -- create_table(:schema_migration_details, {id: :integer})
+app-1    |    -> 0.0046s
+app-1    | -- add_index(:schema_migration_details, [:version], {name: "index_schema_migration_details_on_version"})
+app-1    |    -> 0.0015s
+app-1    | -- execute("INSERT INTO schema_migration_details(version, created_at)\n             SELECT version, current_timestamp\n             FROM schema_migrations\n             ORDER BY version\n            ")
+app-1    |    -> 0.0007s
+app-1    | == 20000225050318 AddSchemaMigrationDetails: migrated (0.0090s) ===============
+app-1    | 
+app-1    | == 20120311163914 CreateForumThreads: migrating ===============================
+app-1    | -- create_table(:forum_threads, {id: :integer})
+app-1    |    -> 0.0122s
+app-1    | == 20120311163914 CreateForumThreads: migrated (0.0138s) ======================
+app-1    | 
+app-1    | == 20120311164326 CreatePosts: migrating ======================================
+app-1    | -- create_table(:posts, {id: :integer})
+app-1    |    -> 0.0119s
+app-1    | -- add_index(:posts, [:forum_thread_id, :created_at], {name: "index_posts_on_forum_thread_id_and_created_at"})
+app-1    |    -> 0.0018s
+app-1    | == 20120311164326 CreatePosts: migrated (0.0154s) =============================
+app-1    | 
+app-1    | == 20120311170118 CreateUsers: migrating ======================================
+app-1    | -- create_table(:users, {id: :integer})
+app-1    |    -> 0.0130s
+app-1    | == 20120311170118 CreateUsers: migrated (0.0141s) =============================
+app-1    | 
+app-1    | == 20120311201341 CreateForums: migrating =====================================
+app-1    | -- create_table(:forums, {id: :integer})
+app-1    |    -> 0.0055s
+app-1    | == 20120311201341 CreateForums: migrated (0.0063s) ============================
+
+... (206 lines omitted) ...
+
+db-1     | 
+db-1     | PostgreSQL init process complete; ready for start up.
+db-1     | 
+db-1     | 2026-04-24 06:45:19.036 UTC [1] LOG:  starting PostgreSQL 13.23 (Debian 13.23-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+db-1     | 2026-04-24 06:45:19.036 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+db-1     | 2026-04-24 06:45:19.036 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+db-1     | 2026-04-24 06:45:19.038 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1     | 2026-04-24 06:45:19.041 UTC [63] LOG:  database system was shut down at 2026-04-24 06:45:18 UTC
+db-1     | 2026-04-24 06:45:19.044 UTC [1] LOG:  database system is ready to accept connections
+db-1     | 2026-04-24 06:45:29.156 UTC [88] ERROR:  relation "translation_overrides" does not exist at character 523
+db-1     | 2026-04-24 06:45:29.156 UTC [88] STATEMENT:  SELECT a.attname, format_type(a.atttypid, a.atttypmod),
+db-1     | 	       pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod,
+db-1     | 	       c.collname, col_description(a.attrelid, a.attnum) AS comment,
+db-1     | 	       attidentity AS identity,
+db-1     | 	       attgenerated as attgenerated
+db-1     | 	  FROM pg_attribute a
+db-1     | 	  LEFT JOIN pg_attrdef d ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+db-1     | 	  LEFT JOIN pg_type t ON a.atttypid = t.oid
+db-1     | 	  LEFT JOIN pg_collation c ON a.attcollation = c.oid AND a.attcollation <> t.typcollation
+db-1     | 	 WHERE a.attrelid = '"translation_overrides"'::regclass
+db-1     | 	   AND a.attnum > 0 AND NOT a.attisdropped
+db-1     | 	 ORDER BY a.attnum
+db-1     | 	
+db-1     | 2026-04-24 06:45:29.164 UTC [89] ERROR:  relation "translation_overrides" does not exist at character 523
+db-1     | 2026-04-24 06:45:29.164 UTC [89] STATEMENT:  SELECT a.attname, format_type(a.atttypid, a.atttypmod),
+db-1     | 	       pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod,
+db-1     | 	       c.collname, col_description(a.attrelid, a.attnum) AS comment,
+db-1     | 	       attidentity AS identity,
+db-1     | 	       attgenerated as attgenerated
+db-1     | 	  FROM pg_attribute a
+db-1     | 	  LEFT JOIN pg_attrdef d ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+db-1     | 	  LEFT JOIN pg_type t ON a.atttypid = t.oid
+db-1     | 	  LEFT JOIN pg_collation c ON a.attcollation = c.oid AND a.attcollation <> t.typcollation
+db-1     | 	 WHERE a.attrelid = '"translation_overrides"'::regclass
+db-1     | 	   AND a.attnum > 0 AND NOT a.attisdropped
+db-1     | 	 ORDER BY a.attnum
+db-1     | 	
+db-1     | 2026-04-24 06:45:29.857 UTC [88] ERROR:  duplicate key value violates unique constraint "pg_type_typname_nsp_index"
+db-1     | 2026-04-24 06:45:29.857 UTC [88] DETAIL:  Key (typname, typnamespace)=(schema_migrations, 2200) already exists.
+db-1     | 2026-04-24 06:45:29.857 UTC [88] STATEMENT:  CREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)
+
+Container diagnostics:
+Port mappings:
+3000/tcp -> 0.0.0.0:3000
+3000/tcp -> [::]:3000
+
+Network port config:
+{"3000/tcp":[{"HostIp":"0.0.0.0","HostPort":"3000"},{"HostIp":"::","HostPort":"3000"}],"4200/tcp":null}
+
+Processes inside container:
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.1  0.0   4360  3256 pts/0    Ss+  06:45   0:00 bash -lc bundle exec rails db:prepare && exec bundle exec bin/dev
+root           9 98.6  0.5 1831164 344964 pts/0  Rl+  06:45   0:08 /usr/local/bin/ruby bin/rails db:prepare
+root         178 33.3  0.0   8552  4624 ?        Rs   06:45   0:00 ps aux
+
+Container stdout/stderr (last 50 lines):
+== 20120518200115 CreateReadPosts: migrated (0.0033s) =========================
+
+== 20120519182212 CreateLastReadPosts: migrating ==============================
+-- create_table(:last_read_posts, {id: :integer})
+   -> 0.0033s
+-- add_index(:last_read_posts, [:user_id, :forum_thread_id], {unique: true, name: "index_last_read_posts_on_user_id_and_forum_thread_id"})
+   -> 0.0014s
+== 20120519182212 CreateLastReadPosts: migrated (0.0069s) =====================
+
+== 20120523180723 CreateViews: migrating ======================================
+-- create_table(:views, {id: false})
+   -> 0.0010s
+-- add_index(:views, [:parent_id, :parent_type], {name: "index_views_on_parent_id_and_parent_type"})
+   -> 0.0023s
+-- add_index(:views, [:parent_id, :parent_type, :ip, :viewed_at], {unique: true, name: "unique_views"})
+   -> 0.0016s
+== 20120523180723 CreateViews: migrated (0.0060s) =============================
+
+== 20120523184307 AddRepliesToForumThreads: migrating =========================
+-- add_column(:forum_threads, :reply_count, :integer, {default: 0, null: false})
+   -> 0.0011s
+-- execute("UPDATE forum_threads SET reply_count = (SELECT COUNT(*) FROM posts WHERE posts.reply_to_post_number IS NOT NULL AND posts.forum_thread_id = forum_threads.id)")
+   -> 0.0005s
+== 20120523184307 AddRepliesToForumThreads: migrated (0.0026s) ================
+
+== 20120523201329 AddFeaturedToForumThreads: migrating ========================
+-- add_column(:forum_threads, :featured_user1_id, :integer, {null: true})
+   -> 0.0009s
+-- add_column(:forum_threads, :featured_user2_id, :integer, {null: true})
+   -> 0.0004s
+-- add_column(:forum_threads, :featured_user3_id, :integer, {null: true})
+   -> 0.0003s
+== 20120523201329 AddFeaturedToForumThreads: migrated (0.0029s) ===============
+
+== 20120525194845 AddAvgTimeToForumThreads: migrating =========================
+-- add_column(:forum_threads, :avg_time, :integer)
+   -> 0.0009s
+-- execute("update forum_threads SET avg_time = abs(random() * 1200)")
+   -> 0.0006s
+== 20120525194845 AddAvgTimeToForumThreads: migrated (0.0024s) ================
+
+== 20120529175956 CreateUploads: migrating ====================================
+-- create_table(:uploads, {id: :integer})
+   -> 0.0033s
+-- add_index(:uploads, :forum_thread_id, {name: "index_uploads_on_forum_thread_id"})
+   -> 0.0012s
+-- add_index(:uploads, :user_id, {name: "index_uploads_on_user_id"})
+   -> 0.0012s
+== 20120529175956 CreateUploads: migrated (0.0076s) ===========================
+
+Application logs inside container:
+=== /app/log/development.log ===
+        name,
+        git_version,
+        duration,
+        direction,
+        rails_version,
+        created_at
+      ) values (
+        20120529175956,
+        'c4bffa438361',
+        'CreateUploads',
+        'a7fdfe450b4d7ade24803baf9eba37e9f4d2a07f',
+        7,
+        'up',
+        '8.0.5',
+        '2026-04-24 06:45:32.362793'
+      )
+
+  ActiveRecord::SchemaMigration Create (0.2ms)  INSERT INTO "schema_migrations" ("version") VALUES ('20120529175956') RETURNING "version"
+  TRANSACTION (0.3ms)  COMMIT
+   (0.1ms)  SELECT pg_advisory_unlock(8245631157040234860)
