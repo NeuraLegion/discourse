@@ -1,0 +1,245 @@
+=== discourse-app-1 ===
+/bundle/ruby/3.4.0/gems/rack-mini-profiler-4.0.1/lib/patches/db/pg/alias_method.rb:109:in 'PG::Connection#exec': [1mPG::NotNullViolation: ERROR:  null value in column "description" of relation "site_settings" violates not-null constraint ([1;4mActiveRecord::NotNullViolation[m[1m)[m
+[1mDETAIL:  Failing row contains (2, global_notice, null, 1, Congratulations, you installed Discourse! Register a new admin a..., 2026-04-26 17:47:09.978262, 2026-04-26 17:47:09.978262).[m
+
+	from /bundle/ruby/3.4.0/gems/rack-mini-profiler-4.0.1/lib/patches/db/pg/alias_method.rb:109:in 'PG::Connection#async_exec'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/postgresql/database_statements.rb:167:in 'ActiveRecord::ConnectionAdapters::PostgreSQL::DatabaseStatements#perform_query'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:556:in 'block (2 levels) in ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract_adapter.rb:1022:in 'block in ActiveRecord::ConnectionAdapters::AbstractAdapter#with_raw_connection'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/concurrency/null_lock.rb:9:in 'ActiveSupport::Concurrency::NullLock#synchronize'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract_adapter.rb:991:in 'ActiveRecord::ConnectionAdapters::AbstractAdapter#with_raw_connection'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:555:in 'block in ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/notifications/instrumenter.rb:58:in 'ActiveSupport::Notifications::Instrumenter#instrument'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract_adapter.rb:1142:in 'ActiveRecord::ConnectionAdapters::AbstractAdapter#log'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:554:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:591:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#internal_execute'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:547:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#internal_exec_query'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:159:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#exec_insert'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/postgresql/database_statements.rb:47:in 'ActiveRecord::ConnectionAdapters::PostgreSQL::DatabaseStatements#exec_insert'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:197:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#insert'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/query_cache.rb:27:in 'ActiveRecord::ConnectionAdapters::AbstractAdapter#insert'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/persistence.rb:257:in 'ActiveRecord::Persistence::ClassMethods#_insert_record'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/persistence.rb:926:in 'block in ActiveRecord::Persistence#_create_record'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/connection_pool.rb:416:in 'ActiveRecord::ConnectionAdapters::ConnectionPool#with_connection'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_handling.rb:312:in 'ActiveRecord::ConnectionHandling#with_connection'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/persistence.rb:923:in 'ActiveRecord::Persistence#_create_record'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/counter_cache.rb:201:in 'ActiveRecord::CounterCache#_create_record'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/locking/optimistic.rb:84:in 'ActiveRecord::Locking::Optimistic#_create_record'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/encryption/encryptable_record.rb:184:in 'ActiveRecord::Encryption::EncryptableRecord#_create_record'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/attribute_methods/dirty.rb:240:in 'ActiveRecord::AttributeMethods::Dirty#_create_record'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/callbacks.rb:445:in 'block in ActiveRecord::Callbacks#_create_record'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:109:in 'ActiveSupport::Callbacks#run_callbacks'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:913:in 'ActiveRecord::Base#_run_create_callbacks'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/callbacks.rb:445:in 'ActiveRecord::Callbacks#_create_record'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/timestamp.rb:116:in 'ActiveRecord::Timestamp#_create_record'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/persistence.rb:894:in 'ActiveRecord::Persistence#create_or_update'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/callbacks.rb:441:in 'block in ActiveRecord::Callbacks#create_or_update'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:120:in 'block in ActiveSupport::Callbacks#run_callbacks'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/autosave_association.rb:406:in 'ActiveRecord::AutosaveAssociation#around_save_collection_association'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:129:in 'block in ActiveSupport::Callbacks#run_callbacks'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:140:in 'ActiveSupport::Callbacks#run_callbacks'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:913:in 'ActiveRecord::Base#_run_save_callbacks'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/callbacks.rb:441:in 'ActiveRecord::Callbacks#create_or_update'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/timestamp.rb:127:in 'ActiveRecord::Timestamp#create_or_update'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/persistence.rb:424:in 'ActiveRecord::Persistence#save!'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/validations.rb:54:in 'ActiveRecord::Validations#save!'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/transactions.rb:365:in 'block in ActiveRecord::Transactions#save!'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/transactions.rb:417:in 'block (2 levels) in ActiveRecord::Transactions#with_transaction_returning_status'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/transaction.rb:626:in 'block in ActiveRecord::ConnectionAdapters::TransactionManager#within_new_transaction'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/concurrency/null_lock.rb:9:in 'ActiveSupport::Concurrency::NullLock#synchronize'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/transaction.rb:623:in 'ActiveRecord::ConnectionAdapters::TransactionManager#within_new_transaction'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:367:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#within_new_transaction'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:359:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#transaction'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/transactions.rb:413:in 'block in ActiveRecord::Transactions#with_transaction_returning_status'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/connection_pool.rb:416:in 'ActiveRecord::ConnectionAdapters::ConnectionPool#with_connection'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_handling.rb:312:in 'ActiveRecord::ConnectionHandling#with_connection'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/transactions.rb:409:in 'ActiveRecord::Transactions#with_transaction_returning_status'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/transactions.rb:365:in 'ActiveRecord::Transactions#save!'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/suppressor.rb:56:in 'ActiveRecord::Suppressor#save!'
+	from /app/lib/site_settings/db_provider.rb:38:in 'SiteSettings::DbProvider#save'
+	from /app/lib/site_setting_extension.rb:778:in 'SiteSettingExtension#add_override!'
+	from /app/lib/site_setting_extension.rb:1159:in 'block in SiteSetting.setup_methods'
+	from /app/config/initializers/006-ensure_login_hint.rb:24:in 'block in <main>'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:406:in 'BasicObject#instance_exec'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:406:in 'block in ActiveSupport::Callbacks::CallTemplate::InstanceExec0#make_lambda'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:178:in 'block in ActiveSupport::Callbacks::Filters::Before#call'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:668:in 'block (2 levels) in ActiveSupport::Callbacks::CallbackChain#default_terminator'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:667:in 'Kernel#catch'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:667:in 'block in ActiveSupport::Callbacks::CallbackChain#default_terminator'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:179:in 'ActiveSupport::Callbacks::Filters::Before#call'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:559:in 'block in ActiveSupport::Callbacks::CallbackSequence#invoke_before'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:559:in 'Array#each'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:559:in 'ActiveSupport::Callbacks::CallbackSequence#invoke_before'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:108:in 'ActiveSupport::Callbacks#run_callbacks'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/reloader.rb:96:in 'ActiveSupport::Reloader.prepare!'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/application/finisher.rb:73:in 'block in <module:Finisher>'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:32:in 'BasicObject#instance_exec'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:32:in 'Rails::Initializable::Initializer#run'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:61:in 'block in Rails::Initializable#run_initializers'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:231:in 'block in TSort.tsort_each'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:353:in 'block (2 levels) in TSort.each_strongly_connected_component'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:434:in 'TSort.each_strongly_connected_component_from'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:352:in 'block in TSort.each_strongly_connected_component'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'Rails::Initializable::Collection#each'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'Method#call'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'TSort.each_strongly_connected_component'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:229:in 'TSort.tsort_each'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:208:in 'TSort#tsort_each'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:60:in 'Rails::Initializable#run_initializers'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/application.rb:444:in 'Rails::Application#initialize!'
+	from /app/config/environment.rb:7:in '<top (required)>'
+	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'Kernel.require'
+	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'block (2 levels) in Kernel#replace_require'
+	from -e:1:in '<main>'
+/bundle/ruby/3.4.0/gems/rack-mini-profiler-4.0.1/lib/patches/db/pg/alias_method.rb:109:in 'PG::Connection#exec': [1mERROR:  null value in column "description" of relation "site_settings" violates not-null constraint ([1;4mPG::NotNullViolation[m[1m)[m
+[1mDETAIL:  Failing row contains (2, global_notice, null, 1, Congratulations, you installed Discourse! Register a new admin a..., 2026-04-26 17:47:09.978262, 2026-04-26 17:47:09.978262).[m
+
+	from /bundle/ruby/3.4.0/gems/rack-mini-profiler-4.0.1/lib/patches/db/pg/alias_method.rb:109:in 'PG::Connection#async_exec'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/postgresql/database_statements.rb:167:in 'ActiveRecord::ConnectionAdapters::PostgreSQL::DatabaseStatements#perform_query'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:556:in 'block (2 levels) in ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract_adapter.rb:1022:in 'block in ActiveRecord::ConnectionAdapters::AbstractAdapter#with_raw_connection'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/concurrency/null_lock.rb:9:in 'ActiveSupport::Concurrency::NullLock#synchronize'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract_adapter.rb:991:in 'ActiveRecord::ConnectionAdapters::AbstractAdapter#with_raw_connection'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:555:in 'block in ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/notifications/instrumenter.rb:58:in 'ActiveSupport::Notifications::Instrumenter#instrument'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract_adapter.rb:1142:in 'ActiveRecord::ConnectionAdapters::AbstractAdapter#log'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:554:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:591:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#internal_execute'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:547:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#internal_exec_query'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:159:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#exec_insert'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/postgresql/database_statements.rb:47:in 'ActiveRecord::ConnectionAdapters::PostgreSQL::DatabaseStatements#exec_insert'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:197:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#insert'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/query_cache.rb:27:in 'ActiveRecord::ConnectionAdapters::AbstractAdapter#insert'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/persistence.rb:257:in 'ActiveRecord::Persistence::ClassMethods#_insert_record'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/persistence.rb:926:in 'block in ActiveRecord::Persistence#_create_record'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/connection_pool.rb:416:in 'ActiveRecord::ConnectionAdapters::ConnectionPool#with_connection'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_handling.rb:312:in 'ActiveRecord::ConnectionHandling#with_connection'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/persistence.rb:923:in 'ActiveRecord::Persistence#_create_record'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/counter_cache.rb:201:in 'ActiveRecord::CounterCache#_create_record'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/locking/optimistic.rb:84:in 'ActiveRecord::Locking::Optimistic#_create_record'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/encryption/encryptable_record.rb:184:in 'ActiveRecord::Encryption::EncryptableRecord#_create_record'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/attribute_methods/dirty.rb:240:in 'ActiveRecord::AttributeMethods::Dirty#_create_record'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/callbacks.rb:445:in 'block in ActiveRecord::Callbacks#_create_record'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:109:in 'ActiveSupport::Callbacks#run_callbacks'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:913:in 'ActiveRecord::Base#_run_create_callbacks'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/callbacks.rb:445:in 'ActiveRecord::Callbacks#_create_record'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/timestamp.rb:116:in 'ActiveRecord::Timestamp#_create_record'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/persistence.rb:894:in 'ActiveRecord::Persistence#create_or_update'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/callbacks.rb:441:in 'block in ActiveRecord::Callbacks#create_or_update'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:120:in 'block in ActiveSupport::Callbacks#run_callbacks'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/autosave_association.rb:406:in 'ActiveRecord::AutosaveAssociation#around_save_collection_association'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:129:in 'block in ActiveSupport::Callbacks#run_callbacks'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:140:in 'ActiveSupport::Callbacks#run_callbacks'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:913:in 'ActiveRecord::Base#_run_save_callbacks'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/callbacks.rb:441:in 'ActiveRecord::Callbacks#create_or_update'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/timestamp.rb:127:in 'ActiveRecord::Timestamp#create_or_update'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/persistence.rb:424:in 'ActiveRecord::Persistence#save!'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/validations.rb:54:in 'ActiveRecord::Validations#save!'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/transactions.rb:365:in 'block in ActiveRecord::Transactions#save!'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/transactions.rb:417:in 'block (2 levels) in ActiveRecord::Transactions#with_transaction_returning_status'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/transaction.rb:626:in 'block in ActiveRecord::ConnectionAdapters::TransactionManager#within_new_transaction'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/concurrency/null_lock.rb:9:in 'ActiveSupport::Concurrency::NullLock#synchronize'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/transaction.rb:623:in 'ActiveRecord::ConnectionAdapters::TransactionManager#within_new_transaction'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:367:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#within_new_transaction'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:359:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#transaction'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/transactions.rb:413:in 'block in ActiveRecord::Transactions#with_transaction_returning_status'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/connection_pool.rb:416:in 'ActiveRecord::ConnectionAdapters::ConnectionPool#with_connection'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_handling.rb:312:in 'ActiveRecord::ConnectionHandling#with_connection'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/transactions.rb:409:in 'ActiveRecord::Transactions#with_transaction_returning_status'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/transactions.rb:365:in 'ActiveRecord::Transactions#save!'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/suppressor.rb:56:in 'ActiveRecord::Suppressor#save!'
+	from /app/lib/site_settings/db_provider.rb:38:in 'SiteSettings::DbProvider#save'
+	from /app/lib/site_setting_extension.rb:778:in 'SiteSettingExtension#add_override!'
+	from /app/lib/site_setting_extension.rb:1159:in 'block in SiteSetting.setup_methods'
+	from /app/config/initializers/006-ensure_login_hint.rb:24:in 'block in <main>'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:406:in 'BasicObject#instance_exec'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:406:in 'block in ActiveSupport::Callbacks::CallTemplate::InstanceExec0#make_lambda'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:178:in 'block in ActiveSupport::Callbacks::Filters::Before#call'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:668:in 'block (2 levels) in ActiveSupport::Callbacks::CallbackChain#default_terminator'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:667:in 'Kernel#catch'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:667:in 'block in ActiveSupport::Callbacks::CallbackChain#default_terminator'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:179:in 'ActiveSupport::Callbacks::Filters::Before#call'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:559:in 'block in ActiveSupport::Callbacks::CallbackSequence#invoke_before'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:559:in 'Array#each'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:559:in 'ActiveSupport::Callbacks::CallbackSequence#invoke_before'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/callbacks.rb:108:in 'ActiveSupport::Callbacks#run_callbacks'
+	from /bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/reloader.rb:96:in 'ActiveSupport::Reloader.prepare!'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/application/finisher.rb:73:in 'block in <module:Finisher>'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:32:in 'BasicObject#instance_exec'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:32:in 'Rails::Initializable::Initializer#run'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:61:in 'block in Rails::Initializable#run_initializers'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:231:in 'block in TSort.tsort_each'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:353:in 'block (2 levels) in TSort.each_strongly_connected_component'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:434:in 'TSort.each_strongly_connected_component_from'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:352:in 'block in TSort.each_strongly_connected_component'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'Rails::Initializable::Collection#each'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'Method#call'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'TSort.each_strongly_connected_component'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:229:in 'TSort.tsort_each'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:208:in 'TSort#tsort_each'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:60:in 'Rails::Initializable#run_initializers'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/application.rb:444:in 'Rails::Application#initialize!'
+	from /app/config/environment.rb:7:in '<top (required)>'
+	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'Kernel.require'
+	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'block (2 levels) in Kernel#replace_require'
+	from -e:1:in '<main>'
+
+=== discourse-db-1 ===
+The files belonging to this database system will be owned by user "postgres".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.utf8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+fixing permissions on existing directory /var/lib/postgresql/data ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+
+Success. You can now start the database server using:
+
+    pg_ctl -D /var/lib/postgresql/data -l logfile start
+
+waiting for server to start....2026-04-26 17:46:48.599 UTC [48] LOG:  starting PostgreSQL 15.17 (Debian 15.17-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+2026-04-26 17:46:48.600 UTC [48] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-04-26 17:46:48.604 UTC [51] LOG:  database system was shut down at 2026-04-26 17:46:48 UTC
+2026-04-26 17:46:48.606 UTC [48] LOG:  database system is ready to accept connections
+ done
+server started
+CREATE DATABASE
+
+
+/usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+
+waiting for server to shut down...2026-04-26 17:46:48.762 UTC [48] LOG:  received fast shutdown request
+.2026-04-26 17:46:48.763 UTC [48] LOG:  aborting any active transactions
+2026-04-26 17:46:48.765 UTC [48] LOG:  background worker "logical replication launcher" (PID 54) exited with exit code 1
+2026-04-26 17:46:48.765 UTC [49] LOG:  shutting down
+2026-04-26 17:46:48.766 UTC [49] LOG:  checkpoint starting: shutdown immediate
+2026-04-26 17:46:48.794 UTC [49] LOG:  checkpoint complete: wrote 922 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.009 s, sync=0.015 s, total=0.029 s; sync files=301, longest=0.001 s, average=0.001 s; distance=4239 kB, estimate=4239 kB
+2026-04-26 17:46:48.796 UTC [48] LOG:  database system is shut down
+ done
+server stopped
+
+PostgreSQL init process complete; ready for start up.
+
+=== discourse-redis-1 ===
+1:C 26 Apr 2026 17:46:48.198 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:C 26 Apr 2026 17:46:48.198 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 26 Apr 2026 17:46:48.198 * Redis version=7.4.8, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 26 Apr 2026 17:46:48.198 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+1:M 26 Apr 2026 17:46:48.198 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+1:M 26 Apr 2026 17:46:48.198 * monotonic clock: POSIX clock_gettime
+1:M 26 Apr 2026 17:46:48.199 * Running mode=standalone, port=6379.
+1:M 26 Apr 2026 17:46:48.199 * Server initialized
+1:M 26 Apr 2026 17:46:48.199 * Ready to accept connections tcp
