@@ -1,0 +1,60 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      ALLOW_EMBER_CLI_PROXY_BYPASS: "1"
+      RAILS_ENV: development
+      DISCOURSE_DEV_DB: discourse_development
+      DISCOURSE_HOSTNAME: localhost
+      DISCOURSE_DB_HOST: db
+      DISCOURSE_DB_PORT: 5432
+      DISCOURSE_DB_USERNAME: postgres
+      DISCOURSE_DB_PASSWORD: postgres
+      DISCOURSE_DEVELOPER_EMAILS: bright@test.com
+      DISCOURSE_REDIS_HOST: redis
+      NODE_ENV: development
+      ROLLUP_PLUGIN_COMPILER: "1"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+    command: bash -lc "bundle exec rake db:migrate && exec bundle exec bin/pitchfork"
+
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: discourse_development
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+volumes:
+  db-data:
+  redis-data:

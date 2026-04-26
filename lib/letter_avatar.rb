@@ -109,7 +109,15 @@ class LetterAvatar
             sleep 2
             cleanup_old
           end
-          Digest::MD5.hexdigest(`magick --version` << `magick -list font`)
+          version = `magick --version 2>/dev/null`
+          fonts = `magick -list font 2>/dev/null`
+
+          if version.to_s.strip.empty?
+            version = `convert --version 2>/dev/null`
+            fonts = `convert -list font 2>/dev/null`
+          end
+
+          Digest::MD5.hexdigest(version << fonts)
         end
     end
 
