@@ -1,0 +1,61 @@
+Application failed on port 3000: The app reports listening on 0.0.0.0:3000, but the host has never reached port 3000 after 20 seconds and 8 failures, indicating a likely port-mapping or binding mismatch that will not resolve by waiti
+
+Container logs:
+redis-1  | 1:C 30 Apr 2026 12:44:31.952 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+redis-1  | 1:C 30 Apr 2026 12:44:31.952 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 1:C 30 Apr 2026 12:44:31.952 * Redis version=7.4.8, bits=64, commit=00000000, modified=0, pid=1, just started
+db-1     | 
+redis-1  | 1:C 30 Apr 2026 12:44:31.952 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+db-1     | PostgreSQL Database directory appears to contain a database; Skipping initialization
+db-1     | 
+db-1     | 2026-04-30 12:44:31.971 UTC [1] LOG:  starting PostgreSQL 16.13 (Debian 16.13-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+db-1     | 2026-04-30 12:44:31.971 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+db-1     | 2026-04-30 12:44:31.971 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+db-1     | 2026-04-30 12:44:31.972 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1     | 2026-04-30 12:44:31.977 UTC [29] LOG:  database system was shut down at 2026-04-30 12:42:57 UTC
+db-1     | 2026-04-30 12:44:31.982 UTC [1] LOG:  database system is ready to accept connections
+redis-1  | 1:M 30 Apr 2026 12:44:31.952 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+redis-1  | 1:M 30 Apr 2026 12:44:31.952 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 30 Apr 2026 12:44:31.953 * Running mode=standalone, port=6379.
+redis-1  | 1:M 30 Apr 2026 12:44:31.953 * Server initialized
+redis-1  | 1:M 30 Apr 2026 12:44:31.953 * Loading RDB produced by version 7.4.8
+redis-1  | 1:M 30 Apr 2026 12:44:31.953 * RDB age 94 seconds
+redis-1  | 1:M 30 Apr 2026 12:44:31.953 * RDB memory usage when created 2.67 Mb
+redis-1  | 1:M 30 Apr 2026 12:44:31.956 * Done loading RDB, keys loaded: 64, keys expired: 6.
+redis-1  | 1:M 30 Apr 2026 12:44:31.956 * DB loaded from disk: 0.003 seconds
+redis-1  | 1:M 30 Apr 2026 12:44:31.956 * Ready to accept connections tcp
+app-1    | Sidekiq 7.3.10 connecting to Redis with options {size: 10, pool_name: "internal", host: "redis", port: 6379, db: 1, url: nil}
+app-1    | WARNING: Discourse hostname: localhost is not a valid domain for emails!
+app-1    | I, [2026-04-30T12:44:49.766678 #105]  INFO -- : listening on addr=0.0.0.0:3000 fd=13
+app-1    | I, [2026-04-30T12:44:59.242275 #1]  INFO -- : mold gen=0 pid=105 ready
+app-1    | I, [2026-04-30T12:44:59.242355 #1]  INFO -- : monitor pid=1 ready
+app-1    | I, [2026-04-30T12:44:59.242379 #1]  INFO -- : monitor process ready
+app-1    | I, [2026-04-30T12:44:59.242597 #105]  INFO -- : service gen=0 spawning...
+app-1    | I, [2026-04-30T12:45:00.268432 #1]  INFO -- : service gen=0 pid=660 spawned
+app-1    | I, [2026-04-30T12:45:00.290614 #105]  INFO -- : worker=0 gen=0 spawning...
+
+Container diagnostics:
+Port mappings:
+3000/tcp -> 0.0.0.0:3000
+3000/tcp -> [::]:3000
+
+Network port config:
+{"3000/tcp":[{"HostIp":"0.0.0.0","HostPort":"3000"},{"HostIp":"::","HostPort":"3000"}]}
+
+Processes inside container:
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  1.5  0.0 477632 30108 pts/0    Ssl+ 12:44   0:00 pitchfork monitor - 
+root         105 82.9  0.6 7597216 441848 pts/0  Sl   12:44   0:12 pitchfork (gen:0) mold - ready
+root         660  0.0  0.6 7590172 399188 pts/0  Sl   12:44   0:00 pitchfork (gen:0) service - ready
+root         664 33.3  0.0   8552  4536 ?        Rs   12:44   0:00 ps aux
+
+Container stdout/stderr (last 50 lines):
+Sidekiq 7.3.10 connecting to Redis with options {size: 10, pool_name: "internal", host: "redis", port: 6379, db: 1, url: nil}
+WARNING: Discourse hostname: localhost is not a valid domain for emails!
+I, [2026-04-30T12:44:49.766678 #105]  INFO -- : listening on addr=0.0.0.0:3000 fd=13
+I, [2026-04-30T12:44:59.242275 #1]  INFO -- : mold gen=0 pid=105 ready
+I, [2026-04-30T12:44:59.242355 #1]  INFO -- : monitor pid=1 ready
+I, [2026-04-30T12:44:59.242379 #1]  INFO -- : monitor process ready
+I, [2026-04-30T12:44:59.242597 #105]  INFO -- : service gen=0 spawning...
+I, [2026-04-30T12:45:00.268432 #1]  INFO -- : service gen=0 pid=660 spawned
+I, [2026-04-30T12:45:00.290614 #105]  INFO -- : worker=0 gen=0 spawning...
