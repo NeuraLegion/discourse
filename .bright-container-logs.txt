@@ -1,0 +1,398 @@
+=== discourse-app-1 ===
+I, [2026-04-30T07:34:00.021852 #11]  INFO -- : listening on addr=0.0.0.0:3000 fd=14
+URGENT: Failed to initialize site default: ActiveRecord::StatementInvalid PG::UndefinedTable: ERROR:  relation "groups" does not exist
+LINE 10:  WHERE a.attrelid = '"groups"'::regclass
+                             ^
+
+/usr/local/bundle/ruby/3.4.0/gems/rack-mini-profiler-4.0.1/lib/patches/db/pg/alias_method.rb:109:in 'PG::Connection#exec'
+/usr/local/bundle/ruby/3.4.0/gems/rack-mini-profiler-4.0.1/lib/patches/db/pg/alias_method.rb:109:in 'PG::Connection#async_exec'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/postgresql/database_statements.rb:167:in 'ActiveRecord::ConnectionAdapters::PostgreSQL::DatabaseStatements#perform_query'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:556:in 'block (2 levels) in ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract_adapter.rb:1022:in 'block in ActiveRecord::ConnectionAdapters::AbstractAdapter#with_raw_connection'
+/usr/local/bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/concurrency/null_lock.rb:9:in 'ActiveSupport::Concurrency::NullLock#synchronize'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract_adapter.rb:991:in 'ActiveRecord::ConnectionAdapters::AbstractAdapter#with_raw_connection'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:555:in 'block in ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+/usr/local/bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/notifications/instrumenter.rb:58:in 'ActiveSupport::Notifications::Instrumenter#instrument'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract_adapter.rb:1142:in 'ActiveRecord::ConnectionAdapters::AbstractAdapter#log'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:554:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:591:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#internal_execute'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/postgresql/database_statements.rb:15:in 'ActiveRecord::ConnectionAdapters::PostgreSQL::DatabaseStatements#query'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/postgresql_adapter.rb:1042:in 'ActiveRecord::ConnectionAdapters::PostgreSQLAdapter#column_definitions'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/schema_statements.rb:109:in 'ActiveRecord::ConnectionAdapters::SchemaStatements#columns'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:345:in 'block (2 levels) in ActiveRecord::ConnectionAdapters::SchemaCache#columns'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/connection_pool.rb:416:in 'ActiveRecord::ConnectionAdapters::ConnectionPool#with_connection'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:344:in 'block in ActiveRecord::ConnectionAdapters::SchemaCache#columns'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:343:in 'Hash#fetch'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:343:in 'ActiveRecord::ConnectionAdapters::SchemaCache#columns'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:354:in 'block in ActiveRecord::ConnectionAdapters::SchemaCache#columns_hash'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:353:in 'Hash#fetch'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:353:in 'ActiveRecord::ConnectionAdapters::SchemaCache#columns_hash'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:54:in 'ActiveRecord::ConnectionAdapters::SchemaReflection#columns_hash'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:198:in 'ActiveRecord::ConnectionAdapters::BoundSchemaReflection#columns_hash'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:592:in 'ActiveRecord::ModelSchema::ClassMethods#load_schema!'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/counter_cache.rb:187:in 'ActiveRecord::CounterCache::ClassMethods#load_schema!'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/encryption/encryptable_record.rb:127:in 'ActiveRecord::Encryption::EncryptableRecord::ClassMethods#load_schema!'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:539:in 'block in ActiveRecord::ModelSchema::ClassMethods#load_schema'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:536:in 'Monitor#synchronize'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:536:in 'ActiveRecord::ModelSchema::ClassMethods#load_schema'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:428:in 'ActiveRecord::ModelSchema::ClassMethods#columns_hash'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:1997:in 'ActiveRecord::QueryMethods#arel_column'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2155:in 'ActiveRecord::QueryMethods#order_column'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2097:in 'block in ActiveRecord::QueryMethods#preprocess_order_args'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2094:in 'Array#map!'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2094:in 'ActiveRecord::QueryMethods#preprocess_order_args'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:665:in 'ActiveRecord::QueryMethods#order!'
+/usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:660:in 'ActiveRecord::QueryMethods#order'
+/app/app/serializers/site_serializer.rb:129:in 'block in SiteSerializer#groups'
+/app/lib/distributed_cache.rb:20:in 'DistributedCache#defer_get_set'
+/app/app/serializers/application_serializer.rb:34:in 'ApplicationSerializer#cache_fragment'
+/app/app/serializers/application_serializer.rb:39:in 'ApplicationSerializer#cache_anon_fragment'
+/app/app/serializers/site_serializer.rb:126:in 'SiteSerializer#groups'
+(eval at /usr/local/bundle/ruby/3.4.0/gems/active_model_serializers-0.8.4/lib/active_model/serializer.rb:467):8:in 'SiteSerializer#_fast_attributes'
+/usr/local/bundle/ruby/3.4.0/gems/active_model_serializers-0.8.4/lib/active_model/serializer.rb:468:in 'ActiveModel::Serializer#attributes'
+/usr/local/bundle/ruby/3.4.0/gems/active_model_serializers-0.8.4/lib/active_model/serializer.rb:480:in 'ActiveModel::Serializer#_serializable_hash'
+/usr/local/bundle/ruby/3.4.0/gems/active_model_serializers-0.8.4/lib/active_model/serializer.rb:359:in 'ActiveModel::Serializer#serializable_hash'
+/usr/local/bundle/ruby/3.4.0/gems/active_model_serializers-0.8.4/lib/active_model/serializer.rb:347:in 'ActiveModel::Serializer#as_json'
+/usr/local/bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/json/encoding.rb:41:in 'Oj::Rails::Encoder#encode'
+/usr/local/bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/json/encoding.rb:41:in 'ActiveSupport::JSON.encode'
+/usr/local/bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/core_ext/object/json.rb:42:in 'ActiveSupport::ToJsonWithActiveSupportEncoder#to_json'
+/usr/local/bundle/ruby/3.4.0/gems/active_model_serializers-0.8.4/lib/active_model/serializer.rb:331:in 'ActiveModel::Serializer#to_json'
+/usr/local/bundle/ruby/3.4.0/gems/multi_json-1.19.1/lib/multi_json/adapters/oj.rb:62:in 'Oj.dump'
+/usr/local/bundle/ruby/3.4.0/gems/multi_json-1.19.1/lib/multi_json/adapters/oj.rb:62:in 'MultiJson::Adapters::Oj#dump'
+/usr/local/bundle/ruby/3.4.0/gems/multi_json-1.19.1/lib/multi_json/adapter.rb:66:in 'MultiJson::Adapter.dump'
+/usr/local/bundle/ruby/3.4.0/gems/multi_json-1.19.1/lib/multi_json.rb:195:in 'MultiJson.dump'
+/app/app/models/site.rb:251:in 'Site.json_for'
+/app/lib/discourse.rb:1259:in 'block in Discourse.preload_rails!'
+/app/lib/freedom_patches/rails_multisite.rb:16:in 'block in RailsMultisite::ConnectionManagement.safe_each_connection'
+/usr/local/bundle/ruby/3.4.0/gems/rails_multisite-7.0.0/lib/rails_multisite/connection_management/null_instance.rb:49:in 'RailsMultisite::ConnectionManagement::NullInstance#with_connection'
+/usr/local/bundle/ruby/3.4.0/gems/rails_multisite-7.0.0/lib/rails_multisite/connection_management/null_instance.rb:36:in 'RailsMultisite::ConnectionManagement::NullInstance#each_connection'
+/usr/local/bundle/ruby/3.4.0/gems/rails_multisite-7.0.0/lib/rails_multisite/connection_management.rb:17:in 'RailsMultisite::ConnectionManagement.each_connection'
+/app/lib/freedom_patches/rails_multisite.rb:9:in 'RailsMultisite::ConnectionManagement.each_active_connection'
+/app/lib/freedom_patches/rails_multisite.rb:14:in 'RailsMultisite::ConnectionManagement.safe_each_connection'
+/app/lib/discourse.rb:1251:in 'Discourse.preload_rails!'
+config/pitchfork.conf.rb:55:in 'block in Pitchfork::Configurator#load'
+/usr/local/bundle/ruby/3.4.0/gems/pitchfork-0.18.2/lib/pitchfork/http_server.rb:965:in 'Pitchfork::HttpServer#init_mold_process'
+/usr/local/bundle/ruby/3.4.0/gems/pitchfork-0.18.2/lib/pitchfork/http_server.rb:1073:in 'Pitchfork::HttpServer#mold_loop'
+/usr/local/bundle/ruby/3.4.0/gems/pitchfork-0.18.2/lib/pitchfork/http_server.rb:696:in 'block in Pitchfork::HttpServer#spawn_initial_mold'
+/usr/local/bundle/ruby/3.4.0/gems/pitchfork-0.18.2/lib/pitchfork.rb:170:in 'block in Pitchfork.clean_fork'
+/usr/local/bundle/ruby/3.4.0/gems/pitchfork-0.18.2/lib/pitchfork.rb:168:in 'Kernel#catch'
+/usr/local/bundle/ruby/3.4.0/gems/pitchfork-0.18.2/lib/pitchfork.rb:168:in 'Pitchfork.clean_fork'
+/usr/local/bundle/ruby/3.4.0/gems/pitchfork-0.18.2/lib/pitchfork/http_server.rb:690:in 'Pitchfork::HttpServer#spawn_initial_mold'
+/usr/local/bundle/ruby/3.4.0/gems/pitchfork-0.18.2/lib/pitchfork/http_server.rb:176:in 'Pitchfork::HttpServer#start'
+/usr/local/bundle/ruby/3.4.0/gems/pitchfork-0.18.2/exe/pitchfork:110:in '<top (required)>'
+/usr/local/lib/ruby/site_ruby/3.4.0/rubygems.rb:305:in 'Kernel#load'
+/usr/local/lib/ruby/site_ruby/3.4.0/rubygems.rb:305:in 'Gem.activate_and_load_bin_path'
+/usr/local/bundle/ruby/3.4.0/bin/pitchfork:25:in '<top (required)>'
+/usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli/exec.rb:59:in 'Kernel.load'
+/usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli/exec.rb:59:in 'Bundler::CLI::Exec#kernel_load'
+/usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli/exec.rb:23:in 'Bundler::CLI::Exec#run'
+/usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli.rb:452:in 'Bundler::CLI#exec'
+/usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor/command.rb:28:in 'Bundler::Thor::Command#run'
+/usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor/invocation.rb:127:in 'Bundler::Thor::Invocation#invoke_command'
+/usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor.rb:538:in 'Bundler::Thor.dispatch'
+/usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli.rb:35:in 'Bundler::CLI.dispatch'
+/usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor/base.rb:584:in 'Bundler::Thor::Base::ClassMethods#start'
+/usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli.rb:29:in 'Bundler::CLI.start'
+/usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/exe/bundle:28:in 'block in <top (required)>'
+/usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/friendly_errors.rb:117:in 'Bundler.with_friendly_errors'
+/usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/exe/bundle:20:in '<top (required)>'
+/usr/local/lib/ruby/site_ruby/3.4.0/rubygems.rb:305:in 'Kernel#load'
+/usr/local/lib/ruby/site_ruby/3.4.0/rubygems.rb:305:in 'Gem.activate_and_load_bin_path'
+/usr/local/bin/bundle:25:in '<main>'
+#<Thread:0x00007f14860e66d0 /app/lib/discourse.rb:1294 run> terminated with exception (report_on_exception is true):
+/usr/local/bundle/ruby/3.4.0/gems/rack-mini-profiler-4.0.1/lib/patches/db/pg/alias_method.rb:109:in 'PG::Connection#exec': [1mPG::UndefinedTable: ERROR:  relation "custom_emojis" does not exist ([1;4mActiveRecord::StatementInvalid[m[1m)[m
+[1mLINE 10:  WHERE a.attrelid = '"custom_emojis"'::regclass[m
+[1m                             ^[m
+
+	from /usr/local/bundle/ruby/3.4.0/gems/rack-mini-profiler-4.0.1/lib/patches/db/pg/alias_method.rb:109:in 'PG::Connection#async_exec'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/postgresql/database_statements.rb:167:in 'ActiveRecord::ConnectionAdapters::PostgreSQL::DatabaseStatements#perform_query'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:556:in 'block (2 levels) in ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract_adapter.rb:1022:in 'block in ActiveRecord::ConnectionAdapters::AbstractAdapter#with_raw_connection'
+	from /usr/local/bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/concurrency/null_lock.rb:9:in 'ActiveSupport::Concurrency::NullLock#synchronize'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract_adapter.rb:991:in 'ActiveRecord::ConnectionAdapters::AbstractAdapter#with_raw_connection'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:555:in 'block in ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+	from /usr/local/bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/notifications/instrumenter.rb:58:in 'ActiveSupport::Notifications::Instrumenter#instrument'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract_adapter.rb:1142:in 'ActiveRecord::ConnectionAdapters::AbstractAdapter#log'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:554:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:591:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#internal_execute'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/postgresql/database_statements.rb:15:in 'ActiveRecord::ConnectionAdapters::PostgreSQL::DatabaseStatements#query'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/postgresql_adapter.rb:1042:in 'ActiveRecord::ConnectionAdapters::PostgreSQLAdapter#column_definitions'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/schema_statements.rb:109:in 'ActiveRecord::ConnectionAdapters::SchemaStatements#columns'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:345:in 'block (2 levels) in ActiveRecord::ConnectionAdapters::SchemaCache#columns'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/connection_pool.rb:422:in 'ActiveRecord::ConnectionAdapters::ConnectionPool#with_connection'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:344:in 'block in ActiveRecord::ConnectionAdapters::SchemaCache#columns'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:343:in 'Hash#fetch'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:343:in 'ActiveRecord::ConnectionAdapters::SchemaCache#columns'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:354:in 'block in ActiveRecord::ConnectionAdapters::SchemaCache#columns_hash'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:353:in 'Hash#fetch'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:353:in 'ActiveRecord::ConnectionAdapters::SchemaCache#columns_hash'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:54:in 'ActiveRecord::ConnectionAdapters::SchemaReflection#columns_hash'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:198:in 'ActiveRecord::ConnectionAdapters::BoundSchemaReflection#columns_hash'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:592:in 'ActiveRecord::ModelSchema::ClassMethods#load_schema!'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/counter_cache.rb:187:in 'ActiveRecord::CounterCache::ClassMethods#load_schema!'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/encryption/encryptable_record.rb:127:in 'ActiveRecord::Encryption::EncryptableRecord::ClassMethods#load_schema!'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:539:in 'block in ActiveRecord::ModelSchema::ClassMethods#load_schema'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:536:in 'Monitor#synchronize'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:536:in 'ActiveRecord::ModelSchema::ClassMethods#load_schema'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:428:in 'ActiveRecord::ModelSchema::ClassMethods#columns_hash'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:1997:in 'ActiveRecord::QueryMethods#arel_column'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2155:in 'ActiveRecord::QueryMethods#order_column'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2097:in 'block in ActiveRecord::QueryMethods#preprocess_order_args'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2094:in 'Array#map!'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2094:in 'ActiveRecord::QueryMethods#preprocess_order_args'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:665:in 'ActiveRecord::QueryMethods#order!'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:660:in 'ActiveRecord::QueryMethods#order'
+	from /app/app/models/emoji.rb:266:in 'Emoji.load_custom'
+	from /app/app/models/emoji.rb:61:in 'block in Emoji.custom'
+	from /app/lib/cache.rb:93:in 'Cache#fetch'
+	from /app/app/models/emoji.rb:61:in 'Emoji.custom'
+	from /app/lib/pretty_text.rb:201:in 'block in PrettyText.markdown'
+	from /app/lib/pretty_text.rb:706:in 'block in PrettyText.protect'
+	from /app/lib/pretty_text.rb:705:in 'Thread::Mutex#synchronize'
+	from /app/lib/pretty_text.rb:705:in 'PrettyText.protect'
+	from /app/lib/pretty_text.rb:197:in 'PrettyText.markdown'
+	from /app/lib/pretty_text.rb:323:in 'PrettyText.cook'
+	from /app/lib/discourse.rb:1296:in 'block in Discourse.preload_rails!'
+/usr/local/bundle/ruby/3.4.0/gems/rack-mini-profiler-4.0.1/lib/patches/db/pg/alias_method.rb:109:in 'PG::Connection#exec': [1mERROR:  relation "custom_emojis" does not exist ([1;4mPG::UndefinedTable[m[1m)[m
+[1mLINE 10:  WHERE a.attrelid = '"custom_emojis"'::regclass[m
+[1m                             ^[m
+
+	from /usr/local/bundle/ruby/3.4.0/gems/rack-mini-profiler-4.0.1/lib/patches/db/pg/alias_method.rb:109:in 'PG::Connection#async_exec'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/postgresql/database_statements.rb:167:in 'ActiveRecord::ConnectionAdapters::PostgreSQL::DatabaseStatements#perform_query'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:556:in 'block (2 levels) in ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract_adapter.rb:1022:in 'block in ActiveRecord::ConnectionAdapters::AbstractAdapter#with_raw_connection'
+	from /usr/local/bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/concurrency/null_lock.rb:9:in 'ActiveSupport::Concurrency::NullLock#synchronize'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract_adapter.rb:991:in 'ActiveRecord::ConnectionAdapters::AbstractAdapter#with_raw_connection'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:555:in 'block in ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+	from /usr/local/bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/notifications/instrumenter.rb:58:in 'ActiveSupport::Notifications::Instrumenter#instrument'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract_adapter.rb:1142:in 'ActiveRecord::ConnectionAdapters::AbstractAdapter#log'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:554:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:591:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#internal_execute'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/postgresql/database_statements.rb:15:in 'ActiveRecord::ConnectionAdapters::PostgreSQL::DatabaseStatements#query'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/postgresql_adapter.rb:1042:in 'ActiveRecord::ConnectionAdapters::PostgreSQLAdapter#column_definitions'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/schema_statements.rb:109:in 'ActiveRecord::ConnectionAdapters::SchemaStatements#columns'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:345:in 'block (2 levels) in ActiveRecord::ConnectionAdapters::SchemaCache#columns'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/connection_pool.rb:422:in 'ActiveRecord::ConnectionAdapters::ConnectionPool#with_connection'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:344:in 'block in ActiveRecord::ConnectionAdapters::SchemaCache#columns'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:343:in 'Hash#fetch'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:343:in 'ActiveRecord::ConnectionAdapters::SchemaCache#columns'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:354:in 'block in ActiveRecord::ConnectionAdapters::SchemaCache#columns_hash'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:353:in 'Hash#fetch'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:353:in 'ActiveRecord::ConnectionAdapters::SchemaCache#columns_hash'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:54:in 'ActiveRecord::ConnectionAdapters::SchemaReflection#columns_hash'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:198:in 'ActiveRecord::ConnectionAdapters::BoundSchemaReflection#columns_hash'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:592:in 'ActiveRecord::ModelSchema::ClassMethods#load_schema!'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/counter_cache.rb:187:in 'ActiveRecord::CounterCache::ClassMethods#load_schema!'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/encryption/encryptable_record.rb:127:in 'ActiveRecord::Encryption::EncryptableRecord::ClassMethods#load_schema!'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:539:in 'block in ActiveRecord::ModelSchema::ClassMethods#load_schema'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:536:in 'Monitor#synchronize'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:536:in 'ActiveRecord::ModelSchema::ClassMethods#load_schema'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:428:in 'ActiveRecord::ModelSchema::ClassMethods#columns_hash'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:1997:in 'ActiveRecord::QueryMethods#arel_column'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2155:in 'ActiveRecord::QueryMethods#order_column'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2097:in 'block in ActiveRecord::QueryMethods#preprocess_order_args'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2094:in 'Array#map!'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2094:in 'ActiveRecord::QueryMethods#preprocess_order_args'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:665:in 'ActiveRecord::QueryMethods#order!'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:660:in 'ActiveRecord::QueryMethods#order'
+	from /app/app/models/emoji.rb:266:in 'Emoji.load_custom'
+	from /app/app/models/emoji.rb:61:in 'block in Emoji.custom'
+	from /app/lib/cache.rb:93:in 'Cache#fetch'
+	from /app/app/models/emoji.rb:61:in 'Emoji.custom'
+	from /app/lib/pretty_text.rb:201:in 'block in PrettyText.markdown'
+	from /app/lib/pretty_text.rb:706:in 'block in PrettyText.protect'
+	from /app/lib/pretty_text.rb:705:in 'Thread::Mutex#synchronize'
+	from /app/lib/pretty_text.rb:705:in 'PrettyText.protect'
+	from /app/lib/pretty_text.rb:197:in 'PrettyText.markdown'
+	from /app/lib/pretty_text.rb:323:in 'PrettyText.cook'
+	from /app/lib/discourse.rb:1296:in 'block in Discourse.preload_rails!'
+/usr/local/bundle/ruby/3.4.0/gems/rack-mini-profiler-4.0.1/lib/patches/db/pg/alias_method.rb:109:in 'PG::Connection#exec': [1mPG::UndefinedTable: ERROR:  relation "custom_emojis" does not exist ([1;4mActiveRecord::StatementInvalid[m[1m)[m
+[1mLINE 10:  WHERE a.attrelid = '"custom_emojis"'::regclass[m
+[1m                             ^[m
+
+	from /usr/local/bundle/ruby/3.4.0/gems/rack-mini-profiler-4.0.1/lib/patches/db/pg/alias_method.rb:109:in 'PG::Connection#async_exec'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/postgresql/database_statements.rb:167:in 'ActiveRecord::ConnectionAdapters::PostgreSQL::DatabaseStatements#perform_query'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:556:in 'block (2 levels) in ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract_adapter.rb:1022:in 'block in ActiveRecord::ConnectionAdapters::AbstractAdapter#with_raw_connection'
+	from /usr/local/bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/concurrency/null_lock.rb:9:in 'ActiveSupport::Concurrency::NullLock#synchronize'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract_adapter.rb:991:in 'ActiveRecord::ConnectionAdapters::AbstractAdapter#with_raw_connection'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:555:in 'block in ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+	from /usr/local/bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/notifications/instrumenter.rb:58:in 'ActiveSupport::Notifications::Instrumenter#instrument'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract_adapter.rb:1142:in 'ActiveRecord::ConnectionAdapters::AbstractAdapter#log'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:554:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:591:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#internal_execute'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/postgresql/database_statements.rb:15:in 'ActiveRecord::ConnectionAdapters::PostgreSQL::DatabaseStatements#query'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/postgresql_adapter.rb:1042:in 'ActiveRecord::ConnectionAdapters::PostgreSQLAdapter#column_definitions'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/schema_statements.rb:109:in 'ActiveRecord::ConnectionAdapters::SchemaStatements#columns'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:345:in 'block (2 levels) in ActiveRecord::ConnectionAdapters::SchemaCache#columns'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/connection_pool.rb:422:in 'ActiveRecord::ConnectionAdapters::ConnectionPool#with_connection'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:344:in 'block in ActiveRecord::ConnectionAdapters::SchemaCache#columns'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:343:in 'Hash#fetch'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:343:in 'ActiveRecord::ConnectionAdapters::SchemaCache#columns'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:354:in 'block in ActiveRecord::ConnectionAdapters::SchemaCache#columns_hash'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:353:in 'Hash#fetch'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:353:in 'ActiveRecord::ConnectionAdapters::SchemaCache#columns_hash'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:54:in 'ActiveRecord::ConnectionAdapters::SchemaReflection#columns_hash'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:198:in 'ActiveRecord::ConnectionAdapters::BoundSchemaReflection#columns_hash'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:592:in 'ActiveRecord::ModelSchema::ClassMethods#load_schema!'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/counter_cache.rb:187:in 'ActiveRecord::CounterCache::ClassMethods#load_schema!'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/encryption/encryptable_record.rb:127:in 'ActiveRecord::Encryption::EncryptableRecord::ClassMethods#load_schema!'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:539:in 'block in ActiveRecord::ModelSchema::ClassMethods#load_schema'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:536:in 'Monitor#synchronize'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:536:in 'ActiveRecord::ModelSchema::ClassMethods#load_schema'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:428:in 'ActiveRecord::ModelSchema::ClassMethods#columns_hash'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:1997:in 'ActiveRecord::QueryMethods#arel_column'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2155:in 'ActiveRecord::QueryMethods#order_column'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2097:in 'block in ActiveRecord::QueryMethods#preprocess_order_args'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2094:in 'Array#map!'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2094:in 'ActiveRecord::QueryMethods#preprocess_order_args'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:665:in 'ActiveRecord::QueryMethods#order!'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:660:in 'ActiveRecord::QueryMethods#order'
+	from /app/app/models/emoji.rb:266:in 'Emoji.load_custom'
+	from /app/app/models/emoji.rb:61:in 'block in Emoji.custom'
+	from /app/lib/cache.rb:93:in 'Cache#fetch'
+	from /app/app/models/emoji.rb:61:in 'Emoji.custom'
+	from /app/lib/pretty_text.rb:201:in 'block in PrettyText.markdown'
+	from /app/lib/pretty_text.rb:706:in 'block in PrettyText.protect'
+	from /app/lib/pretty_text.rb:705:in 'Thread::Mutex#synchronize'
+	from /app/lib/pretty_text.rb:705:in 'PrettyText.protect'
+	from /app/lib/pretty_text.rb:197:in 'PrettyText.markdown'
+	from /app/lib/pretty_text.rb:323:in 'PrettyText.cook'
+	from /app/lib/discourse.rb:1296:in 'block in Discourse.preload_rails!'
+/usr/local/bundle/ruby/3.4.0/gems/rack-mini-profiler-4.0.1/lib/patches/db/pg/alias_method.rb:109:in 'PG::Connection#exec': [1mERROR:  relation "custom_emojis" does not exist ([1;4mPG::UndefinedTable[m[1m)[m
+[1mLINE 10:  WHERE a.attrelid = '"custom_emojis"'::regclass[m
+[1m                             ^[m
+
+	from /usr/local/bundle/ruby/3.4.0/gems/rack-mini-profiler-4.0.1/lib/patches/db/pg/alias_method.rb:109:in 'PG::Connection#async_exec'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/postgresql/database_statements.rb:167:in 'ActiveRecord::ConnectionAdapters::PostgreSQL::DatabaseStatements#perform_query'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:556:in 'block (2 levels) in ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract_adapter.rb:1022:in 'block in ActiveRecord::ConnectionAdapters::AbstractAdapter#with_raw_connection'
+	from /usr/local/bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/concurrency/null_lock.rb:9:in 'ActiveSupport::Concurrency::NullLock#synchronize'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract_adapter.rb:991:in 'ActiveRecord::ConnectionAdapters::AbstractAdapter#with_raw_connection'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:555:in 'block in ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+	from /usr/local/bundle/ruby/3.4.0/gems/activesupport-8.0.5/lib/active_support/notifications/instrumenter.rb:58:in 'ActiveSupport::Notifications::Instrumenter#instrument'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract_adapter.rb:1142:in 'ActiveRecord::ConnectionAdapters::AbstractAdapter#log'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:554:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#raw_execute'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/database_statements.rb:591:in 'ActiveRecord::ConnectionAdapters::DatabaseStatements#internal_execute'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/postgresql/database_statements.rb:15:in 'ActiveRecord::ConnectionAdapters::PostgreSQL::DatabaseStatements#query'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/postgresql_adapter.rb:1042:in 'ActiveRecord::ConnectionAdapters::PostgreSQLAdapter#column_definitions'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/schema_statements.rb:109:in 'ActiveRecord::ConnectionAdapters::SchemaStatements#columns'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:345:in 'block (2 levels) in ActiveRecord::ConnectionAdapters::SchemaCache#columns'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/abstract/connection_pool.rb:422:in 'ActiveRecord::ConnectionAdapters::ConnectionPool#with_connection'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:344:in 'block in ActiveRecord::ConnectionAdapters::SchemaCache#columns'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:343:in 'Hash#fetch'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:343:in 'ActiveRecord::ConnectionAdapters::SchemaCache#columns'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:354:in 'block in ActiveRecord::ConnectionAdapters::SchemaCache#columns_hash'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:353:in 'Hash#fetch'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:353:in 'ActiveRecord::ConnectionAdapters::SchemaCache#columns_hash'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:54:in 'ActiveRecord::ConnectionAdapters::SchemaReflection#columns_hash'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:198:in 'ActiveRecord::ConnectionAdapters::BoundSchemaReflection#columns_hash'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:592:in 'ActiveRecord::ModelSchema::ClassMethods#load_schema!'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/counter_cache.rb:187:in 'ActiveRecord::CounterCache::ClassMethods#load_schema!'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/encryption/encryptable_record.rb:127:in 'ActiveRecord::Encryption::EncryptableRecord::ClassMethods#load_schema!'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:539:in 'block in ActiveRecord::ModelSchema::ClassMethods#load_schema'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:536:in 'Monitor#synchronize'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:536:in 'ActiveRecord::ModelSchema::ClassMethods#load_schema'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:428:in 'ActiveRecord::ModelSchema::ClassMethods#columns_hash'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:1997:in 'ActiveRecord::QueryMethods#arel_column'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2155:in 'ActiveRecord::QueryMethods#order_column'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2097:in 'block in ActiveRecord::QueryMethods#preprocess_order_args'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2094:in 'Array#map!'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2094:in 'ActiveRecord::QueryMethods#preprocess_order_args'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:665:in 'ActiveRecord::QueryMethods#order!'
+	from /usr/local/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:660:in 'ActiveRecord::QueryMethods#order'
+	from /app/app/models/emoji.rb:266:in 'Emoji.load_custom'
+	from /app/app/models/emoji.rb:61:in 'block in Emoji.custom'
+	from /app/lib/cache.rb:93:in 'Cache#fetch'
+	from /app/app/models/emoji.rb:61:in 'Emoji.custom'
+	from /app/lib/pretty_text.rb:201:in 'block in PrettyText.markdown'
+	from /app/lib/pretty_text.rb:706:in 'block in PrettyText.protect'
+	from /app/lib/pretty_text.rb:705:in 'Thread::Mutex#synchronize'
+	from /app/lib/pretty_text.rb:705:in 'PrettyText.protect'
+	from /app/lib/pretty_text.rb:197:in 'PrettyText.markdown'
+	from /app/lib/pretty_text.rb:323:in 'PrettyText.cook'
+	from /app/lib/discourse.rb:1296:in 'block in Discourse.preload_rails!'
+I, [2026-04-30T07:34:06.237435 #1]  INFO -- : reaped unknown subprocess #<Process::Status: pid 285 exit 56>
+E, [2026-04-30T07:34:06.263861 #1] ERROR -- : mold gen=0 pid=11 reaped (#<Process::Status: pid 11 exit 1>)
+[31mbundler: failed to load command: pitchfork (/usr/local/bundle/ruby/3.4.0/bin/pitchfork)[0m
+/usr/local/bundle/ruby/3.4.0/gems/pitchfork-0.18.2/lib/pitchfork/http_server.rb:179:in 'Pitchfork::HttpServer#start': [1mThe initial mold failed to boot ([1;4mPitchfork::BootFailure[m[1m)[m
+	from /usr/local/bundle/ruby/3.4.0/gems/pitchfork-0.18.2/exe/pitchfork:110:in '<top (required)>'
+	from /usr/local/lib/ruby/site_ruby/3.4.0/rubygems.rb:305:in 'Kernel#load'
+	from /usr/local/lib/ruby/site_ruby/3.4.0/rubygems.rb:305:in 'Gem.activate_and_load_bin_path'
+	from /usr/local/bundle/ruby/3.4.0/bin/pitchfork:25:in '<top (required)>'
+	from /usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli/exec.rb:59:in 'Kernel.load'
+	from /usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli/exec.rb:59:in 'Bundler::CLI::Exec#kernel_load'
+	from /usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli/exec.rb:23:in 'Bundler::CLI::Exec#run'
+	from /usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli.rb:452:in 'Bundler::CLI#exec'
+	from /usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor/command.rb:28:in 'Bundler::Thor::Command#run'
+	from /usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor/invocation.rb:127:in 'Bundler::Thor::Invocation#invoke_command'
+	from /usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor.rb:538:in 'Bundler::Thor.dispatch'
+	from /usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli.rb:35:in 'Bundler::CLI.dispatch'
+	from /usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor/base.rb:584:in 'Bundler::Thor::Base::ClassMethods#start'
+	from /usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli.rb:29:in 'Bundler::CLI.start'
+	from /usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/exe/bundle:28:in 'block in <top (required)>'
+	from /usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/friendly_errors.rb:117:in 'Bundler.with_friendly_errors'
+	from /usr/local/bundle/ruby/3.4.0/gems/bundler-2.6.4/exe/bundle:20:in '<top (required)>'
+	from /usr/local/lib/ruby/site_ruby/3.4.0/rubygems.rb:305:in 'Kernel#load'
+	from /usr/local/lib/ruby/site_ruby/3.4.0/rubygems.rb:305:in 'Gem.activate_and_load_bin_path'
+	from /usr/local/bin/bundle:25:in '<main>'
+
+=== discourse-db-1 ===
+The files belonging to this database system will be owned by user "postgres".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.utf8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+fixing permissions on existing directory /var/lib/postgresql/data ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+
+Success. You can now start the database server using:
+
+    pg_ctl -D /var/lib/postgresql/data -l logfile start
+
+waiting for server to start....2026-04-30 07:33:50.565 UTC [48] LOG:  starting PostgreSQL 16.13 (Debian 16.13-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+2026-04-30 07:33:50.566 UTC [48] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-04-30 07:33:50.570 UTC [51] LOG:  database system was shut down at 2026-04-30 07:33:50 UTC
+2026-04-30 07:33:50.573 UTC [48] LOG:  database system is ready to accept connections
+ done
+server started
+CREATE DATABASE
+
+
+/usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+
+2026-04-30 07:33:50.728 UTC [48] LOG:  received fast shutdown request
+waiting for server to shut down....2026-04-30 07:33:50.729 UTC [48] LOG:  aborting any active transactions
+2026-04-30 07:33:50.730 UTC [48] LOG:  background worker "logical replication launcher" (PID 54) exited with exit code 1
+2026-04-30 07:33:50.730 UTC [49] LOG:  shutting down
+2026-04-30 07:33:50.731 UTC [49] LOG:  checkpoint starting: shutdown immediate
+2026-04-30 07:33:50.755 UTC [49] LOG:  checkpoint complete: wrote 926 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.016 s, total=0.025 s; sync files=301, longest=0.001 s, average=0.001 s; distance=4273 kB, estimate=4273 kB; lsn=0/191F0F0, redo lsn=0/191F0F0
+2026-04-30 07:33:50.758 UTC [48] LOG:  database system is shut down
+ done
+server stopped
+
+PostgreSQL init process complete; ready for start up.
+
+=== discourse-redis-1 ===
+1:C 30 Apr 2026 07:33:50.151 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+1:C 30 Apr 2026 07:33:50.151 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+1:C 30 Apr 2026 07:33:50.151 * Redis version=7.4.8, bits=64, commit=00000000, modified=0, pid=1, just started
+1:C 30 Apr 2026 07:33:50.151 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+1:M 30 Apr 2026 07:33:50.151 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+1:M 30 Apr 2026 07:33:50.151 * monotonic clock: POSIX clock_gettime
+1:M 30 Apr 2026 07:33:50.152 * Running mode=standalone, port=6379.
+1:M 30 Apr 2026 07:33:50.152 * Server initialized
+1:M 30 Apr 2026 07:33:50.152 * Ready to accept connections tcp

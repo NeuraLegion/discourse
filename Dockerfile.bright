@@ -1,0 +1,87 @@
+FROM ruby:3.4-bookworm
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    BUNDLE_WITHOUT="development" \
+    BUNDLE_PATH=/usr/local/bundle \
+    BUNDLE_JOBS=4 \
+    BUNDLE_RETRY=3 \
+    RAILS_ENV=production \
+    RACK_ENV=production \
+    NODE_ENV=production \
+    DISCOURSE_HOSTNAME=localhost \
+    SECRET_KEY_BASE=dummy_secret_key_base_for_dast_testing
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    git \
+    curl \
+    ca-certificates \
+    pkg-config \
+    libpq-dev \
+    libyaml-dev \
+    libxml2-dev \
+    libxslt1-dev \
+    libssl-dev \
+    zlib1g-dev \
+    libffi-dev \
+    libgmp-dev \
+    libreadline-dev \
+    libsqlite3-dev \
+    imagemagick \
+    fonts-noto \
+    fonts-liberation \
+    libvips42 \
+    libjemalloc2 \
+    wkhtmltopdf \
+    redis-tools \
+    brotli \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends nodejs \
+    && corepack enable \
+    && corepack prepare pnpm@10.28.0 --activate \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN gem update --system --no-document \
+    && gem install bundler --no-document
+
+COPY Gemfile Gemfile.lock ./
+RUN bundle config set without 'development' \
+    && bundle config set path "${BUNDLE_PATH}" \
+    && bundle install
+
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
+COPY patches ./patches
+COPY frontend ./frontend
+COPY plugins ./plugins
+COPY themes ./themes
+COPY script ./script
+
+RUN pnpm install --frozen-lockfile
+
+COPY . .
+
+RUN if [ -d plugins/discourse-ai ]; then \
+      mkdir -p plugins-disabled && mv plugins/discourse-ai plugins-disabled/discourse-ai; \
+    fi
+
+RUN sed -i 's/^db_host = .*/db_host = db/' config/discourse_defaults.conf \
+    && sed -i 's/^db_name = .*/db_name = discourse/' config/discourse_defaults.conf \
+    && sed -i 's/^db_username = .*/db_username = discourse/' config/discourse_defaults.conf \
+    && sed -i 's/^db_password = .*/db_password = discourse/' config/discourse_defaults.conf \
+    && sed -i 's/^redis_host = .*/redis_host = redis/' config/discourse_defaults.conf \
+    && sed -i 's/^message_bus_redis_host = .*/message_bus_redis_host = redis/' config/discourse_defaults.conf \
+    && sed -i 's/^hostname = "www.example.com"/hostname = "localhost"/' config/discourse_defaults.conf
+
+RUN SKIP_DB_AND_REDIS=1 bundle exec rake assets:precompile \
+    && ln -sf /usr/bin/convert /usr/local/bin/magick
+
+EXPOSE 3000
+
+CMD ["bash", "-lc", "UNICORN_BIND_ALL=true bundle exec pitchfork -c config/pitchfork.conf.rb"]

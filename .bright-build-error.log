@@ -1,0 +1,11 @@
+docker compose --wait failed and port 3000 is not reachable. Original error: Process exited with code 1.
+
+First 30 lines:
+#1 [internal] load local bake definitions
+ERR:  Image discourse-app Building 
+#1 reading from stdin 523B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile.bright
+#2 transferring dockerfile: 2.69kB done
+#2 WARN: SecretsUsedInArgOrEnv: 

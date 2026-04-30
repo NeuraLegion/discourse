@@ -1,0 +1,65 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.bright
+    environment:
+      RAILS_ENV: production
+      NODE_ENV: production
+      RACK_ENV: production
+      DISCOURSE_HOSTNAME: app.localhost
+      DISCOURSE_DB_HOST: db
+      DISCOURSE_DB_NAME: discourse
+      DISCOURSE_DB_USERNAME: postgres
+      DISCOURSE_DB_PASSWORD: postgres
+      DISCOURSE_REDIS_HOST: redis
+      DISCOURSE_REDIS_PORT: "6379"
+      DISCOURSE_MESSAGE_BUS_REDIS_HOST: redis
+      DISCOURSE_MESSAGE_BUS_REDIS_PORT: "6379"
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+    command: >
+      bash -lc "if [ ! -f tmp/.bright_db_prepared ]; then bundle exec rake db:migrate && mkdir -p tmp && touch tmp/.bright_db_prepared; fi; RUBY_BIND=0.0.0.0 UNICORN_BIND_ALL=true bundle exec pitchfork -c config/pitchfork.conf.rb"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:3000/srv/status || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 40s
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: discourse
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+volumes:
+  db-data:
+  redis-data:
