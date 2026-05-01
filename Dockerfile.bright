@@ -1,0 +1,103 @@
+FROM node:22-bookworm-slim AS node
+
+RUN corepack enable && corepack prepare pnpm@10.28.0 --activate
+
+FROM ruby:3.4-bookworm
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    RAILS_ENV=production \
+    RACK_ENV=production \
+    NODE_ENV=production \
+    BUNDLE_WITHOUT=development:test \
+    BUNDLE_PATH=/bundle \
+    BUNDLE_JOBS=4 \
+    BUNDLE_RETRY=3 \
+    SECRET_KEY_BASE=dummy-secret-key-base-for-dast \
+    DISCOURSE_DB_HOST=db \
+    DISCOURSE_DB_NAME=discourse \
+    DISCOURSE_DB_USERNAME=discourse \
+    DISCOURSE_DB_PASSWORD=discourse \
+    DISCOURSE_REDIS_HOST=redis \
+    DISCOURSE_MESSAGE_BUS_REDIS_HOST=redis \
+    DISCOURSE_MESSAGE_BUS_REDIS_ENABLED=true \
+    DISCOURSE_HOSTNAME=localhost \
+    DISCOURSE_REFRESH_MAXMIND_DB_DURING_PRECOMPILE_DAYS=0 \
+    UNICORN_BIND_ALL=1 \
+    UNICORN_PORT=3000 \
+    PATH=/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+
+WORKDIR /var/www/discourse
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      build-essential \
+      git \
+      pkg-config \
+      curl \
+      ca-certificates \
+      gnupg \
+      libssl-dev \
+      libreadline-dev \
+      zlib1g-dev \
+      libyaml-dev \
+      libxml2-dev \
+      libxslt1-dev \
+      libpq-dev \
+      imagemagick \
+      fonts-noto \
+      fonts-liberation \
+      ffmpeg \
+      libvips \
+      libjemalloc2 \
+      shared-mime-info \
+      xz-utils \
+      wget \
+      libglib2.0-0 \
+      libgconf-2-4 \
+      chromium \
+      brotli \
+    && ln -sf /usr/bin/convert /usr/local/bin/magick \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+COPY --from=node /usr/local/lib/node_modules/corepack /usr/local/lib/node_modules/corepack
+
+RUN ln -sf ../lib/node_modules/corepack/dist/corepack.js /usr/local/bin/corepack \
+    && ln -sf ../lib/node_modules/corepack/dist/pnpm.js /usr/local/bin/pnpm \
+    && ln -sf ../lib/node_modules/corepack/dist/pnpx.js /usr/local/bin/pnpx \
+    && corepack enable \
+    && corepack prepare pnpm@10.28.0 --activate \
+    && pnpm --version
+
+COPY Gemfile Gemfile.lock package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY patches ./patches
+COPY config/sidekiq.yml config/sidekiq.yml
+COPY config/pitchfork.conf.rb config/pitchfork.conf.rb
+COPY config/discourse_defaults.conf config/discourse_defaults.conf
+COPY config/database.yml config/database.yml
+COPY config/nginx.sample.conf config/nginx.sample.conf
+
+RUN printf "auto-install-peers=false\n" > .npmrc
+
+RUN bundle config set path "$BUNDLE_PATH" \
+    && bundle config set without 'development test' \
+    && bundle install
+
+COPY . .
+
+RUN printf "db_host = db\n\
+db_name = discourse\n\
+db_username = discourse\n\
+db_password = discourse\n\
+redis_host = redis\n\
+message_bus_redis_enabled = true\n\
+message_bus_redis_host = redis\n\
+hostname = localhost\n\
+refresh_maxmind_db_during_precompile_days = 0\n" > config/discourse.conf
+
+RUN pnpm install --frozen-lockfile \
+    && pnpm --dir=frontend/discourse build \
+    && SKIP_DB_AND_REDIS=1 bundle exec rake assets:precompile
+
+EXPOSE 3000
+
+CMD ["bash", "-lc", "bundle exec pitchfork -c config/pitchfork.conf.rb"]
