@@ -1,0 +1,96 @@
+FROM ruby:3.4-bookworm
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    RAILS_ENV=production \
+    RACK_ENV=production \
+    NODE_ENV=production \
+    BUNDLE_WITHOUT="development:test" \
+    BUNDLE_PATH=/bundle \
+    BUNDLE_RETRY=3 \
+    SKIP_ENFORCE_HOSTNAME=1 \
+    SECRET_KEY_BASE=dummy_secret_key_base_for_dast \
+    DISCOURSE_HOSTNAME=localhost \
+    DISCOURSE_MULTISITE_CONFIG_PATH=/app/config/multisite.yml \
+    PNPM_HOME=/root/.local/share/pnpm \
+    PATH=/root/.local/share/pnpm:/usr/local/lib/node_modules/.bin:$PATH
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      ca-certificates \
+      curl \
+      git \
+      gnupg \
+      build-essential \
+      pkg-config \
+      autoconf \
+      bison \
+      libpq-dev \
+      libyaml-dev \
+      libxml2-dev \
+      libxslt1-dev \
+      zlib1g-dev \
+      libssl-dev \
+      libreadline-dev \
+      libgmp-dev \
+      libffi-dev \
+      libjpeg62-turbo-dev \
+      libpng-dev \
+      libwebp-dev \
+      imagemagick \
+      fonts-noto \
+      fonts-liberation \
+      shared-mime-info \
+      poppler-utils \
+      ghostscript \
+      ffmpeg \
+      gifsicle \
+      optipng \
+      jpegoptim \
+      brotli \
+      xz-utils \
+      libvips \
+      postgresql-client \
+      default-mysql-client \
+      sqlite3 \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=node:22-bookworm-slim /usr/local/ /usr/local/
+COPY --from=node:22-bookworm-slim /opt/yarn-v1.22.22/ /opt/yarn-v1.22.22/
+
+RUN corepack enable \
+    && corepack prepare pnpm@10.28.0 --activate \
+    && pnpm --version \
+    && node --version
+
+RUN gem update --system --no-document \
+    && gem install bundler --no-document
+
+COPY Gemfile Gemfile.lock ./
+RUN bundle config set without "${BUNDLE_WITHOUT}" \
+    && bundle config set path "${BUNDLE_PATH}" \
+    && bundle config set jobs "$(nproc)" \
+    && bundle install
+
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY patches ./patches
+COPY frontend ./frontend
+COPY plugins ./plugins
+COPY themes ./themes
+
+RUN printf "auto-install-peers=false\n" > /app/.npmrc \
+    && pnpm install --frozen-lockfile
+
+COPY . .
+
+RUN sed -i '/^[[:space:]]*production:/,/^[[:space:]]*[A-Za-z0-9_-]\+:/ s/^\([[:space:]]*\)#\{0,1\}[[:space:]]*host:[[:space:]].*$/\1host: db/' config/database.yml || true
+
+RUN rm -rf /app/public/fonts \
+    && ln -sf /usr/bin/convert /usr/local/bin/magick \
+    && SKIP_DB_AND_REDIS=1 bundle exec rake assets:precompile
+
+EXPOSE 3000
+
+CMD ["bash", "-lc", "bundle exec pitchfork -c config/pitchfork.conf.rb"]
