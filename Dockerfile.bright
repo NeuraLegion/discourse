@@ -1,0 +1,90 @@
+FROM ruby:3.4-bookworm
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    LANG=C.UTF-8 \
+    BUNDLE_PATH=/bundle \
+    BUNDLE_WITHOUT="development test" \
+    RAILS_ENV=production \
+    NODE_ENV=production \
+    DISCOURSE_HOSTNAME=localhost \
+    SKIP_ENFORCE_HOSTNAME=1 \
+    SECRET_KEY_BASE=dummy_secret_key_base_for_dast_testing \
+    RAILS_LOG_TO_STDOUT=1 \
+    RAILS_SERVE_STATIC_FILES=1 \
+    MAKEFLAGS="-j$(nproc)" \
+    CARGO_BUILD_JOBS="$(nproc)"
+
+WORKDIR /var/www/discourse
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    curl \
+    git \
+    gnupg \
+    build-essential \
+    pkg-config \
+    autoconf \
+    bison \
+    libssl-dev \
+    libyaml-dev \
+    libreadline-dev \
+    zlib1g-dev \
+    libgdbm-dev \
+    libncurses5-dev \
+    libffi-dev \
+    libxml2-dev \
+    libxslt1-dev \
+    libpq-dev \
+    imagemagick \
+    fonts-noto \
+    fonts-liberation \
+    jpegoptim \
+    optipng \
+    gifsicle \
+    pngquant \
+    brotli \
+    libvips \
+    libvips-tools \
+    libjemalloc2 \
+    shared-mime-info \
+    xz-utils \
+    file \
+  && ln -sf /usr/bin/convert /usr/local/bin/magick \
+  && rm -rf /var/lib/apt/lists/*
+
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+  && apt-get update && apt-get install -y --no-install-recommends nodejs \
+  && rm -rf /var/lib/apt/lists/*
+
+RUN corepack enable \
+  && corepack prepare pnpm@10.28.0 --activate
+
+COPY Gemfile Gemfile.lock package.json pnpm-workspace.yaml pnpm-lock.yaml ./
+COPY frontend ./frontend
+COPY plugins ./plugins
+RUN if [ -d plugins/discourse-ai ]; then mv plugins/discourse-ai plugins/discourse-ai.disabled; fi
+COPY themes ./themes
+COPY app ./app
+COPY config ./config
+COPY lib ./lib
+COPY public ./public
+COPY script ./script
+COPY bin ./bin
+COPY docs ./docs
+COPY migrations ./migrations
+COPY spec ./spec
+COPY Rakefile ./
+COPY . .
+
+RUN bundle config set --local jobs "$(nproc)" \
+  && bundle config set --local retry 3 \
+  && bundle config set --local path "$BUNDLE_PATH" \
+  && bundle install \
+  && pnpm install --frozen-lockfile
+
+RUN rm -f public/assets/.sprockets-manifest*.json public/assets/.manifest.json \
+  && DISCOURSE_DB_HOST=localhost DISCOURSE_REDIS_HOST=redis DISCOURSE_MESSAGE_BUS_REDIS_HOST=redis SKIP_DB_AND_REDIS=1 bundle exec rake assets:precompile
+
+EXPOSE 3000
+
+CMD ["bash", "-lc", "UNICORN_BIND_ALL=true bundle exec pitchfork -c config/pitchfork.conf.rb"]

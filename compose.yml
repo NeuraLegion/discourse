@@ -1,0 +1,70 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.bright
+    environment:
+      RAILS_ENV: production
+      NODE_ENV: production
+      DISCOURSE_HOSTNAME: localhost
+      SECRET_KEY_BASE: dummy_secret_key_base_for_dast_testing
+      DISCOURSE_DB_HOST: db
+      DISCOURSE_DB_NAME: discourse
+      DISCOURSE_DB_USERNAME: discourse
+      DISCOURSE_DB_PASSWORD: discourse
+      DISCOURSE_REDIS_HOST: redis
+      DISCOURSE_MESSAGE_BUS_REDIS_HOST: redis
+      SKIP_ENFORCE_HOSTNAME: "1"
+      DISCOURSE_MAX_REQS_PER_IP_MODE: none
+      DISCOURSE_MAX_REQS_PER_IP_PER_MINUTE: "0"
+      DISCOURSE_MAX_REQS_PER_IP_PER_10_SECONDS: "0"
+      DISCOURSE_MAX_ASSET_REQS_PER_IP_PER_10_SECONDS: "0"
+      DISCOURSE_MAX_USER_API_REQS_PER_MINUTE: "0"
+      DISCOURSE_MAX_USER_API_REQS_PER_DAY: "0"
+      DISCOURSE_MAX_ADMIN_API_REQS_PER_MINUTE: "0"
+      DISCOURSE_MAX_REQS_RATE_LIMIT_ON_PRIVATE: "true"
+      DISCOURSE_DEVELOPER_EMAILS: smoke_user@discourse.org
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+    command: bash -lc "rm -rf plugins/discourse-ai plugins/discourse-ai.disabled && bundle exec rake db:migrate && bundle exec rake db:seed_fu && SMOKE=1 bundle exec rake db:seed_fu && UNICORN_BIND_ALL=true bundle exec pitchfork -c config/pitchfork.conf.rb"
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: discourse
+      POSTGRES_PASSWORD: discourse
+      POSTGRES_DB: discourse
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U discourse"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    ports:
+      - "6379:6379"
+
+volumes:
+  db-data:
+  redis-data:
