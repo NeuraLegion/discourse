@@ -1,0 +1,98 @@
+# syntax=docker/dockerfile:1.7
+FROM ruby:3.4-bookworm
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    RAILS_ENV=production \
+    RACK_ENV=production \
+    NODE_ENV=production \
+    DISCOURSE_RUNNING_IN_RACK=1 \
+    BUNDLE_PATH=/bundle \
+    BUNDLE_WITHOUT="development test" \
+    BUNDLE_JOBS=4 \
+    MAKEFLAGS="-j4" \
+    YARN_IGNORE_PATH=1 \
+    PLAYWRIGHT_BROWSERS_PATH=/ms-playwright \
+    SKIP_ENFORCE_HOSTNAME=1 \
+    DISCOURSE_HOSTNAME=app.localhost \
+    DISCOURSE_DB_HOST=db \
+    DISCOURSE_DB_PORT=5432 \
+    DISCOURSE_DB_NAME=discourse \
+    DISCOURSE_DB_USERNAME=postgres \
+    DISCOURSE_DB_PASSWORD=postgres \
+    DISCOURSE_REDIS_HOST=redis \
+    DISCOURSE_REDIS_PORT=6379 \
+    UNICORN_BIND_ALL=1
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    bash \
+    build-essential \
+    ca-certificates \
+    curl \
+    git \
+    gnupg \
+    pkg-config \
+    libpq-dev \
+    libyaml-dev \
+    libxml2-dev \
+    libxslt1-dev \
+    zlib1g-dev \
+    libffi-dev \
+    libgmp-dev \
+    libvips42 \
+    libvips-tools \
+    imagemagick \
+    fonts-noto \
+    fonts-liberation \
+    ghostscript \
+    wkhtmltopdf \
+    ffmpeg \
+    poppler-utils \
+    optipng \
+    jpegoptim \
+    gifsicle \
+    brotli \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
+    apt-get update && apt-get install -y --no-install-recommends nodejs && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN corepack enable && corepack prepare pnpm@10.28.0 --activate
+RUN ln -sf /usr/bin/convert /usr/local/bin/magick
+
+COPY Gemfile Gemfile.lock ./
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
+COPY .npmrc ./
+COPY patches ./patches
+COPY frontend ./frontend
+COPY plugins ./plugins
+COPY themes ./themes
+COPY app ./app
+COPY config ./config
+COPY lib ./lib
+COPY script ./script
+COPY public ./public
+COPY db ./db
+COPY migrations ./migrations
+COPY docs ./docs
+COPY bin ./bin
+COPY vendor ./vendor
+COPY Rakefile config.ru ./
+
+RUN bundle config set --local path "$BUNDLE_PATH" && \
+    bundle config set --local without 'development test' && \
+    bundle config set --local jobs "$(nproc)" && \
+    bundle install && \
+    pnpm install --frozen-lockfile
+
+COPY . .
+
+RUN SKIP_DB_AND_REDIS=1 bundle exec rake assets:precompile
+
+EXPOSE 3000
+
+CMD ["bash", "-lc", "bundle exec pitchfork -c config/pitchfork.conf.rb"]

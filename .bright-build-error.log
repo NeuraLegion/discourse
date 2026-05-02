@@ -1,0 +1,94 @@
+Application failed on port 3000: The app reports listening on 0.0.0.0:3000, but the host has never reached port 3000 after 22 seconds and 9 failures, indicating a likely port-mapping/binding mismatch that will not resolve by waiting.
+
+Container logs:
+db-1  | 
+db-1  | PostgreSQL Database directory appears to contain a database; Skipping initialization
+db-1  | 
+db-1  | 2026-05-02 19:44:44.212 UTC [1] LOG:  starting PostgreSQL 16.13 (Debian 16.13-1.pgdg12+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+db-1  | 2026-05-02 19:44:44.212 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+db-1  | 2026-05-02 19:44:44.212 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+db-1  | 2026-05-02 19:44:44.214 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1  | 2026-05-02 19:44:44.217 UTC [29] LOG:  database system was shut down at 2026-05-02 19:42:35 UTC
+db-1  | 2026-05-02 19:44:44.221 UTC [1] LOG:  database system is ready to accept connections
+db-1  | 2026-05-02 19:44:51.920 UTC [40] ERROR:  database "discourse" already exists
+db-1  | 2026-05-02 19:44:51.920 UTC [40] STATEMENT:  CREATE DATABASE "discourse" ENCODING = 'utf8'
+redis-1  | 1:C 02 May 2026 19:44:44.162 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+redis-1  | 1:C 02 May 2026 19:44:44.162 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 1:C 02 May 2026 19:44:44.162 * Redis version=7.4.8, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1  | 1:C 02 May 2026 19:44:44.162 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis-1  | 1:M 02 May 2026 19:44:44.163 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+redis-1  | 1:M 02 May 2026 19:44:44.163 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 02 May 2026 19:44:44.163 * Running mode=standalone, port=6379.
+redis-1  | 1:M 02 May 2026 19:44:44.163 * Server initialized
+redis-1  | 1:M 02 May 2026 19:44:44.163 * Loading RDB produced by version 7.4.8
+redis-1  | 1:M 02 May 2026 19:44:44.163 * RDB age 129 seconds
+redis-1  | 1:M 02 May 2026 19:44:44.164 * RDB memory usage when created 2.33 Mb
+redis-1  | 1:M 02 May 2026 19:44:44.166 * Done loading RDB, keys loaded: 55, keys expired: 10.
+redis-1  | 1:M 02 May 2026 19:44:44.166 * DB loaded from disk: 0.002 seconds
+redis-1  | 1:M 02 May 2026 19:44:44.166 * Ready to accept connections tcp
+app-1    | Database 'discourse' already exists
+app-1    | WARNING: Discourse hostname: localhost is not a valid domain for emails!
+app-1    | I, [2026-05-02T19:45:03.267925 #160]  INFO -- : listening on addr=0.0.0.0:3000 fd=12
+app-1    | I, [2026-05-02T19:45:12.183004 #1]  INFO -- : mold gen=0 pid=160 ready
+app-1    | I, [2026-05-02T19:45:12.183094 #1]  INFO -- : monitor pid=1 ready
+app-1    | I, [2026-05-02T19:45:12.183114 #1]  INFO -- : monitor process ready
+app-1    | I, [2026-05-02T19:45:12.183341 #160]  INFO -- : service gen=0 spawning...
+app-1    | I, [2026-05-02T19:45:13.220656 #1]  INFO -- : service gen=0 pid=729 spawned
+app-1    | I, [2026-05-02T19:45:13.236624 #160]  INFO -- : worker=0 gen=0 spawning...
+app-1    | I, [2026-05-02T19:45:14.268008 #1]  INFO -- : worker=0 gen=0 pid=736 registered
+app-1    | I, [2026-05-02T19:45:14.287189 #160]  INFO -- : worker=1 gen=0 spawning...
+app-1    | I, [2026-05-02T19:45:14.308980 #736]  INFO -- : worker=0 gen=0 pid=736 ready
+
+Container diagnostics:
+Port mappings:
+3000/tcp -> 0.0.0.0:3000
+3000/tcp -> [::]:3000
+
+Network port config:
+{"3000/tcp":[{"HostIp":"0.0.0.0","HostPort":"3000"},{"HostIp":"::","HostPort":"3000"}]}
+
+Processes inside container:
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  1.4  0.0 478028 30512 pts/0    Ssl+ 19:44   0:00 pitchfork monitor - 
+root         160 75.3  0.7 7629184 460972 pts/0  Sl   19:44   0:11 pitchfork (gen:0) mold - ready
+root         729  0.0  0.6 7629184 416016 pts/0  Sl   19:45   0:00 pitchfork (gen:0) service - ready
+root         736 77.1  0.7 8172180 467328 pts/0  Sl   19:45   0:00 pitchfork (gen:0) worker[0] - requests: 0, processing: /
+root         767 42.4  0.0 403700 65524 pts/0    Sl   19:45   0:00 /bundle/ruby/3.4.0/gems/sass-embedded-1.99.0-x86_64-linux-gnu/lib/sass/dart-sass/src/dart /bundle/ruby/3.4.0/gems/sass-embedded-1.99.0-x86_64-linux-gnu/lib/sass/dart-sass/src/sass.snapshot --embedded
+root         781 50.0  0.0   8552  4548 ?        Rs   19:45   0:00 ps aux
+
+Container stdout/stderr (last 50 lines):
+Database 'discourse' already exists
+WARNING: Discourse hostname: localhost is not a valid domain for emails!
+I, [2026-05-02T19:45:03.267925 #160]  INFO -- : listening on addr=0.0.0.0:3000 fd=12
+I, [2026-05-02T19:45:12.183004 #1]  INFO -- : mold gen=0 pid=160 ready
+I, [2026-05-02T19:45:12.183094 #1]  INFO -- : monitor pid=1 ready
+I, [2026-05-02T19:45:12.183114 #1]  INFO -- : monitor process ready
+I, [2026-05-02T19:45:12.183341 #160]  INFO -- : service gen=0 spawning...
+I, [2026-05-02T19:45:13.220656 #1]  INFO -- : service gen=0 pid=729 spawned
+I, [2026-05-02T19:45:13.236624 #160]  INFO -- : worker=0 gen=0 spawning...
+I, [2026-05-02T19:45:14.268008 #1]  INFO -- : worker=0 gen=0 pid=736 registered
+I, [2026-05-02T19:45:14.287189 #160]  INFO -- : worker=1 gen=0 spawning...
+I, [2026-05-02T19:45:14.308980 #736]  INFO -- : worker=0 gen=0 pid=736 ready
+
+Application logs inside container:
+=== /app/log/production.log ===
+Writing map/plugins/discourse-zendesk-plugin_main-at542922.digested.js.map
+Writing js/plugins/discourse-zendesk-plugin_main-at542922.digested.js
+Writing map/plugins/footnote_main-otcg5ooz.digested.js.map
+Writing js/plugins/footnote_main-otcg5ooz.digested.js
+Writing plugins/footnote_extra-95ffab71.js
+Writing map/plugins/poll_main-2rup8vqn.digested.js.map
+Writing js/plugins/poll_main-2rup8vqn.digested.js
+Writing map/plugins/spoiler-alert_main-ku7h39dg.digested.js.map
+Writing js/plugins/spoiler-alert_main-ku7h39dg.digested.js
+Writing map/plugins/styleguide_main-hypm3ttf.digested.js.map
+Writing js/plugins/styleguide_main-hypm3ttf.digested.js
+Writing logster.js-0dc7c930.erb
+Writing message-bus-ajax-75fbb252.js
+Writing message-bus-ff3a5dc1.js
+Writing rails-ujs.esm-4793aacd.js
+Writing rails-ujs-02496e62.js
+Sidekiq 7.3.10 connecting to Redis with options {size: 10, pool_name: "internal", host: "redis", port: 6379, db: 1, url: nil}
+Sidekiq 7.3.10 connecting to Redis with options {size: 10, pool_name: "internal", host: "redis", port: 6379, db: 1, url: nil}
+Started GET "/" for 172.18.0.1 at 2026-05-02 19:45:14 +0000
+Processing by ListController#latest as HTML
