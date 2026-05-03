@@ -36,6 +36,25 @@ class UploadsController < ApplicationController
     IPAddr.new("fe80::/10"),
   ].freeze
 
+  SHORT_UPLOAD_URL_PATTERN = %r{
+    \A
+    (?:
+      /uploads/
+        (?:(?:secure|default|optimized)/)?
+        (?:short-|)
+        [A-Za-z0-9/_\-\.]+?
+        /[A-Za-z0-9]+\.[A-Za-z0-9]+(?:\?[^\s]*)?
+      |
+      /uploads/
+        (?:(?:secure|default|optimized)/)?
+        [A-Za-z0-9/_\-\.]+?
+        /[A-Za-z0-9]+\.[A-Za-z0-9]+(?:\?[^\s]*)?
+      |
+      [A-Za-z0-9]+(?:\.[A-Za-z0-9]+)?
+    )
+    \z
+  }x.freeze
+
   def create
     # capture current user for block later on
     me = current_user
@@ -106,12 +125,12 @@ class UploadsController < ApplicationController
   end
 
   def lookup_urls
-    params.permit(short_urls: [])
+    short_urls = sanitized_short_urls
     uploads = []
 
-    if (params[:short_urls] && params[:short_urls].length > 0)
+    if short_urls.present?
       PrettyText::Helpers
-        .lookup_upload_urls(params[:short_urls])
+        .lookup_upload_urls(short_urls)
         .each do |short_url, paths|
           uploads << { short_url: short_url, url: paths[:url], short_path: paths[:short_path] }
         end
@@ -364,6 +383,21 @@ class UploadsController < ApplicationController
   end
 
   private
+
+  def sanitized_short_urls
+    short_urls = params[:short_urls]
+    return [] unless short_urls.is_a?(Array)
+
+    short_urls.filter_map do |short_url|
+      next unless short_url.is_a?(String)
+
+      short_url = short_url.strip
+      next if short_url.blank?
+      next unless short_url.match?(SHORT_UPLOAD_URL_PATTERN)
+
+      short_url
+    end.uniq
+  end
 
   def self.max_attachment_size_for_user(user)
     if user.id == Discourse::SYSTEM_USER_ID && !SiteSetting.system_user_max_attachment_size_kb.zero?
