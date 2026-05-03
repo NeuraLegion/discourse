@@ -1,0 +1,63 @@
+Compose container "discourse-app-1" crashed (state: exited, exit code: 1)
+
+Container diagnostics:
+Network port config:
+{}
+
+Processes inside container:
+Error response from daemon: container f809d2736f90e0a74d6faf044f4b8857a20f7ccc0a130faefb5fbfd1fe8385e9 is not running
+
+Container stdout/stderr (last 50 lines):
+/app/plugins/discourse-ai/lib/configuration/module.rb:39: warning: already initialized constant DiscourseAi::Configuration::Module::SPAM_ID
+/app/plugins/discourse-ai.disabled/lib/configuration/module.rb:39: warning: previous definition of SPAM_ID was here
+/app/plugins/discourse-ai/lib/configuration/module.rb:40: warning: already initialized constant DiscourseAi::Configuration::Module::EMBEDDINGS_ID
+/app/plugins/discourse-ai.disabled/lib/configuration/module.rb:40: warning: previous definition of EMBEDDINGS_ID was here
+/app/plugins/discourse-ai/lib/configuration/module.rb:41: warning: already initialized constant DiscourseAi::Configuration::Module::AUTOMATION_REPORTS_ID
+/app/plugins/discourse-ai.disabled/lib/configuration/module.rb:41: warning: previous definition of AUTOMATION_REPORTS_ID was here
+/app/plugins/discourse-ai/lib/configuration/module.rb:42: warning: already initialized constant DiscourseAi::Configuration::Module::AUTOMATION_TRIAGE_ID
+/app/plugins/discourse-ai.disabled/lib/configuration/module.rb:42: warning: previous definition of AUTOMATION_TRIAGE_ID was here
+/app/plugins/discourse-ai/lib/mcp/oauth_discovery.rb:6: warning: already initialized constant DiscourseAi::Mcp::OAuthDiscovery::Result
+/app/plugins/discourse-ai.disabled/lib/mcp/oauth_discovery.rb:6: warning: previous definition of Result was here
+/app/plugins/discourse-ai/lib/mcp/oauth_flow.rb:9: warning: already initialized constant DiscourseAi::Mcp::OAuthFlow::STATE_TTL
+/app/plugins/discourse-ai.disabled/lib/mcp/oauth_flow.rb:9: warning: previous definition of STATE_TTL was here
+/app/plugins/discourse-ai/lib/mcp/oauth_flow.rb:11: warning: already initialized constant DiscourseAi::Mcp::OAuthFlow::OAuthError
+/app/plugins/discourse-ai.disabled/lib/mcp/oauth_flow.rb:11: warning: previous definition of OAuthError was here
+rake aborted!
+ActiveRecord::DuplicateMigrationNameError:  (ActiveRecord::DuplicateMigrationNameError)
+
+Multiple migrations have the name CreateClassificationResultsTable.
+
+/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/migration.rb:1559:in 'ActiveRecord::Migrator#validate'
+/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/migration.rb:1428:in 'ActiveRecord::Migrator#initialize'
+/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/migration.rb:1260:in 'Class#new'
+/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/migration.rb:1260:in 'ActiveRecord::MigrationContext#up'
+/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/migration.rb:1235:in 'ActiveRecord::MigrationContext#migrate'
+/bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/tasks/database_tasks.rb:270:in 'ActiveRecord::Tasks::DatabaseTasks#migrate'
+/app/lib/tasks/db.rake:105:in 'Object#execute_db_migration'
+/app/lib/tasks/db.rake:234:in 'block (2 levels) in <main>'
+/app/lib/distributed_mutex.rb:53:in 'block in DistributedMutex#synchronize'
+/app/lib/distributed_mutex.rb:49:in 'Thread::Mutex#synchronize'
+/app/lib/distributed_mutex.rb:49:in 'DistributedMutex#synchronize'
+/app/lib/distributed_mutex.rb:34:in 'DistributedMutex.synchronize'
+/app/lib/tasks/db.rake:209:in 'block in <main>'
+/bundle/ruby/3.4.0/gems/rake-13.3.1/exe/rake:27:in '<top (required)>'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli/exec.rb:59:in 'Kernel.load'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli/exec.rb:59:in 'Bundler::CLI::Exec#kernel_load'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli/exec.rb:23:in 'Bundler::CLI::Exec#run'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli.rb:452:in 'Bundler::CLI#exec'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor/command.rb:28:in 'Bundler::Thor::Command#run'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor/invocation.rb:127:in 'Bundler::Thor::Invocation#invoke_command'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor.rb:538:in 'Bundler::Thor.dispatch'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli.rb:35:in 'Bundler::CLI.dispatch'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor/base.rb:584:in 'Bundler::Thor::Base::ClassMethods#start'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli.rb:29:in 'Bundler::CLI.start'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/exe/bundle:28:in 'block in <top (required)>'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/friendly_errors.rb:117:in 'Bundler.with_friendly_errors'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/exe/bundle:20:in '<top (required)>'
+/usr/local/bin/bundle:25:in 'Kernel#load'
+/usr/local/bin/bundle:25:in '<main>'
+Tasks: TOP => db:migrate
+(See full trace by running task with --trace)
+
+Application logs inside container:
+Error response from daemon: container f809d2736f90e0a74d6faf044f4b8857a20f7ccc0a130faefb5fbfd1fe8385e9 is not running

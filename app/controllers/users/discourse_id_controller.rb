@@ -7,7 +7,11 @@ class Users::DiscourseIdController < ApplicationController
                      only: [:revoke]
 
   def revoke
-    RateLimiter.new(nil, "discourse_id_revoke_#{params[:identifier]}", 5, 1.minute).performed!
+    identifier = params[:identifier].to_s
+    raise Discourse::InvalidParameters.new(:identifier) if identifier.blank? || identifier.length > 256
+    raise Discourse::InvalidParameters.new(:identifier) if identifier !~ /\A[a-zA-Z0-9._\-]+\z/
+
+    RateLimiter.new(nil, "discourse_id_revoke_#{identifier}", 5, 1.minute).performed!
 
     DiscourseId::Revoke.call(service_params) do |result|
       on_success { render json: { success: true } }
@@ -20,5 +24,16 @@ class Users::DiscourseIdController < ApplicationController
         render json: { error: "Invalid request" }, status: :bad_request
       end
     end
+  end
+
+  private
+
+  def service_params
+    {
+      params: {
+        identifier: params[:identifier].to_s,
+      },
+      guardian:,
+    }
   end
 end
