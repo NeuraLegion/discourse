@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require "mini_mime"
+require "ipaddr"
+require "resolv"
 
 class UploadsController < ApplicationController
   include ExternalUploadHelpers
@@ -21,6 +23,18 @@ class UploadsController < ApplicationController
   before_action :external_store_check, only: %i[_show_secure_deprecated show_secure]
 
   SECURE_REDIRECT_GRACE_SECONDS = 5
+  PRIVATE_UPLOAD_URL_ALLOWED_HOSTS = []
+  PRIVATE_UPLOAD_URL_BLOCKED_IP_RANGES = [
+    IPAddr.new("127.0.0.0/8"),
+    IPAddr.new("10.0.0.0/8"),
+    IPAddr.new("172.16.0.0/12"),
+    IPAddr.new("192.168.0.0/16"),
+    IPAddr.new("169.254.0.0/16"),
+    IPAddr.new("100.64.0.0/10"),
+    IPAddr.new("::1/128"),
+    IPAddr.new("fc00::/7"),
+    IPAddr.new("fe80::/10"),
+  ].freeze
 
   def create
     # capture current user for block later on
@@ -310,6 +324,8 @@ class UploadsController < ApplicationController
   )
     if file.nil?
       if url.present? && is_api
+        validate_remote_upload_url!(url)
+
         maximum_upload_size = [
           SiteSetting.max_image_size_kb,
           UploadsController.max_attachment_size_for_user(current_user),
@@ -318,7 +334,7 @@ class UploadsController < ApplicationController
           begin
             FileHelper.download(
               url,
-              follow_redirect: true,
+              follow_redirect: false,
               max_file_size: maximum_upload_size,
               tmp_file_name: "discourse-upload-#{type}",
             )
@@ -355,6 +371,27 @@ class UploadsController < ApplicationController
     else
       SiteSetting.max_attachment_size_kb
     end
+  end
+
+  def self.validate_remote_upload_url!(url)
+    uri = URI.parse(url)
+
+    raise Discourse::InvalidParameters.new("invalid upload url") unless %w[http https].include?(uri.scheme)
+    raise Discourse::InvalidParameters.new("invalid upload url") if uri.host.blank?
+    raise Discourse::InvalidParameters.new("invalid upload url") unless PRIVATE_UPLOAD_URL_ALLOWED_HOSTS.empty? || PRIVATE_UPLOAD_URL_ALLOWED_HOSTS.include?(uri.host)
+
+    Resolv.getaddresses(uri.host).each do |address|
+      ip = IPAddr.new(address)
+      if PRIVATE_UPLOAD_URL_BLOCKED_IP_RANGES.any? { |range| range.include?(ip) }
+        raise Discourse::InvalidParameters.new("invalid upload url")
+      end
+    rescue IPAddr::InvalidAddressError
+      raise Discourse::InvalidParameters.new("invalid upload url")
+    end
+
+    true
+  rescue URI::InvalidURIError, Resolv::ResolvError
+    raise Discourse::InvalidParameters.new("invalid upload url")
   end
 
   # We can preemptively check size for attachments, but not for (most) images
