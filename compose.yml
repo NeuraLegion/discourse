@@ -1,0 +1,94 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.bright
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: production
+      NODE_ENV: production
+      RACK_ENV: production
+      SECRET_KEY_BASE: 0000000000000000000000000000000000000000000000000000000000000000
+      DISCOURSE_DB_HOST: db
+      DISCOURSE_DB_USERNAME: postgres
+      DISCOURSE_DB_PASSWORD: postgres
+      DISCOURSE_DB_NAME: discourse_development
+      DISCOURSE_REDIS_HOST: redis
+      DISCOURSE_MESSAGE_BUS_REDIS_HOST: redis
+      DISCOURSE_HOSTNAME: localhost
+      DISCOURSE_DEVELOPER_EMAILS: bright@test.com
+      DISCOURSE_DISABLE_EMBER_CLI: "1"
+      DISCOURSE_SMTP_ADDRESS: smtp
+      DISCOURSE_SMTP_PORT: 1025
+      DISCOURSE_SMTP_ENABLE_START_TLS: "false"
+      DISCOURSE_FORCE_HOSTNAME: "localhost"
+      DISCOURSE_USE_HTTPS: "false"
+      DISCOURSE_EMAIL_LEVEL: "never"
+      DISCOURSE_NOTIFICATION_EMAIL: noreply@localhost
+      DISCOURSE_DISABLE_EMAILS: "yes"
+      DISCOURSE_LOGIN_REQUIRED: "false"
+      DISCOURSE_MUST_APPROVE_USERS: "false"
+      DISCOURSE_MUST_APPROVE_USERS_ADMIN: "false"
+      DISCOURSE_MAX_REQS_PER_IP_MODE: warn
+      DISCOURSE_MAX_REQS_PER_IP_PER_MINUTE: "0"
+      DISCOURSE_MAX_REQS_PER_IP_PER_DAY: "0"
+      DISCOURSE_MAX_REQS_PER_IP_EXCEPTIONS: "127.0.0.1,::1"
+      DISCOURSE_MAX_LOGINS_PER_IP_PER_HOUR: "0"
+      DISCOURSE_MAX_LOGINS_PER_IP_PER_MINUTE: "0"
+      DISCOURSE_MAX_NEW_ACCOUNTS_PER_REGISTRATION_IP: "0"
+      UNICORN_BIND_ALL: "1"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+    command: bash -lc 'ln -sf /usr/bin/convert /usr/local/bin/magick && bundle exec rake db:migrate && bundle exec rake db:seed_fu && exec bundle exec pitchfork -c config/pitchfork.conf.rb'
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:3000/ >/dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 90s
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: discourse_development
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  smtp:
+    image: axllent/mailpit:v1.21
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+volumes:
+  db-data:
+  redis-data:

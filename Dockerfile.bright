@@ -1,0 +1,75 @@
+FROM ruby:3.4-bookworm
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    RAILS_ENV=production \
+    RACK_ENV=production \
+    NODE_ENV=production \
+    BUNDLE_WITHOUT="development:test" \
+    BUNDLE_PATH=/bundle \
+    BUNDLE_RETRY=3 \
+    DISCOURSE_RUNNING_IN_RACK=1 \
+    SECRET_KEY_BASE=dummy \
+    UNICORN_BIND_ALL=1 \
+    PATH="/usr/local/bundle/bin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      ca-certificates \
+      curl \
+      gnupg \
+      git \
+      build-essential \
+      pkg-config \
+      libpq-dev \
+      libyaml-dev \
+      libxml2-dev \
+      libxslt1-dev \
+      libgmp-dev \
+      libssl-dev \
+      zlib1g-dev \
+      libreadline-dev \
+      libffi-dev \
+      imagemagick \
+      fonts-noto \
+      fonts-liberation \
+      ghostscript \
+      poppler-utils \
+      ffmpeg \
+      wkhtmltopdf \
+      brotli \
+      libvips42 \
+      libvips-dev \
+    && ln -sf /usr/bin/convert /usr/local/bin/magick \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends nodejs \
+    && corepack enable \
+    && corepack prepare pnpm@10.28.0 --activate \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY . .
+
+RUN gem install bundler -v 2.6.4 \
+    && bundle config set --local without 'development test' \
+    && bundle config set --local path "$BUNDLE_PATH" \
+    && bundle config set --local jobs "$(nproc)" \
+    && bundle install
+
+RUN perl -0pi -e 's/^strictPeerDependencies:\s*true$/strictPeerDependencies: false/m' pnpm-workspace.yaml \
+    && pnpm install --no-frozen-lockfile --ignore-scripts
+
+RUN ruby -e "path='config/discourse_defaults.conf'; data=File.read(path); data.gsub!(/^redis_host\s*=\s*localhost\s*$/, 'redis_host = redis'); data.gsub!(/^message_bus_redis_host\s*=\s*localhost\s*$/, 'message_bus_redis_host = redis'); data.gsub!(/^hostname\s*=.*/, 'hostname = \"localhost\"'); data.gsub!(/^db_host\s*=\s*$/, 'db_host = db'); File.write(path, data)"
+
+RUN if [ -d plugins/discourse-ai.disabled ]; then mv plugins/discourse-ai.disabled plugins/discourse-ai; fi \
+    && rm -rf plugins/discourse-ai
+
+RUN SKIP_DB_AND_REDIS=1 bundle exec rake assets:precompile
+
+EXPOSE 3000
+
+CMD ["bundle", "exec", "pitchfork", "-c", "config/pitchfork.conf.rb"]

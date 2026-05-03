@@ -1,0 +1,175 @@
+Application failed on port 3000: The app finished migrations and claims to be listening on 0.0.0.0:3000, but the host has never reached port 3000 after 21 seconds and 10 failures, indicating a likely port-mapping or binding mismatch 
+
+Container logs:
+redis-1  | 1:C 03 May 2026 13:17:32.561 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+redis-1  | 1:C 03 May 2026 13:17:32.561 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 1:C 03 May 2026 13:17:32.561 * Redis version=7.4.8, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1  | 1:C 03 May 2026 13:17:32.561 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis-1  | 1:M 03 May 2026 13:17:32.561 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+redis-1  | 1:M 03 May 2026 13:17:32.562 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 03 May 2026 13:17:32.562 * Running mode=standalone, port=6379.
+redis-1  | 1:M 03 May 2026 13:17:32.562 * Server initialized
+redis-1  | 1:M 03 May 2026 13:17:32.562 * Ready to accept connections tcp
+db-1     | The files belonging to this database system will be owned by user "postgres".
+db-1     | This user must also own the server process.
+db-1     | 
+db-1     | The database cluster will be initialized with locale "en_US.utf8".
+db-1     | The default database encoding has accordingly been set to "UTF8".
+app-1    | == 20000225050318 AddSchemaMigrationDetails: migrating ========================
+app-1    | -- create_table(:schema_migration_details, {id: :integer})
+smtp-1   | time="2026/05/03 13:19:42" level=info msg="[smtpd] starting on [::]:1025 (no encryption)"
+smtp-1   | time="2026/05/03 13:19:42" level=info msg="[http] starting on [::]:8025"
+app-1    |    -> 0.0028s
+smtp-1   | time="2026/05/03 13:19:42" level=info msg="[http] accessible via http://localhost:8025/"
+app-1    | -- add_index(:schema_migration_details, [:version], {name: "index_schema_migration_details_on_version"})
+app-1    |    -> 0.0014s
+db-1     | The default text search configuration will be set to "english".
+db-1     | 
+db-1     | Data page checksums are disabled.
+db-1     | 
+db-1     | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+db-1     | creating subdirectories ... ok
+db-1     | selecting dynamic shared memory implementation ... posix
+db-1     | selecting default max_connections ... 100
+app-1    | -- execute("INSERT INTO schema_migration_details(version, created_at)\n             SELECT version, current_timestamp\n             FROM schema_migrations\n             ORDER BY version\n            ")
+app-1    |    -> 0.0002s
+app-1    | == 20000225050318 AddSchemaMigrationDetails: migrated (0.0050s) ===============
+app-1    | 
+app-1    | == 20120311163914 CreateForumThreads: migrating ===============================
+app-1    | -- create_table(:forum_threads, {id: :integer})
+app-1    |    -> 0.0026s
+app-1    | == 20120311163914 CreateForumThreads: migrated (0.0030s) ======================
+app-1    | 
+app-1    | == 20120311164326 CreatePosts: migrating ======================================
+
+... (15770 lines omitted) ...
+
+app-1    |    -> 0.0002s
+app-1    | == 20260319054730 DeleteRedundantEveryonePostingReviewGroups: migrated (0.0005s) 
+app-1    | 
+app-1    | == 20260319054731 DropPermissionFromCategoryPostingReviewGroups: migrating ====
+app-1    | == 20260319054731 DropPermissionFromCategoryPostingReviewGroups: migrated (0.0013s) 
+app-1    | 
+app-1    | == 20260319120000 AddNotifyOnSolvedToUserOptions: migrating ===================
+app-1    | -- add_column(:user_options, :notify_on_solved, :boolean, {default: true, null: false})
+app-1    |    -> 0.0008s
+app-1    | == 20260319120000 AddNotifyOnSolvedToUserOptions: migrated (0.0013s) ==========
+app-1    | 
+app-1    | == 20260323145627 AddLimitColorSchemesToThemeModifier: migrating ==============
+app-1    | -- add_column(:theme_modifier_sets, :only_theme_color_schemes, :boolean, {null: true})
+app-1    |    -> 0.0004s
+app-1    | == 20260323145627 AddLimitColorSchemesToThemeModifier: migrated (0.0008s) =====
+app-1    | 
+app-1    | == 20260324004457 RemoveFlowdockChatIntegration: migrating ====================
+app-1    | -- execute("DELETE FROM site_settings WHERE name = 'chat_integration_flowdock_enabled';\nDELETE FROM site_settings WHERE name = 'chat_integration_flowdock_excerpt_length';\n")
+app-1    |    -> 0.0002s
+app-1    | == 20260324004457 RemoveFlowdockChatIntegration: migrated (0.0004s) ===========
+app-1    | 
+app-1    | == 20260324200000 AddTopicIdCreatedAtIndexToTopicVotingVotes: migrating =======
+app-1    | -- remove_index(:topic_voting_votes, [:topic_id, :created_at], {if_exists: true})
+app-1    |    -> 0.0009s
+app-1    | -- add_index(:topic_voting_votes, [:topic_id, :created_at], {algorithm: :concurrently})
+app-1    |    -> 0.0020s
+app-1    | == 20260324200000 AddTopicIdCreatedAtIndexToTopicVotingVotes: migrated (0.0035s) 
+app-1    | 
+app-1    | == 20260407093145 AddShowOriginalContentToUserOptions: migrating ==============
+app-1    | -- add_column(:user_options, :show_original_content, :boolean, {default: false, null: false})
+app-1    |    -> 0.0007s
+app-1    | == 20260407093145 AddShowOriginalContentToUserOptions: migrated (0.0011s) =====
+app-1    | 
+app-1    | Seeding theme and color schemes
+app-1    | WARNING: Discourse hostname: localhost is not a valid domain for emails!
+app-1    | pngquant worker: `pngquant` not found; please provide proper binary or disable this worker (--no-pngquant argument or `:pngquant => false` through options)
+app-1    | oxipng worker: `oxipng` not found; please provide proper binary or disable this worker (--no-oxipng argument or `:oxipng => false` through options)
+app-1    | jhead worker: `jhead` not found, `jpegtran` not found; please provide proper binary or disable this worker (--no-jhead argument or `:jhead => false` through options)
+app-1    | jpegoptim worker: `jpegoptim` not found; please provide proper binary or disable this worker (--no-jpegoptim argument or `:jpegoptim => false` through options)
+app-1    | I, [2026-05-03T13:20:15.267735 #364]  INFO -- : listening on addr=0.0.0.0:3000 fd=14
+
+Container diagnostics:
+Port mappings:
+3000/tcp -> 0.0.0.0:3000
+3000/tcp -> [::]:3000
+
+Network port config:
+{"3000/tcp":[{"HostIp":"0.0.0.0","HostPort":"3000"},{"HostIp":"::","HostPort":"3000"}]}
+
+Processes inside container:
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.9  0.0 477632 30160 pts/0    Ssl+ 13:19   0:00 pitchfork monitor - 
+root         364 90.2  0.7 7664888 485508 pts/0  Sl   13:20   0:08 pitchfork (gen:0) mold - init
+root         860 66.6  0.0   8552  4516 ?        Rs   13:20   0:00 ps aux
+
+Container stdout/stderr (last 50 lines):
+-- change_column_null(:category_posting_review_groups, :permission, true)
+   -> 0.0002s
+-- execute("UPDATE category_settings\nSET topic_posting_review_mode = 1\nWHERE category_id IN (\n  SELECT category_id FROM category_posting_review_groups\n  WHERE group_id = 0 AND permission = 1 AND post_type = 0\n)\n")
+   -> 0.0005s
+-- execute("UPDATE category_settings\nSET reply_posting_review_mode = 1\nWHERE category_id IN (\n  SELECT category_id FROM category_posting_review_groups\n  WHERE group_id = 0 AND permission = 1 AND post_type = 1\n)\n")
+   -> 0.0002s
+== 20260319054026 AddPostingReviewModesToCategorySettings: migrated (0.0060s) =
+
+== 20260319054730 DeleteRedundantEveryonePostingReviewGroups: migrating =======
+-- execute("DELETE FROM category_posting_review_groups\nWHERE group_id = 0 AND permission = 1\n")
+   -> 0.0002s
+== 20260319054730 DeleteRedundantEveryonePostingReviewGroups: migrated (0.0005s) 
+
+== 20260319054731 DropPermissionFromCategoryPostingReviewGroups: migrating ====
+== 20260319054731 DropPermissionFromCategoryPostingReviewGroups: migrated (0.0013s) 
+
+== 20260319120000 AddNotifyOnSolvedToUserOptions: migrating ===================
+-- add_column(:user_options, :notify_on_solved, :boolean, {default: true, null: false})
+   -> 0.0008s
+== 20260319120000 AddNotifyOnSolvedToUserOptions: migrated (0.0013s) ==========
+
+== 20260323145627 AddLimitColorSchemesToThemeModifier: migrating ==============
+-- add_column(:theme_modifier_sets, :only_theme_color_schemes, :boolean, {null: true})
+   -> 0.0004s
+== 20260323145627 AddLimitColorSchemesToThemeModifier: migrated (0.0008s) =====
+
+== 20260324004457 RemoveFlowdockChatIntegration: migrating ====================
+-- execute("DELETE FROM site_settings WHERE name = 'chat_integration_flowdock_enabled';\nDELETE FROM site_settings WHERE name = 'chat_integration_flowdock_excerpt_length';\n")
+   -> 0.0002s
+== 20260324004457 RemoveFlowdockChatIntegration: migrated (0.0004s) ===========
+
+== 20260324200000 AddTopicIdCreatedAtIndexToTopicVotingVotes: migrating =======
+-- remove_index(:topic_voting_votes, [:topic_id, :created_at], {if_exists: true})
+   -> 0.0009s
+-- add_index(:topic_voting_votes, [:topic_id, :created_at], {algorithm: :concurrently})
+   -> 0.0020s
+== 20260324200000 AddTopicIdCreatedAtIndexToTopicVotingVotes: migrated (0.0035s) 
+
+== 20260407093145 AddShowOriginalContentToUserOptions: migrating ==============
+-- add_column(:user_options, :show_original_content, :boolean, {default: false, null: false})
+   -> 0.0007s
+== 20260407093145 AddShowOriginalContentToUserOptions: migrated (0.0011s) =====
+
+Seeding theme and color schemes
+WARNING: Discourse hostname: localhost is not a valid domain for emails!
+pngquant worker: `pngquant` not found; please provide proper binary or disable this worker (--no-pngquant argument or `:pngquant => false` through options)
+oxipng worker: `oxipng` not found; please provide proper binary or disable this worker (--no-oxipng argument or `:oxipng => false` through options)
+jhead worker: `jhead` not found, `jpegtran` not found; please provide proper binary or disable this worker (--no-jhead argument or `:jhead => false` through options)
+jpegoptim worker: `jpegoptim` not found; please provide proper binary or disable this worker (--no-jpegoptim argument or `:jpegoptim => false` through options)
+I, [2026-05-03T13:20:15.267735 #364]  INFO -- : listening on addr=0.0.0.0:3000 fd=14
+
+Application logs inside container:
+=== /app/log/production.log ===
+Migrating to AddTopicTitlePlaceholderToCategories (20260306183220)
+Migrating to RemoveEnableUpcomingChangesSiteSetting (20260309032553)
+Migrating to RemoveEnableCategoryTypeSetupSiteSetting (20260310001245)
+Migrating to MarkCategoryApprovalBooleansReadonly (20260310072550)
+Migrating to CreateCategoryApprovalGroups (20260310072759)
+Migrating to PopulateSolvedCategoryCustomFieldsFromSiteSettings (20260310120000)
+Migrating to AddAllDayToDiscoursePostEventEvents (20260311021412)
+Migrating to CleanExistingTagLocalizationNames (20260311064518)
+Migrating to AddTopicCustomFieldAllDayIndex (20260311161955)
+Migrating to RenameAutomationApiKeyScopeResource (20260316071735)
+Migrating to RenameDataExplorerApiKeyScopeResource (20260316071737)
+Migrating to AddImageUploadIdToEvents (20260316154328)
+Migrating to AddPostingReviewModesToCategorySettings (20260319054026)
+Migrating to DeleteRedundantEveryonePostingReviewGroups (20260319054730)
+Migrating to DropPermissionFromCategoryPostingReviewGroups (20260319054731)
+Migrating to AddNotifyOnSolvedToUserOptions (20260319120000)
+Migrating to AddLimitColorSchemesToThemeModifier (20260323145627)
+Migrating to RemoveFlowdockChatIntegration (20260324004457)
+Migrating to AddTopicIdCreatedAtIndexToTopicVotingVotes (20260324200000)
+Migrating to AddShowOriginalContentToUserOptions (20260407093145)
