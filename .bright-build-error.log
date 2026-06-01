@@ -1,0 +1,10 @@
+docker compose --wait failed and port 3000 is not reachable. Original error: Process exited with code 1.
+
+Output:
+ERR:  Network discourse_default Creating 
+ERR:  Network discourse_default Created 
+ERR:  Volume discourse_redis-data Creating 
+ERR:  Volume discourse_redis-data Created 
+ERR:  Volume discourse_db-data Creating 
+ERR:  Volume discourse_db-data Created 
+ERR:  Contai
