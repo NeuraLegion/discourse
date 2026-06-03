@@ -1,0 +1,44 @@
+services:
+  redis:
+    image: redis:7-bookworm
+    command: ["redis-server", "--appendonly", "no"]
+
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: discourse_development
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d discourse_development"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  app:
+    build: .
+    depends_on:
+      redis:
+        condition: service_started
+      db:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: "development"
+      DISCOURSE_RUNNING_IN_RACK: "1"
+      DISCOURSE_DEV_DB: "discourse_development"
+      RAILS_DB: "discourse_test"
+      RAILS_DEVELOPMENT_HOSTS: "localhost,127.0.0.1,[::1]"
+      DISCOURSE_SKIP_CSS_WATCHER: "1"
+      PGHOST: "db"
+      PGPORT: "5432"
+      PGUSER: "postgres"
+      PGPASSWORD: "postgres"
+    command:
+      - bash
+      - -lc
+      - |
+        rm -rf public/plugins app/assets/generated tmp/*
+        bundle exec rails db:prepare
+        exec bin/rails server -b 0.0.0.0 -p 3000
