@@ -1,0 +1,45 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: "production"
+      NODE_ENV: "production"
+      DISCOURSE_HOSTNAME: "localhost"
+      DISCOURSE_DB_HOST: "postgres"
+      DISCOURSE_DB_PORT: "5432"
+      DISCOURSE_DB_NAME: "discourse_development"
+      DISCOURSE_DB_USERNAME: "postgres"
+      DISCOURSE_DB_PASSWORD: "postgres"
+      DISCOURSE_REDIS_HOST: "redis"
+      DISCOURSE_REDIS_PORT: "6379"
+      DISCOURSE_SECRET_KEY_BASE: "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+      DISABLE_SPRING: "1"
+    volumes:
+      - public-assets:/app/public/assets
+    depends_on:
+      - redis
+      - postgres
+    command: >-
+      bash -lc 'if [ ! -f /app/public/assets/.precompiled ]; then
+        echo "Assets missing in /app/public/assets volume. Run: docker compose run --rm app bash -lc \"bundle exec rake assets:precompile; cp -a tmp/final-build/public/. /app/public/assets/ 2>/dev/null || true; cp -a public/assets/. /app/public/assets/ 2>/dev/null || true; touch /app/public/assets/.precompiled\"";
+        exit 1;
+      fi;
+      bundle exec rails server -b 0.0.0.0 -p 3000'
+
+  postgres:
+    image: postgres:16-bookworm
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: discourse_development
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-bookworm
+
+volumes:
+  postgres-data:
+  public-assets:
