@@ -1,0 +1,35 @@
+services:
+  redis:
+    image: redis:7-alpine
+
+  postgres:
+    build:
+      context: .
+      dockerfile: Dockerfile.pgvector
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: discourse_development
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+      - "4200:4200"
+    environment:
+      RAILS_ENV: "development"
+      RACK_ENV: "development"
+      NODE_ENV: "development"
+      UNICORN_BIND_ALL: "true"
+      UNICORN_PORT: "3000"
+      BIND: "0.0.0.0"
+      DISCOURSE_HOSTNAME: "localhost"
+      DISCOURSE_DEVELOPER_EMAILS: "dev@example.com"
+      DISCOURSE_DB_HOST: "postgres"
+      DISCOURSE_DB_USERNAME: "postgres"
+      DISCOURSE_DB_PASSWORD: "postgres"
+      DISCOURSE_REDIS_HOST: "redis"
+    depends_on:
+      - redis
+      - postgres
+    command: bash -lc "bundle exec rails db:create db:migrate && pnpm dev --host 0.0.0.0"

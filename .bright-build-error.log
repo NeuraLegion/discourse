@@ -1,0 +1,210 @@
+Application did not start on port 3000 within 120s
+
+Container logs (last 40 lines):
+redis-1  | 1:C 19 Apr 2026 14:04:29.912 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+redis-1  | 1:C 19 Apr 2026 14:04:29.912 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 1:C 19 Apr 2026 14:04:29.912 * Redis version=7.4.8, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1  | 1:C 19 Apr 2026 14:04:29.912 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis-1  | 1:M 19 Apr 2026 14:04:29.912 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+redis-1  | 1:M 19 Apr 2026 14:04:29.912 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 19 Apr 2026 14:04:29.913 * Running mode=standalone, port=6379.
+redis-1  | 1:M 19 Apr 2026 14:04:29.914 * Server initialized
+redis-1  | 1:M 19 Apr 2026 14:04:29.914 * Ready to accept connections tcp
+redis-1  | 1:M 19 Apr 2026 14:05:30.084 * 10000 changes in 60 seconds. Saving...
+redis-1  | 1:M 19 Apr 2026 14:05:30.085 * Background saving started by pid 21
+redis-1  | 21:C 19 Apr 2026 14:05:30.115 * DB saved on disk
+redis-1  | 21:C 19 Apr 2026 14:05:30.116 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+app-1    | jpegoptim worker: `jpegoptim` not found; please provide proper binary or disable this worker (--no-jpegoptim argument or `:jpegoptim => false` through options)
+app-1    | 
+app-1    | > @ dev /app
+app-1    | > concurrently "bin/ember-cli server --environment=development" "RAILS_ENV=development bin/rails server"
+redis-1  | 1:M 19 Apr 2026 14:05:30.185 * Background saving terminated with success
+postgres-1  | server started
+postgres-1  | CREATE DATABASE
+postgres-1  | 
+app-1       | 
+postgres-1  | 
+app-1       | [1] => Booting Puma
+app-1       | [1] => Rails 8.0.5 application starting in development 
+app-1       | [1] => Run `bin/rails server --help` for more startup options
+app-1       | [1] Starting CSS change watcher
+app-1       | [0] Proxying to http://localhost:3000
+app-1       | [0] building... 
+app-1       | [0] ...[ConfigLoader]
+app-1       | [0] ...[Babel: ember-tracked-storage-polyfill > applyPatches]
+app-1       | [1] Puma starting in single mode...
+app-1       | [1] * Puma version: 7.1.0 ("Neon Witch")
+app-1       | [1] * Ruby version: ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [x86_64-linux]
+app-1       | [1] *  Min threads: 0
+app-1       | [1] *  Max threads: 5
+app-1       | [1] *  Environment: development
+postgres-1  | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+postgres-1  | 
+postgres-1  | 2026-04-19 14:04:30.527 UTC [48] LOG:  received fast shutdown request
+postgres-1  | waiting for server to shut down....2026-04-19 14:04:30.527 UTC [48] LOG:  aborting any active transactions
+postgres-1  | 2026-04-19 14:04:30.529 UTC [48] LOG:  background worker "logical replication launcher" (PID 54) exited with exit code 1
+postgres-1  | 2026-04-19 14:04:30.529 UTC [49] LOG:  shutting down
+postgres-1  | 2026-04-19 14:04:30.530 UTC [49] LOG:  checkpoint starting: shutdown immediate
+app-1       | [1] *          PID: 584
+app-1       | [1] * Listening on http://127.0.0.1:3000
+app-1       | [1] * Listening on http://[::1]:3000
+app-1       | [1] Use Ctrl-C to stop
+app-1       | [0] ...[Babel: pretty-text > applyPatches]
+app-1       | [0] ...[Babel: @embroider/macros > applyPatches]
+app-1       | [0] ...[Babel: ember-this-fallback > applyPatches]
+postgres-1  | 2026-04-19 14:04:30.557 UTC [49] LOG:  checkpoint complete: wrote 918 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.010 s, sync=0.016 s, total=0.029 s; sync files=301, longest=0.001 s, average=0.001 s; distance=4222 kB, estimate=4222 kB
+app-1       | [0] ...[@embroider/compat/app]
+postgres-1  | 2026-04-19 14:04:30.559 UTC [48] LOG:  database system is shut down
+postgres-1  |  done
+app-1       | [0] ...[@embroider/webpack]
+app-1       | [0] ...[@embroider/webpack]
+app-1       | [0] ...[@embroider/webpack]
+app-1       | [0] ...[Babel: discourse > applyPatches]
+app-1       | [0] ...[SourceMapConcat]
+app-1       | [0] ...[Babel: discourse > applyPatches]
+app-1       | [0] 
+app-1       | [0] Build successful (26870ms) – Serving on http://localhost:4200/
+postgres-1  | server stopped
+postgres-1  | 
+postgres-1  | PostgreSQL init process complete; ready for start up.
+postgres-1  | 
+postgres-1  | 2026-04-19 14:04:30.646 UTC [1] LOG:  starting PostgreSQL 15.17 (Debian 15.17-1.pgdg12+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+postgres-1  | 2026-04-19 14:04:30.647 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgres-1  | 2026-04-19 14:04:30.647 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgres-1  | 2026-04-19 14:04:30.648 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+app-1       | [0] 
+app-1       | [0] Slowest Nodes (totalTime >= 5%) | Total (avg)
+app-1       | [0] -+-
+app-1       | [0] @embroider/webpack (1) | 23086ms
+app-1       | [0] 
+postgres-1  | 2026-04-19 14:04:30.651 UTC [64] LOG:  database system was shut down at 2026-04-19 14:04:30 UTC
+postgres-1  | 2026-04-19 14:04:30.654 UTC [1] LOG:  database system is ready to accept connections
+postgres-1  | 2026-04-19 14:04:35.900 UTC [68] ERROR:  database "discourse_development" already exists
+postgres-1  | 2026-04-19 14:04:35.900 UTC [68] STATEMENT:  CREATE DATABASE "discourse_development" ENCODING = 'utf8'
+postgres-1  | 2026-04-19 14:04:38.216 UTC [71] ERROR:  relation "translation_overrides" does not exist at character 523
+postgres-1  | 2026-04-19 14:04:38.216 UTC [71] STATEMENT:  SELECT a.attname, format_type(a.atttypid, a.atttypmod),
+postgres-1  | 	       pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod,
+postgres-1  | 	       c.collname, col_description(a.attrelid, a.attnum) AS comment,
+postgres-1  | 	       attidentity AS identity,
+postgres-1  | 	       attgenerated as attgenerated
+postgres-1  | 	  FROM pg_attribute a
+postgres-1  | 	  LEFT JOIN pg_attrdef d ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+postgres-1  | 	  LEFT JOIN pg_type t ON a.atttypid = t.oid
+postgres-1  | 	  LEFT JOIN pg_collation c ON a.attcollation = c.oid AND a.attcollation <> t.typcollation
+postgres-1  | 	 WHERE a.attrelid = '"translation_overrides"'::regclass
+postgres-1  | 	   AND a.attnum > 0 AND NOT a.attisdropped
+postgres-1  | 	 ORDER BY a.attnum
+postgres-1  |
+
+Container diagnostics:
+Port mappings:
+3000/tcp -> 0.0.0.0:3000
+3000/tcp -> [::]:3000
+
+Network port config:
+{"3000/tcp":[{"HostIp":"0.0.0.0","HostPort":"3000"},{"HostIp":"::","HostPort":"3000"}]}
+
+Processes inside container:
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.2  0.1 1348648 95096 ?       Ssl  14:04   0:00 node /usr/bin/pnpm dev
+root         568  0.0  0.0   2592  1572 ?        S    14:05   0:00 sh -c concurrently "bin/ember-cli server --environment=development" "RAILS_ENV=development bin/rails server"
+root         569  0.1  0.0 1015836 59488 ?       Sl   14:05   0:00 node /app/node_modules/.bin/../concurrently/dist/bin/concurrently.js bin/ember-cli server --environment=development RAILS_ENV=development bin/rails server
+root         581  0.0  0.0   2592  1628 ?        S    14:05   0:00 /bin/sh -c bin/ember-cli server --environment=development
+root         582  0.7  0.1 1349208 105924 ?      Sl   14:05   0:00 node /usr/bin/pnpm --dir=frontend/discourse ember server server --environment=development --proxy http://localhost:3000
+root         583  0.0  0.0   2592  1604 ?        S    14:05   0:00 /bin/sh -c RAILS_ENV=development bin/rails server
+root         584  5.4  0.4 2182672 306396 ?      Sl   14:05   0:03 puma 7.1.0 (tcp://localhost:3000) [app]
+root         599 69.7  3.8 68621132 2553764 ?    Sl   14:05   0:50 ember
+root         726 15.1  0.2 1397356 159948 ?      Ssl  14:05   0:10 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         732 13.9  0.2 1384628 145004 ?      Ssl  14:05   0:09 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         738 13.4  0.2 1377784 141040 ?      Ssl  14:05   0:09 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         745 11.9  0.2 1376628 134208 ?      Ssl  14:05   0:08 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         752 12.8  0.2 1375724 136240 ?      Ssl  14:05   0:08 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         758 11.2  0.2 1374836 131428 ?      Ssl  14:05   0:07 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         769 12.4  0.2 1383828 145656 ?      Ssl  14:05   0:08 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         788 11.9  0.2 1377128 135676 ?      Ssl  14:05   0:08 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         795 11.5  0.2 1377308 137336 ?      Ssl  14:05   0:07 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         801 11.8  0.2 1377432 137256 ?      Ssl  14:05   0:08 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         805 11.3  0.2 1376496 133772 ?      Ssl  14:05   0:07 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         827 12.6  0.2 1382932 141412 ?      Ssl  14:05   0:08 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         835 11.8  0.2 1375700 134904 ?      Ssl  14:05   0:08 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         847 11.6  0.2 1375084 136684 ?      Ssl  14:05   0:07 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         857 10.4  0.2 1377328 136812 ?      Ssl  14:05   0:07 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         873 10.8  0.2 1375560 133776 ?      Ssl  14:05   0:07 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         880 10.2  0.2 1374708 131372 ?      Ssl  14:05   0:06 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         900 10.5  0.2 1375496 134496 ?      Ssl  14:05   0:07 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         915 10.9  0.2 1377560 134532 ?      Ssl  14:05   0:07 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         954 66.6  0.0   8684  4728 ?        Rs   14:06   0:00 ps aux
+
+Container stdout/stderr (last 50 lines):
+== 20260407093145 AddShowOriginalContentToUserOptions: migrating ==============
+-- add_column(:user_options, :show_original_content, :boolean, {default: false, null: false})
+   -> 0.0009s
+== 20260407093145 AddShowOriginalContentToUserOptions: migrated (0.0016s) =====
+
+Seeding theme and color schemes
+pngquant worker: `pngquant` not found; please provide proper binary or disable this worker (--no-pngquant argument or `:pngquant => false` through options)
+oxipng worker: `oxipng` not found; please provide proper binary or disable this worker (--no-oxipng argument or `:oxipng => false` through options)
+jhead worker: `jhead` not found, `jpegtran` not found; please provide proper binary or disable this worker (--no-jhead argument or `:jhead => false` through options)
+jpegoptim worker: `jpegoptim` not found; please provide proper binary or disable this worker (--no-jpegoptim argument or `:jpegoptim => false` through options)
+
+> @ dev /app
+> concurrently "bin/ember-cli server --environment=development" "RAILS_ENV=development bin/rails server"
+
+[1] => Booting Puma
+[1] => Rails 8.0.5 application starting in development 
+[1] => Run `bin/rails server --help` for more startup options
+[1] Starting CSS change watcher
+[0] Proxying to http://localhost:3000
+[0] building... 
+[0] ...[ConfigLoader]
+[0] ...[Babel: ember-tracked-storage-polyfill > applyPatches]
+[1] Puma starting in single mode...
+[1] * Puma version: 7.1.0 ("Neon Witch")
+[1] * Ruby version: ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [x86_64-linux]
+[1] *  Min threads: 0
+[1] *  Max threads: 5
+[1] *  Environment: development
+[1] *          PID: 584
+[1] * Listening on http://127.0.0.1:3000
+[1] * Listening on http://[::1]:3000
+[1] Use Ctrl-C to stop
+[0] ...[Babel: pretty-text > applyPatches]
+[0] ...[Babel: @embroider/macros > applyPatches]
+[0] ...[Babel: ember-this-fallback > applyPatches]
+[0] ...[@embroider/compat/app]
+[0] ...[@embroider/webpack]
+[0] ...[@embroider/webpack]
+[0] ...[@embroider/webpack]
+[0] ...[Babel: discourse > applyPatches]
+[0] ...[SourceMapConcat]
+[0] ...[Babel: discourse > applyPatches]
+[0] 
+[0] Build successful (26870ms) – Serving on http://localhost:4200/
+[0] 
+[0] Slowest Nodes (totalTime >= 5%) | Total (avg)
+[0] -+-
+[0] @embroider/webpack (1) | 23086ms
+[0]
+
+Application logs inside container:
+=== /app/log/development.log ===
+  TRANSACTION (0.9ms)  COMMIT
+  SiteSetting Load (0.5ms)  SELECT "site_settings".* FROM "site_settings" WHERE "site_settings"."name" = 'vapid_private_key' LIMIT 1
+  TRANSACTION (0.6ms)  BEGIN
+  SiteSetting Create (1.0ms)  INSERT INTO "site_settings" ("name", "data_type", "value", "created_at", "updated_at") VALUES ('vapid_private_key', 1, 'KglJAGPZcnIkVd6kr5KurUDJPn4ZpkdYgjiWLaWqPag=', '2026-04-19 14:05:20.981481', '2026-04-19 14:05:20.981481') RETURNING "id"
+  TRANSACTION (0.5ms)  COMMIT
+  SiteSetting Load (0.6ms)  SELECT "site_settings".* FROM "site_settings" WHERE "site_settings"."name" = 'vapid_public_key_bytes' LIMIT 1
+  TRANSACTION (0.3ms)  BEGIN
+  SiteSetting Create (0.8ms)  INSERT INTO "site_settings" ("name", "data_type", "value", "created_at", "updated_at") VALUES ('vapid_public_key_bytes', 1, '4|105|45|148|224|218|95|71|48|130|149|43|67|8|114|73|48|112|212|195|89|178|159|7|169|238|55|8|18|190|212|22|35|179|90|248|82|124|15|141|202|64|134|183|237|245|212|75|108|207|44|130|199|218|150|54|43|53|139|255|156|186|234|41|193', '2026-04-19 14:05:20.985328', '2026-04-19 14:05:20.985328') RETURNING "id"
+  TRANSACTION (0.7ms)  COMMIT
+  SiteSetting Load (0.4ms)  SELECT "site_settings".* FROM "site_settings" WHERE "site_settings"."name" = 'vapid_base_url' LIMIT 1
+  PushSubscription Delete All (0.5ms)  DELETE FROM "push_subscriptions"
+  SiteSetting Load (0.4ms)  SELECT "site_settings".* FROM "site_settings" WHERE "site_settings"."name" = 'send_welcome_message' LIMIT 1
+  TRANSACTION (1.0ms)  BEGIN
+  SiteSetting Create (1.9ms)  INSERT INTO "site_settings" ("name", "data_type", "value", "created_at", "updated_at") VALUES ('send_welcome_message', 5, 'f', '2026-04-19 14:05:21.339492', '2026-04-19 14:05:21.339492') RETURNING "id"
+  TRANSACTION (8.4ms)  COMMIT
+  SiteSetting Load (0.8ms)  SELECT "site_settings".* FROM "site_settings" WHERE "site_settings"."name" = 'allowed_iframes' LIMIT 1
+  TRANSACTION (0.9ms)  BEGIN
+  SiteSetting Create (2.3ms)  INSERT INTO "site_settings" ("name", "data_type", "value", "created_at", "updated_at") VALUES ('allowed_iframes', 8, 'https://www.google.com/maps/embed?|https://www.openstreetmap.org/export/embed.html?|https://calendar.google.com/calendar/embed?|https://codepen.io/*/embed/preview/|https://www.instagram.com/|https://open.spotify.com/|http://localhost:3000/discobot/certificate.svg', '2026-04-19 14:05:21.353658', '2026-04-19 14:05:21.353658') RETURNING "id"
+  TRANSACTION (0.9ms)  COMMIT
+  TranslationOverride Pluck (0.5ms)  SELECT "translation_overrides"."translation_key", "translation_overrides"."value" FROM "translation_overrides" WHERE "translation_overrides"."locale" = 'en'
