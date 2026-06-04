@@ -1,0 +1,58 @@
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: discourse
+      POSTGRES_PASSWORD: discourse
+      POSTGRES_DB: discourse
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U discourse"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.bright
+    command: bash -lc "rm -rf /app/plugins/discourse-ai && bundle exec rake db:migrate && bundle exec bin/pitchfork -c config/pitchfork.conf.rb -E production"
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: production
+      RACK_ENV: production
+      NODE_ENV: production
+      DISCOURSE_DB_HOST: db
+      DISCOURSE_DB_PORT: "5432"
+      DISCOURSE_DB_NAME: discourse
+      DISCOURSE_DB_USERNAME: discourse
+      DISCOURSE_DB_PASSWORD: discourse
+      DISCOURSE_REDIS_HOST: redis
+      DISCOURSE_REDIS_PORT: "6379"
+      SKIP_ENFORCE_HOSTNAME: "1"
+      DISCOURSE_SKIP_CRAWLER_INDEX: "1"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+
+volumes:
+  db-data:
+  redis-data:

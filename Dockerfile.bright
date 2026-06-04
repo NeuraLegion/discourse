@@ -1,0 +1,138 @@
+FROM ruby:3.4-bookworm
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    RAILS_ENV=production \
+    RACK_ENV=production \
+    NODE_ENV=production \
+    BUNDLE_WITHOUT=development:test \
+    BUNDLE_PATH=/bundle \
+    BUNDLE_APP_CONFIG=/bundle \
+    BUNDLE_JOBS=8 \
+    BUNDLE_RETRY=3 \
+    SKIP_ENFORCE_HOSTNAME=1 \
+    SECRET_KEY_BASE=dummy \
+    DISCOURSE_DB_HOST=db \
+    DISCOURSE_DB_NAME=discourse \
+    DISCOURSE_DB_USERNAME=discourse \
+    DISCOURSE_REDIS_HOST=redis \
+    UNICORN_BIND_ALL=1 \
+    UNICORN_SIDEKIQS=0
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    git \
+    curl \
+    ca-certificates \
+    gnupg \
+    pkg-config \
+    libpq-dev \
+    postgresql-client \
+    libyaml-dev \
+    libxml2-dev \
+    libxslt1-dev \
+    zlib1g-dev \
+    liblz4-dev \
+    libsqlite3-dev \
+    libvips \
+    imagemagick \
+    brotli \
+    fonts-noto \
+    fonts-liberation \
+    libjemalloc2 \
+    shared-mime-info \
+    xdg-utils \
+    python3 \
+    python3-venv \
+    python3-pip \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends nodejs \
+    && corepack enable \
+    && corepack prepare pnpm@10.28.0 --activate \
+    && ln -sf /usr/bin/convert /usr/local/bin/magick \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY Gemfile Gemfile.lock ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .pnpmfile.cjs .npmrc ./
+COPY patches/ ./patches/
+
+COPY docs/developer-guides/package.json ./docs/developer-guides/
+COPY frontend/.npmrc ./frontend/
+COPY frontend/custom-proxy/package.json frontend/custom-proxy/.npmrc ./frontend/custom-proxy/
+COPY frontend/deprecation-silencer/package.json ./frontend/deprecation-silencer/
+COPY frontend/discourse/package.json frontend/discourse/.npmrc ./frontend/discourse/
+COPY frontend/discourse-i18n/package.json ./frontend/discourse-i18n/
+COPY frontend/discourse-markdown-it/package.json ./frontend/discourse-markdown-it/
+COPY frontend/discourse-plugins/package.json ./frontend/discourse-plugins/
+COPY frontend/discourse-types/package.json ./frontend/discourse-types/
+COPY frontend/ember-cli-progress-ci/package.json ./frontend/ember-cli-progress-ci/
+COPY frontend/pretty-text/package.json frontend/pretty-text/.npmrc ./frontend/pretty-text/
+COPY frontend/asset-processor/package.json ./frontend/asset-processor/
+
+COPY plugins/automation/package.json ./plugins/automation/
+COPY plugins/chat/package.json ./plugins/chat/
+COPY plugins/checklist/package.json ./plugins/checklist/
+COPY plugins/discourse-adplugin/package.json ./plugins/discourse-adplugin/
+COPY plugins/discourse-affiliate/package.json ./plugins/discourse-affiliate/
+COPY plugins/discourse-ai/package.json ./plugins/discourse-ai/
+COPY plugins/discourse-apple-auth/package.json ./plugins/discourse-apple-auth/
+COPY plugins/discourse-assign/package.json ./plugins/discourse-assign/
+COPY plugins/discourse-cakeday/package.json ./plugins/discourse-cakeday/
+COPY plugins/discourse-calendar/package.json ./plugins/discourse-calendar/
+COPY plugins/discourse-chat-integration/package.json ./plugins/discourse-chat-integration/
+COPY plugins/discourse-data-explorer/package.json ./plugins/discourse-data-explorer/
+COPY plugins/discourse-details/package.json ./plugins/discourse-details/
+COPY plugins/discourse-gamification/package.json ./plugins/discourse-gamification/
+COPY plugins/discourse-github/package.json ./plugins/discourse-github/
+COPY plugins/discourse-graphviz/package.json ./plugins/discourse-graphviz/
+COPY plugins/discourse-hcaptcha/package.json ./plugins/discourse-hcaptcha/
+COPY plugins/discourse-lazy-videos/package.json ./plugins/discourse-lazy-videos/
+COPY plugins/discourse-local-dates/package.json ./plugins/discourse-local-dates/
+COPY plugins/discourse-login-with-amazon/package.json ./plugins/discourse-login-with-amazon/
+COPY plugins/discourse-lti/package.json ./plugins/discourse-lti/
+COPY plugins/discourse-math/package.json ./plugins/discourse-math/
+COPY plugins/discourse-microsoft-auth/package.json ./plugins/discourse-microsoft-auth/
+COPY plugins/discourse-narrative-bot/package.json ./plugins/discourse-narrative-bot/
+COPY plugins/discourse-oauth2-basic/package.json ./plugins/discourse-oauth2-basic/
+COPY plugins/discourse-openid-connect/package.json ./plugins/discourse-openid-connect/
+COPY plugins/discourse-patreon/package.json ./plugins/discourse-patreon/
+COPY plugins/discourse-policy/package.json ./plugins/discourse-policy/
+COPY plugins/discourse-post-voting/package.json ./plugins/discourse-post-voting/
+COPY plugins/discourse-presence/package.json ./plugins/discourse-presence/
+COPY plugins/discourse-reactions/package.json ./plugins/discourse-reactions/
+COPY plugins/discourse-rss-polling/package.json ./plugins/discourse-rss-polling/
+COPY plugins/discourse-solved/package.json ./plugins/discourse-solved/
+COPY plugins/discourse-subscriptions/package.json ./plugins/discourse-subscriptions/
+COPY plugins/discourse-templates/package.json ./plugins/discourse-templates/
+COPY plugins/discourse-topic-voting/package.json ./plugins/discourse-topic-voting/
+COPY plugins/discourse-user-notes/package.json ./plugins/discourse-user-notes/
+COPY plugins/discourse-zendesk-plugin/package.json ./plugins/discourse-zendesk-plugin/
+COPY plugins/footnote/package.json ./plugins/footnote/
+COPY plugins/poll/package.json ./plugins/poll/
+COPY plugins/spoiler-alert/package.json ./plugins/spoiler-alert/
+COPY plugins/styleguide/package.json ./plugins/styleguide/
+
+COPY themes/horizon/package.json ./themes/horizon/
+
+RUN export MAKEFLAGS="-j$(nproc)" \
+    && bundle config set without "${BUNDLE_WITHOUT}" \
+    && bundle config set path "${BUNDLE_PATH}" \
+    && bundle config set jobs "$(nproc)" \
+    && bundle install
+
+RUN pnpm install --frozen-lockfile
+
+COPY . .
+
+RUN SKIP_DB_AND_REDIS=1 bundle exec rake assets:precompile \
+    && magick -version
+
+EXPOSE 3000
+
+CMD ["bash", "-lc", "bundle exec bin/pitchfork -c config/pitchfork.conf.rb -E production"]
