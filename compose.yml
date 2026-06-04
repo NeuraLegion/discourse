@@ -1,0 +1,88 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: discourse
+      POSTGRES_PASSWORD: discourse
+      POSTGRES_DB: discourse
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U discourse"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.bright
+    environment:
+      RAILS_ENV: production
+      NODE_ENV: production
+      DISCOURSE_HOSTNAME: localhost
+      DISCOURSE_DB_NAME: discourse
+      DISCOURSE_DB_USERNAME: discourse
+      DISCOURSE_DB_PASSWORD: discourse
+      DISCOURSE_DB_HOST: db
+      DISCOURSE_REDIS_HOST: redis
+      DISCOURSE_MESSAGE_BUS_REDIS_HOST: redis
+      DISCOURSE_MESSAGE_BUS_REDIS_ENABLED: "true"
+      DISCOURSE_DISCOURSE_DEVELOPER_EMAILS: bright@test.com
+      DISCOURSE_DISCOURSE_SMTP_ADDRESS: localhost
+      DISCOURSE_DISCOURSE_SMTP_PORT: "1025"
+      UNICORN_BIND_ALL: "1"
+      UNICORN_PORT: "3000"
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    stdin_open: true
+    tty: true
+
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile.bright
+    environment:
+      RAILS_ENV: production
+      NODE_ENV: production
+      DISCOURSE_HOSTNAME: localhost
+      DISCOURSE_DB_NAME: discourse
+      DISCOURSE_DB_USERNAME: discourse
+      DISCOURSE_DB_PASSWORD: discourse
+      DISCOURSE_DB_HOST: db
+      DISCOURSE_REDIS_HOST: redis
+      DISCOURSE_MESSAGE_BUS_REDIS_HOST: redis
+      DISCOURSE_MESSAGE_BUS_REDIS_ENABLED: "true"
+      DISCOURSE_DISCOURSE_DEVELOPER_EMAILS: bright@test.com
+      DISCOURSE_DISCOURSE_SMTP_ADDRESS: localhost
+      DISCOURSE_DISCOURSE_SMTP_PORT: "1025"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: ["bash", "-lc", "bundle exec rake db:create db:migrate"]
+    restart: "no"
+
+volumes:
+  db-data:
+  redis-data:
