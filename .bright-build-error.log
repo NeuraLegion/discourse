@@ -1,0 +1,63 @@
+Compose container "discourse-app-1" crashed (state: exited, exit code: 1)
+
+Container diagnostics:
+Network port config:
+{}
+
+Processes inside container:
+Error response from daemon: container 9dac946369904eb671f5314c45f7b650c6d4cd4a6592d4edf40d624e1688b369 is not running
+
+Container stdout/stderr (last 50 lines):
+from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:54:in 'ActiveRecord::ConnectionAdapters::SchemaReflection#columns_hash'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:198:in 'ActiveRecord::ConnectionAdapters::BoundSchemaReflection#columns_hash'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:592:in 'ActiveRecord::ModelSchema::ClassMethods#load_schema!'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/counter_cache.rb:187:in 'ActiveRecord::CounterCache::ClassMethods#load_schema!'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/encryption/encryptable_record.rb:127:in 'ActiveRecord::Encryption::EncryptableRecord::ClassMethods#load_schema!'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:539:in 'block in ActiveRecord::ModelSchema::ClassMethods#load_schema'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:536:in 'Monitor#synchronize'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:536:in 'ActiveRecord::ModelSchema::ClassMethods#load_schema'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:428:in 'ActiveRecord::ModelSchema::ClassMethods#columns_hash'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:1997:in 'ActiveRecord::QueryMethods#arel_column'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2155:in 'ActiveRecord::QueryMethods#order_column'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2097:in 'block in ActiveRecord::QueryMethods#preprocess_order_args'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2094:in 'Array#map!'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2094:in 'ActiveRecord::QueryMethods#preprocess_order_args'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:665:in 'ActiveRecord::QueryMethods#order!'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:660:in 'ActiveRecord::QueryMethods#order'
+	from /app/app/models/emoji.rb:266:in 'Emoji.load_custom'
+	from /app/app/models/emoji.rb:61:in 'block in Emoji.custom'
+	from /app/lib/cache.rb:93:in 'Cache#fetch'
+	from /app/app/models/emoji.rb:61:in 'Emoji.custom'
+	from /app/lib/pretty_text.rb:201:in 'block in PrettyText.markdown'
+	from /app/lib/pretty_text.rb:706:in 'block in PrettyText.protect'
+	from /app/lib/pretty_text.rb:705:in 'Thread::Mutex#synchronize'
+	from /app/lib/pretty_text.rb:705:in 'PrettyText.protect'
+	from /app/lib/pretty_text.rb:197:in 'PrettyText.markdown'
+	from /app/lib/pretty_text.rb:323:in 'PrettyText.cook'
+	from /app/lib/discourse.rb:1296:in 'block in Discourse.preload_rails!'
+E, [2026-04-27T14:16:41.954748 #9] ERROR -- : mold gen=0 pid=12 reaped (#<Process::Status: pid 12 exit 1>)
+[31mbundler: failed to load command: pitchfork (/bundle/ruby/3.4.0/bin/pitchfork)[0m
+/bundle/ruby/3.4.0/gems/pitchfork-0.18.2/lib/pitchfork/http_server.rb:179:in 'Pitchfork::HttpServer#start': [1mThe initial mold failed to boot ([1;4mPitchfork::BootFailure[m[1m)[m
+	from /bundle/ruby/3.4.0/gems/pitchfork-0.18.2/exe/pitchfork:110:in '<top (required)>'
+	from /usr/local/lib/ruby/site_ruby/3.4.0/rubygems.rb:305:in 'Kernel#load'
+	from /usr/local/lib/ruby/site_ruby/3.4.0/rubygems.rb:305:in 'Gem.activate_and_load_bin_path'
+	from /bundle/ruby/3.4.0/bin/pitchfork:25:in '<top (required)>'
+	from /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli/exec.rb:59:in 'Kernel.load'
+	from /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli/exec.rb:59:in 'Bundler::CLI::Exec#kernel_load'
+	from /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli/exec.rb:23:in 'Bundler::CLI::Exec#run'
+	from /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli.rb:452:in 'Bundler::CLI#exec'
+	from /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor/command.rb:28:in 'Bundler::Thor::Command#run'
+	from /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor/invocation.rb:127:in 'Bundler::Thor::Invocation#invoke_command'
+	from /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor.rb:538:in 'Bundler::Thor.dispatch'
+	from /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli.rb:35:in 'Bundler::CLI.dispatch'
+	from /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor/base.rb:584:in 'Bundler::Thor::Base::ClassMethods#start'
+	from /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli.rb:29:in 'Bundler::CLI.start'
+	from /bundle/ruby/3.4.0/gems/bundler-2.6.4/exe/bundle:28:in 'block in <top (required)>'
+	from /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/friendly_errors.rb:117:in 'Bundler.with_friendly_errors'
+	from /bundle/ruby/3.4.0/gems/bundler-2.6.4/exe/bundle:20:in '<top (required)>'
+	from /usr/local/lib/ruby/site_ruby/3.4.0/rubygems.rb:305:in 'Kernel#load'
+	from /usr/local/lib/ruby/site_ruby/3.4.0/rubygems.rb:305:in 'Gem.activate_and_load_bin_path'
+	from /usr/local/bin/bundle:25:in '<main>'
+
+Application logs inside container:
+Error response from daemon: container 9dac946369904eb671f5314c45f7b650c6d4cd4a6592d4edf40d624e1688b369 is not running
