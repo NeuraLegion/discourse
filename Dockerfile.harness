@@ -1,0 +1,44 @@
+FROM ruby:3.4-slim
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    RUBYLIB=/app/lib \
+    PORT=3001
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      ca-certificates \
+      git \
+      build-essential \
+      libpq-dev \
+      default-libmysqlclient-dev \
+      libxml2-dev \
+      libxslt1-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN gem install --no-document \
+      sinatra \
+      rack \
+      rackup \
+      puma \
+      json \
+      logger \
+      redis \
+      activesupport \
+      activerecord \
+      pg \
+      mysql2 \
+      nokogiri \
+      http \
+      addressable \
+      mime-types \
+      mini_mime \
+      loofah \
+      htmlentities
+
+COPY . /app
+COPY harness.rb /app/harness.rb
+
+EXPOSE 3001
+
+CMD ["ruby", "harness.rb"]
