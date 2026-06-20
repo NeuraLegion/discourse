@@ -1,0 +1,32 @@
+FROM ruby:3.4-slim
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    PORT=3001 \
+    RUBYLIB=/app:/app/lib
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      build-essential \
+      ca-certificates \
+      curl \
+      git \
+      libyaml-dev \
+      pkg-config \
+      libssl-dev \
+      zlib1g-dev \
+      libpq-dev \
+      shared-mime-info \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY Gemfile Gemfile.lock /app/
+
+RUN bundle config set without 'development test' \
+    && bundle install --jobs 4 --retry 3
+
+COPY . /app
+COPY harness.rb /app/harness.rb
+
+EXPOSE 3001
+
+CMD ["bundle", "exec", "ruby", "harness.rb"]
