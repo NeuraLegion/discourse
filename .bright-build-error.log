@@ -1,0 +1,63 @@
+Compose container "discourse-app-1" crashed (state: exited, exit code: 1)
+
+Container diagnostics:
+Network port config:
+{}
+
+Processes inside container:
+Error response from daemon: container 37d3567b676bc5b6296542aea9e9ae2c47a2382d2358db5b94b6eb3098098dcd is not running
+
+Container stdout/stderr (last 50 lines):
+== 20230708011310 FixReviewableQueuedPostsTargetCreatedById: migrated (0.0017s) 
+
+-- execute("    UPDATE chat_channels\n    SET last_message_id = (\n      SELECT cm.id\n      FROM chat_messages cm\n      LEFT JOIN chat_threads ON chat_threads.original_message_id = cm.id\n      WHERE cm.chat_channel_id = chat_channels.id\n        AND cm.deleted_at IS NULL\n        AND (cm.thread_id IS NULL OR chat_threads.id IS NOT NULL)\n      ORDER BY cm.created_at DESC, cm.id DESC\n      LIMIT 1\n    );\n")
+   -> 0.0010s
+-- execute("    UPDATE chat_threads\n    SET last_message_id = (\n      SELECT cm.id\n      FROM chat_messages cm\n      WHERE cm.thread_id = chat_threads.id\n        AND cm.deleted_at IS NULL\n      ORDER BY cm.created_at DESC, cm.id DESC\n      LIMIT 1\n    );\n")
+   -> 0.0007s
+== 20230710040640 BackfillChatChannelAndThreadLastMessageIdsPostMigrate: migrating 
+== 20230710040640 BackfillChatChannelAndThreadLastMessageIdsPostMigrate: migrated (0.0012s) 
+
+== 20230710171141 EnablePgVectorExtension: migrating ==========================
+-- extension_enabled?(:vector)
+   -> 0.0010s
+-- enable_extension(:vector)
+bin/rails aborted!
+StandardError: An error has occurred, this and all later migrations canceled: (StandardError)
+
+ERROR:  current transaction is aborted, commands ignored until end of transaction block
+/app/lib/mini_sql_multisite_connection.rb:109:in 'MiniSqlMultisiteConnection#run'
+/app/plugins/discourse-ai/db/migrate/20230710171141_enable_pg_vector_extension.rb:9:in 'EnablePgVectorExtension#change'
+/app/lib/freedom_patches/schema_migration_details.rb:8:in 'block in FreedomPatches::SchemaMigrationDetails#exec_migration'
+/app/lib/freedom_patches/schema_migration_details.rb:8:in 'FreedomPatches::SchemaMigrationDetails#exec_migration'
+/app/lib/migration/safe_migrate.rb:28:in 'Migration::SafeMigrate::SafeMigration#migrate'
+/app/lib/migration/safe_migrate.rb:53:in 'Migration::SafeMigrate::NiceErrors#migrate'
+
+Caused by:
+PG::InFailedSqlTransaction: ERROR:  current transaction is aborted, commands ignored until end of transaction block (PG::InFailedSqlTransaction)
+/app/lib/mini_sql_multisite_connection.rb:109:in 'MiniSqlMultisiteConnection#run'
+/app/plugins/discourse-ai/db/migrate/20230710171141_enable_pg_vector_extension.rb:9:in 'EnablePgVectorExtension#change'
+/app/lib/freedom_patches/schema_migration_details.rb:8:in 'block in FreedomPatches::SchemaMigrationDetails#exec_migration'
+/app/lib/freedom_patches/schema_migration_details.rb:8:in 'FreedomPatches::SchemaMigrationDetails#exec_migration'
+/app/lib/migration/safe_migrate.rb:28:in 'Migration::SafeMigrate::SafeMigration#migrate'
+/app/lib/migration/safe_migrate.rb:53:in 'Migration::SafeMigrate::NiceErrors#migrate'
+
+Caused by:
+ActiveRecord::StatementInvalid: PG::UndefinedFile: ERROR:  could not open extension control file "/usr/share/postgresql/13/extension/vector.control": No such file or directory (ActiveRecord::StatementInvalid)
+/app/plugins/discourse-ai/db/migrate/20230710171141_enable_pg_vector_extension.rb:7:in 'EnablePgVectorExtension#change'
+/app/lib/freedom_patches/schema_migration_details.rb:8:in 'block in FreedomPatches::SchemaMigrationDetails#exec_migration'
+/app/lib/freedom_patches/schema_migration_details.rb:8:in 'FreedomPatches::SchemaMigrationDetails#exec_migration'
+/app/lib/migration/safe_migrate.rb:28:in 'Migration::SafeMigrate::SafeMigration#migrate'
+/app/lib/migration/safe_migrate.rb:53:in 'Migration::SafeMigrate::NiceErrors#migrate'
+
+Caused by:
+PG::UndefinedFile: ERROR:  could not open extension control file "/usr/share/postgresql/13/extension/vector.control": No such file or directory (PG::UndefinedFile)
+/app/plugins/discourse-ai/db/migrate/20230710171141_enable_pg_vector_extension.rb:7:in 'EnablePgVectorExtension#change'
+/app/lib/freedom_patches/schema_migration_details.rb:8:in 'block in FreedomPatches::SchemaMigrationDetails#exec_migration'
+/app/lib/freedom_patches/schema_migration_details.rb:8:in 'FreedomPatches::SchemaMigrationDetails#exec_migration'
+/app/lib/migration/safe_migrate.rb:28:in 'Migration::SafeMigrate::SafeMigration#migrate'
+/app/lib/migration/safe_migrate.rb:53:in 'Migration::SafeMigrate::NiceErrors#migrate'
+Tasks: TOP => db:prepare
+(See full trace by running task with --trace)
+
+Application logs inside container:
+Error response from daemon: container 37d3567b676bc5b6296542aea9e9ae2c47a2382d2358db5b94b6eb3098098dcd is not running
