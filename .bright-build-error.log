@@ -1,0 +1,149 @@
+Application returning HTTP 500 persistently on port 3000
+
+HTTP 500 response body:
+connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory | ActiveRecord::ConnectionNotEstablished | Action Controller: Exception caught
+Action Controller: Exception caught ActiveRecord::ConnectionNotEstablished connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory Is the server running locally and accepting connections on that socket? connection to server on socket "/run/postgresql/.s.PGSQL.5432" failed: No such file or directory Is the server running locally and accepting connections on that socket? connection to server on socket "/tmp/.s.PGSQL.5432" failed: No such file or directo
+
+Container logs:
+app-1  | /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:64: warning: already initialized constant Gem::Platform::JAVA
+app-1  | /usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:279: warning: previous definition of JAVA was here
+app-1  | /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:65: warning: already initialized constant Gem::Platform::MSWIN
+app-1  | /usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:280: warning: previous definition of MSWIN was here
+app-1  | /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:66: warning: already initialized constant Gem::Platform::MSWIN64
+app-1  | /usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:281: warning: previous definition of MSWIN64 was here
+app-1  | /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:67: warning: already initialized constant Gem::Platform::MINGW
+app-1  | /usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:282: warning: previous definition of MINGW was here
+app-1  | /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:68: warning: already initialized constant Gem::Platform::X64_MINGW
+app-1  | /usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:284: warning: previous definition of X64_MINGW was here
+app-1  | /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:70: warning: already initialized constant Gem::Platform::UNIVERSAL_MINGW
+app-1  | /usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:285: warning: previous definition of UNIVERSAL_MINGW was here
+app-1  | /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:71: warning: already initialized constant Gem::Platform::WINDOWS
+app-1  | /usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:286: warning: previous definition of WINDOWS was here
+app-1  | /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:72: warning: already initialized constant Gem::Platform::X64_LINUX
+app-1  | /usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:287: warning: previous definition of X64_LINUX was here
+app-1  | /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:73: warning: already initialized constant Gem::Platform::X64_LINUX_MUSL
+app-1  | /usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:288: warning: previous definition of X64_LINUX_MUSL was here
+app-1  | => Booting Puma
+app-1  | => Rails 8.0.5 application starting in development 
+app-1  | => Run `bin/rails server --help` for more startup options
+app-1  | Puma starting in single mode...
+app-1  | * Puma version: 7.1.0 ("Neon Witch")
+app-1  | * Ruby version: ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [x86_64-linux]
+app-1  | *  Min threads: 0
+app-1  | *  Max threads: 5
+app-1  | *  Environment: development
+app-1  | *          PID: 1
+app-1  | * Listening on http://0.0.0.0:3000
+app-1  | Use Ctrl-C to stop
+app-1  | Started GET "/" for 172.18.0.1 at 2026-04-21 06:36:32 +0000
+app-1  | Started GET "/" for 172.18.0.1 at 2026-04-21 06:36:35 +0000
+db-1   | The files belonging to this database system will be owned by user "postgres".
+db-1   | This user must also own the server process.
+db-1   | 
+db-1   | The database cluster will be initialized with locale "en_US.utf8".
+app-1  | Started GET "/" for 172.18.0.1 at 2026-04-21 06:36:37 +0000
+db-1   | The default database encoding has accordingly been set to "UTF8".
+db-1   | The default text search configuration will be set to "english".
+db-1   | 
+
+... (19 lines omitted) ...
+
+redis-1  | 1:M 21 Apr 2026 06:36:20.745 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 21 Apr 2026 06:36:20.745 * Running mode=standalone, port=6379.
+redis-1  | 1:M 21 Apr 2026 06:36:20.745 * Server initialized
+redis-1  | 1:M 21 Apr 2026 06:36:20.746 * Ready to accept connections tcp
+db-1     | 
+db-1     | 
+db-1     | Success. You can now start the database server using:
+db-1     | 
+db-1     |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+db-1     | 
+db-1     | initdb: warning: enabling "trust" authentication for local connections
+db-1     | You can change this by editing pg_hba.conf or using the option -A, or
+db-1     | --auth-local and --auth-host, the next time you run initdb.
+db-1     | waiting for server to start....2026-04-21 06:36:21.191 UTC [48] LOG:  starting PostgreSQL 13.23 (Debian 13.23-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+db-1     | 2026-04-21 06:36:21.192 UTC [48] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1     | 2026-04-21 06:36:21.194 UTC [49] LOG:  database system was shut down at 2026-04-21 06:36:21 UTC
+db-1     | 2026-04-21 06:36:21.197 UTC [48] LOG:  database system is ready to accept connections
+db-1     |  done
+db-1     | server started
+db-1     | CREATE DATABASE
+db-1     | 
+db-1     | 
+db-1     | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+db-1     | 
+db-1     | waiting for server to shut down...2026-04-21 06:36:21.364 UTC [48] LOG:  received fast shutdown request
+db-1     | .2026-04-21 06:36:21.364 UTC [48] LOG:  aborting any active transactions
+db-1     | 2026-04-21 06:36:21.365 UTC [48] LOG:  background worker "logical replication launcher" (PID 55) exited with exit code 1
+db-1     | 2026-04-21 06:36:21.365 UTC [50] LOG:  shutting down
+db-1     | 2026-04-21 06:36:21.371 UTC [48] LOG:  database system is shut down
+db-1     |  done
+db-1     | server stopped
+db-1     | 
+db-1     | PostgreSQL init process complete; ready for start up.
+db-1     | 
+db-1     | 2026-04-21 06:36:21.477 UTC [1] LOG:  starting PostgreSQL 13.23 (Debian 13.23-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+db-1     | 2026-04-21 06:36:21.477 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+db-1     | 2026-04-21 06:36:21.477 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+db-1     | 2026-04-21 06:36:21.478 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1     | 2026-04-21 06:36:21.480 UTC [63] LOG:  database system was shut down at 2026-04-21 06:36:21 UTC
+db-1     | 2026-04-21 06:36:21.483 UTC [1] LOG:  database system is ready to accept connections
+
+Container diagnostics:
+Port mappings:
+3000/tcp -> 0.0.0.0:3000
+3000/tcp -> [::]:3000
+
+Network port config:
+{"3000/tcp":[{"HostIp":"0.0.0.0","HostPort":"3000"},{"HostIp":"::","HostPort":"3000"}]}
+
+Processes inside container:
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1 42.1  0.4 2690632 304408 pts/0  Ssl+ 06:36   0:07 puma 7.1.0 (tcp://0.0.0.0:3000) [app]
+root         136 66.6  0.0   8552  4644 ?        Rs   06:36   0:00 ps aux
+
+Container stdout/stderr (last 50 lines):
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:64: warning: already initialized constant Gem::Platform::JAVA
+/usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:279: warning: previous definition of JAVA was here
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:65: warning: already initialized constant Gem::Platform::MSWIN
+/usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:280: warning: previous definition of MSWIN was here
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:66: warning: already initialized constant Gem::Platform::MSWIN64
+/usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:281: warning: previous definition of MSWIN64 was here
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:67: warning: already initialized constant Gem::Platform::MINGW
+/usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:282: warning: previous definition of MINGW was here
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:68: warning: already initialized constant Gem::Platform::X64_MINGW
+/usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:284: warning: previous definition of X64_MINGW was here
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:70: warning: already initialized constant Gem::Platform::UNIVERSAL_MINGW
+/usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:285: warning: previous definition of UNIVERSAL_MINGW was here
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:71: warning: already initialized constant Gem::Platform::WINDOWS
+/usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:286: warning: previous definition of WINDOWS was here
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:72: warning: already initialized constant Gem::Platform::X64_LINUX
+/usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:287: warning: previous definition of X64_LINUX was here
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/rubygems_ext.rb:73: warning: already initialized constant Gem::Platform::X64_LINUX_MUSL
+/usr/local/lib/ruby/site_ruby/3.4.0/rubygems/platform.rb:288: warning: previous definition of X64_LINUX_MUSL was here
+=> Booting Puma
+=> Rails 8.0.5 application starting in development 
+=> Run `bin/rails server --help` for more startup options
+Puma starting in single mode...
+* Puma version: 7.1.0 ("Neon Witch")
+* Ruby version: ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [x86_64-linux]
+*  Min threads: 0
+*  Max threads: 5
+*  Environment: development
+*          PID: 1
+* Listening on http://0.0.0.0:3000
+Use Ctrl-C to stop
+Started GET "/" for 172.18.0.1 at 2026-04-21 06:36:32 +0000
+Started GET "/" for 172.18.0.1 at 2026-04-21 06:36:35 +0000
+Started GET "/" for 172.18.0.1 at 2026-04-21 06:36:37 +0000
+Started GET "/" for 172.18.0.1 at 2026-04-21 06:36:40 +0000
+Started GET "/" for 172.18.0.1 at 2026-04-21 06:36:43 +0000
+
+Application logs inside container:
+=== /app/log/development.log ===
+   (101.0ms)  CREATE DATABASE "discourse_development" ENCODING = 'utf8'
+Started GET "/" for 172.18.0.1 at 2026-04-21 06:36:32 +0000
+Started GET "/" for 172.18.0.1 at 2026-04-21 06:36:35 +0000
+Started GET "/" for 172.18.0.1 at 2026-04-21 06:36:37 +0000
+Started GET "/" for 172.18.0.1 at 2026-04-21 06:36:40 +0000
+Started GET "/" for 172.18.0.1 at 2026-04-21 06:36:43 +0000

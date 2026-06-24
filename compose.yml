@@ -1,0 +1,75 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: development
+      DISCOURSE_DEV_DB: discourse_development
+      DISCOURSE_HOSTNAME: localhost
+      CHECKOUT_TIMEOUT: "5"
+      RUBY_BIND: 0.0.0.0
+      LOAD_PLUGINS: "0"
+      DISCOURSE_SKIP_CSS_WATCHER: "1"
+      PGHOST: db
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: discourse_development
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+    command:
+      - bash
+      - -lc
+      - |
+        cat > config/discourse.conf <<'EOF'
+        db_host = db
+        db_port = 5432
+        db_name = discourse_development
+        db_username = postgres
+        db_password = postgres
+        hostname = localhost
+        redis_host = redis
+        redis_port = 6379
+        message_bus_redis_enabled = false
+        EOF
+        bundle exec rails server -b 0.0.0.0 -p 3000
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: discourse_development
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+volumes:
+  db-data:
+  redis-data:
