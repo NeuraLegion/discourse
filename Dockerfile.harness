@@ -1,0 +1,8 @@
+FROM bright-app-local
+WORKDIR /app
+RUN BUNDLE_GEMFILE="" gem install sinatra webrick erb --no-document
+COPY harness.rb /app/harness.rb
+EXPOSE 3001
+ENV PORT=3001
+ENV BUNDLE_GEMFILE=""
+CMD ["ruby","harness.rb"]
