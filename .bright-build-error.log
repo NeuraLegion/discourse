@@ -1,0 +1,4 @@
+Command failed: docker compose exec -T app bin/rails assets:precompile
+Exit code: 1
+
+service "app" is not running
