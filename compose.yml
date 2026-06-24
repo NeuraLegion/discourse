@@ -1,0 +1,32 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16-bookworm
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: discourse_development
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-bookworm
+
+  app:
+    build: .
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: "development"
+      NODE_ENV: "development"
+      DISCOURSE_DEV_DB: "discourse_development"
+      DISCOURSE_REDIS_HOST: "redis"
+      DISABLE_TRANSLATION_OVERRIDES: "1"
+      DISCOURSE_HOSTNAME: "localhost"
+      DISCOURSE_LOCAL_EMAIL_PORT: "1025"
+    command: bash -lc "ruby -e 'require \"socket\"; loop do begin; TCPSocket.new(\"postgres\",5432).close; break; rescue; sleep 1; end; end; loop do begin; TCPSocket.new(\"redis\",6379).close; break; rescue; sleep 1; end; end' && bundle exec rake db:migrate && bundle exec rails server -b 0.0.0.0 -p 3000"
+
+volumes:
+  postgres-data:

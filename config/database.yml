@@ -3,26 +3,27 @@
     ENV
       .filter { |key, _| key.start_with?("DISCOURSE_DB_VARIABLES_") }
       .transform_keys { |key| key.slice(("DISCOURSE_DB_VARIABLES_".length)..).downcase }
+
+  db_host = GlobalSetting.db_host || ENV["PGHOST"] || "postgres"
+  db_port = GlobalSetting.db_port || ENV["PGPORT"] || 5432
+  db_username = GlobalSetting.db_username || ENV["PGUSER"] || "postgres"
+  db_password = GlobalSetting.db_password || ENV["PGPASSWORD"] || "postgres"
 %>
 
 development:
   prepared_statements: false
   adapter: postgresql
-  database: <%= ENV['DISCOURSE_DEV_DB'] || 'discourse_development' %>
+  host: <%= db_host %>
+  port: <%= db_port %>
+  username: <%= db_username %>
+  password: <%= db_password %>
+  database: <%= ENV['DISCOURSE_DEV_DB'] || GlobalSetting.db_name || 'discourse_development' %>
   min_messages: warning
   pool: 5
   checkout_timeout: <%= ENV['CHECKOUT_TIMEOUT'] || 5 %>
   host_names:
-    ### Don't include the port number here. Change the "port" site setting instead, at /admin/site_settings.
-    ### If you change this setting you will need to
-    ###   - restart sidekiq if you change this setting
-    ###   - rebake all to posts using: `RAILS_ENV=production bundle exec rake posts:rebake`
-    - "<%= ENV['DISCOURSE_HOSTNAME'] || 'localhost' %>"
+    - "<%= ENV['DISCOURSE_HOSTNAME'] || GlobalSetting.hostname || 'localhost' %>"
   variables: <%= db_variables.to_json %>
-
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
 
 <%
   test_db = ENV["RAILS_DB"]
@@ -39,6 +40,10 @@ development:
 test:
   prepared_statements: false
   adapter: postgresql
+  host: <%= db_host %>
+  port: <%= db_port %>
+  username: <%= db_username %>
+  password: <%= db_password %>
   database: <%= test_db %>
   min_messages: warning
   pool: 2
@@ -48,17 +53,15 @@ test:
     - test.localhost
   variables: <%= db_variables.to_json %>
 
-# profile db is used for benchmarking using the script/bench.rb script
 profile:
   prepared_statements: false
   adapter: postgresql
+  host: <%= db_host %>
+  port: <%= db_port %>
+  username: <%= db_username %>
+  password: <%= db_password %>
   database: discourse_profile
   min_messages: warning
   pool: 5
   host_names:
     - "localhost"
-# You may be surprised production is not here, it is sourced from application.rb using a monkey patch
-# This is done for 2 reasons
-#
-# 1. we need to support blank settings correctly and rendering nothing in yaml/erb is a PITA
-# 2. why go from object -> yaml -> object, pointless
