@@ -1,0 +1,213 @@
+Database and Cache Configuration | discourse/discourse_docker | DeepWiki
+
+Loading...
+
+Index your code with Devin
+DeepWikiDeepWikidiscourse/discourse_docker 
+
+Index your code with
+
+Devin
+Edit WikiShare
+
+Loading...
+
+Last indexed: 25 June 2025 (072c52)
+
+Overview
+Getting Started
+Core Components
+Launcher Script
+Template System
+Docker Images
+Configuration
+Sample Configurations
+Web Services Configuration
+Database and Cache Configuration
+SSL/TLS and Security
+Development and Testing
+CI/CD and Image Building
+Advanced Topics
+Data Import Systems
+Mail Processing
+Alternative Configurations
+PostgreSQL Management
+Troubleshooting and Maintenance
+
+Menu
+
+Database and Cache Configuration
+
+Relevant source files
+
+image/discourse_dev/postgres_dev.template.yml
+
+launcher
+
+templates/postgres.13.template.yml
+
+templates/postgres.15.template.yml
+
+templates/postgres.template.yml
+
+templates/redis.template.yml
+
+This document covers the configuration of PostgreSQL database and Redis cache services within the discourse_docker deployment system. It explains how these services are configured through templates, integrated with the container orchestration system, and optimized for Discourse forum performance.
+
+For web application configuration, see Web Services Configuration. For SSL/TLS security configuration, see SSL/TLS and Security.
+
+Overview
+
+The discourse_docker system provides PostgreSQL database and Redis cache services through a modular template system. These services can be deployed together in a standalone configuration or separately in distributed setups.
+
+Sources: launcher92-98 templates/postgres.template.yml1-285 templates/redis.template.yml1-95
+
+PostgreSQL Database Configuration
+
+Template Structure and Parameters
+
+PostgreSQL configuration is managed through versioned templates that define database parameters, installation procedures, and service management.
+
+TemplatePurposePostgreSQL Version
+postgres.template.ymlCurrent default template15
+postgres.15.template.ymlPostgreSQL 15 specific15
+postgres.13.template.ymlPostgreSQL 13 legacy13
+
+Core Configuration Parameters
+
+The PostgreSQL templates expose tunable parameters through the params section:
+
+ParameterDefaultPurpose
+db_synchronous_commit"off"Disable synchronous commit for performance
+db_shared_buffers"256MB"PostgreSQL shared buffer pool size
+db_work_mem"10MB"Memory for query operations
+db_namediscourseDatabase name
+db_userdiscourseDatabase user
+db_checkpoint_segments6WAL checkpoint frequency
+db_logging_collectoroffPostgreSQL log collection
+db_log_min_duration_statement100Log slow queries (ms)
+
+Sources: templates/postgres.template.yml2-11 templates/postgres.15.template.yml1-10
+
+Database Installation and Initialization
+
+The PostgreSQL installation process is handled by the install_postgres script embedded in the template:
+
+Sources: templates/postgres.template.yml49-86 templates/postgres.template.yml224-238
+
+Database Extensions and Setup
+
+PostgreSQL is configured with essential extensions for Discourse functionality:
+
+The create_db script handles database and user creation along with extension installation.
+
+Sources: templates/postgres.template.yml240-258 templates/postgres.template.yml277-284
+
+Version Upgrade Management
+
+PostgreSQL version upgrades are handled automatically through the upgrade_postgres script:
+
+Sources: templates/postgres.template.yml88-155 templates/postgres.15.template.yml82-149
+
+Redis Cache Configuration
+
+Redis Service Setup
+
+Redis is configured as both a cache and background job queue through the redis.template.yml template:
+
+Sources: templates/redis.template.yml1-4 templates/redis.template.yml6-26 templates/redis.template.yml80-95
+
+Redis Configuration Modifications
+
+The template applies several configuration changes to the default Redis setup:
+
+Configuration ChangeFile LocationPurpose
+Disable daemonization/etc/redis/redis.confRun as foreground process
+Remove PID file/etc/redis/redis.confManaged by runit
+Clear bind addresses/etc/redis/redis.confListen on all interfaces
+Set data directory/etc/redis/redis.confUse /shared/redis_data
+Disable protected mode/etc/redis/redis.confAllow container connections
+Configure IO threads/etc/redis/redis.confSet io-threads parameter
+
+Sources: templates/redis.template.yml27-65
+
+Template System Integration
+
+Launcher Integration
+
+The launcher script processes database and cache templates through its template resolution system:
+
+Sources: launcher317-328 launcher330-482 launcher660-731
+
+Parameter Substitution
+
+Template parameters are substituted during container bootstrap through Ruby processing:
+
+Sources: launcher348-368 templates/postgres.template.yml176-178
+
+Data Persistence and Storage
+
+Shared Volume Structure
+
+Database and cache data are persisted through shared volumes mounted in containers:
+
+ServiceData DirectoryPurposePermissions
+PostgreSQL/shared/postgres_dataDatabase filespostgres:postgres
+PostgreSQL/shared/postgres_backupBackup storagepostgres:postgres
+PostgreSQL/shared/postgres_runRuntime socketspostgres:postgres
+Redis/shared/redis_dataCache and queue dataredis:redis
+
+Sources: templates/postgres.template.yml64-82 templates/redis.template.yml39-54
+
+Backup Management
+
+PostgreSQL backups are handled through the take-database-backup script:
+
+Sources: templates/postgres.template.yml260-276
+
+Performance Tuning Parameters
+
+PostgreSQL Performance Settings
+
+Key performance parameters and their impact on Discourse operation:
+
+ParameterDefaultImpactTuning Guidance
+shared_buffers256MBMemory for page cacheSet to 25% of available RAM
+work_mem10MBSort/hash operation memoryIncrease for complex queries
+synchronous_commitoffWAL commit behaviorOff for better performance
+checkpoint_segments6WAL checkpoint frequencyHigher for write-heavy loads
+
+Sources: templates/postgres.template.yml168-195
+
+Redis Performance Configuration
+
+Redis performance is primarily controlled through the redis_io_threads parameter:
+
+Higher values enable multi-threaded I/O operations but should be tuned based on CPU cores and workload patterns.
+
+Sources: templates/redis.template.yml3 templates/redis.template.yml62-64
+
+DismissRefresh this wiki
+Enter email to refresh
+
+On this page
+Database and Cache Configuration
+Overview
+PostgreSQL Database Configuration
+Template Structure and Parameters
+Core Configuration Parameters
+Database Installation and Initialization
+Database Extensions and Setup
+Version Upgrade Management
+Redis Cache Configuration
+Redis Service Setup
+Redis Configuration Modifications
+Template System Integration
+Launcher Integration
+Parameter Substitution
+Data Persistence and Storage
+Shared Volume Structure
+Backup Management
+Performance Tuning Parameters
+PostgreSQL Performance Settings
+Redis Performance Configuration
