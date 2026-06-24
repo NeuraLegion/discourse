@@ -1,0 +1,201 @@
+Application failed on port 3000: The Rails server process exited with code 1 during startup, indicating an unrecoverable application boot failure rather than continued progress toward readiness.
+
+Container logs:
+db-1     | The files belonging to this database system will be owned by user "postgres".
+redis-1  | 1:C 20 Apr 2026 20:30:36.763 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+redis-1  | 1:C 20 Apr 2026 20:30:36.763 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 1:C 20 Apr 2026 20:30:36.763 * Redis version=7.4.8, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1  | 1:C 20 Apr 2026 20:30:36.763 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis-1  | 1:M 20 Apr 2026 20:30:36.764 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+redis-1  | 1:M 20 Apr 2026 20:30:36.764 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 20 Apr 2026 20:30:36.764 * Running mode=standalone, port=6379.
+redis-1  | 1:M 20 Apr 2026 20:30:36.764 * Server initialized
+redis-1  | 1:M 20 Apr 2026 20:30:36.764 * Ready to accept connections tcp
+db-1     | This user must also own the server process.
+db-1     | 
+db-1     | The database cluster will be initialized with locale "en_US.utf8".
+db-1     | The default database encoding has accordingly been set to "UTF8".
+db-1     | The default text search configuration will be set to "english".
+db-1     | 
+db-1     | Data page checksums are disabled.
+db-1     | 
+db-1     | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+db-1     | creating subdirectories ... ok
+db-1     | selecting dynamic shared memory implementation ... posix
+db-1     | selecting default max_connections ... 100
+db-1     | selecting default shared_buffers ... 128MB
+db-1     | selecting default time zone ... Etc/UTC
+db-1     | creating configuration files ... ok
+db-1     | running bootstrap script ... ok
+db-1     | performing post-bootstrap initialization ... ok
+db-1     | initdb: warning: enabling "trust" authentication for local connections
+db-1     | syncing data to disk ... ok
+db-1     | 
+db-1     | 
+db-1     | Success. You can now start the database server using:
+db-1     | 
+db-1     |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+db-1     | 
+db-1     | initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+db-1     | waiting for server to start....2026-04-20 20:30:37.215 UTC [48] LOG:  starting PostgreSQL 16.13 (Debian 16.13-1.pgdg12+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+db-1     | 2026-04-20 20:30:37.216 UTC [48] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1     | 2026-04-20 20:30:37.219 UTC [51] LOG:  database system was shut down at 2026-04-20 20:30:37 UTC
+db-1     | 2026-04-20 20:30:37.222 UTC [48] LOG:  database system is ready to accept connections
+
+... (17558 lines omitted) ...
+
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/application.rb:444:in 'Rails::Application#initialize!'
+app-1    | [1] 	from /app/config/environment.rb:7:in '<main>'
+app-1    | [1] 	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'Kernel.require'
+app-1    | [1] 	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'block (2 levels) in Kernel#replace_require'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/bootsnap-1.23.0/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:33:in 'Kernel#require'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/zeitwerk-2.7.5/lib/zeitwerk/core_ext/kernel.rb:34:in 'Kernel#require'
+app-1    | [1] 	from config.ru:6:in 'block in <main>'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/builder.rb:116:in 'Kernel#eval'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/builder.rb:116:in 'Rack::Builder.new_from_string'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/builder.rb:105:in 'Rack::Builder.load_file'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/builder.rb:66:in 'Rack::Builder.parse_file'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/server.rb:349:in 'Rack::Server#build_app_and_options_from_config'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/server.rb:249:in 'Rack::Server#app'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/server.rb:422:in 'Rack::Server#wrapped_app'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/server/server_command.rb:76:in 'Rails::Server#log_to_stdout'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/server/server_command.rb:36:in 'Rails::Server#start'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/server/server_command.rb:145:in 'block in Rails::Command::ServerCommand#perform'
+app-1    | [1] 	from <internal:kernel>:91:in 'Kernel#tap'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/server/server_command.rb:136:in 'Rails::Command::ServerCommand#perform'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/thor-1.5.0/lib/thor/command.rb:28:in 'Thor::Command#run'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/thor-1.5.0/lib/thor/invocation.rb:127:in 'Thor::Invocation#invoke_command'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command/base.rb:178:in 'Rails::Command::Base#invoke_command'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/thor-1.5.0/lib/thor.rb:538:in 'Thor.dispatch'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command/base.rb:73:in 'Rails::Command::Base.perform'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:65:in 'block in Rails::Command.invoke'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:143:in 'Rails::Command.with_argv'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:63:in 'Rails::Command.invoke'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands.rb:18:in '<main>'
+app-1    | [1] 	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'Kernel.require'
+app-1    | [1] 	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'block (2 levels) in Kernel#replace_require'
+app-1    | [1] 	from /bundle/ruby/3.4.0/gems/bootsnap-1.23.0/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:33:in 'Kernel#require'
+app-1    | [1] 	from bin/rails:18:in '<main>'
+app-1    | [1] RAILS_ENV=development bin/rails server exited with code 1
+app-1    | [0] ...[ConfigLoader]
+app-1    | [0] ...[Babel: ember-tracked-storage-polyfill > applyPatches]
+app-1    | [0] ...[Babel: pretty-text > applyPatches]
+app-1    | [0] ...[Babel: @ember/render-modifiers > applyPatches]
+app-1    | [0] ...[Babel: ember-this-fallback > applyPatches]
+app-1    | [0] ...[@embroider/compat/app]
+app-1    | [0] ...[@embroider/webpack]
+
+Container diagnostics:
+Port mappings:
+3000/tcp -> 0.0.0.0:3000
+3000/tcp -> [::]:3000
+4200/tcp -> 0.0.0.0:4200
+4200/tcp -> [::]:4200
+
+Network port config:
+{"3000/tcp":[{"HostIp":"0.0.0.0","HostPort":"3000"},{"HostIp":"::","HostPort":"3000"}],"4200/tcp":[{"HostIp":"0.0.0.0","HostPort":"4200"},{"HostIp":"::","HostPort":"4200"}]}
+
+Processes inside container:
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.1  0.1 1347324 108112 ?      Ssl  20:30   0:00 node /usr/bin/pnpm dev
+root         150  0.0  0.0   2592  1724 ?        S    20:33   0:00 sh -c concurrently "bin/ember-cli server --environment=development" "RAILS_ENV=development bin/rails server"
+root         151  1.5  0.0 994076 51280 ?        Sl   20:33   0:00 node /app/node_modules/.bin/../concurrently/dist/bin/concurrently.js bin/ember-cli server --environment=development RAILS_ENV=development bin/rails server
+root         163  0.0  0.0   2592  1800 ?        S    20:33   0:00 /bin/sh -c bin/ember-cli server --environment=development
+root         164  4.9  0.1 1319396 89588 ?       Sl   20:33   0:00 node /usr/bin/pnpm --dir=frontend/discourse ember server server --environment=development --proxy http://localhost:3000
+root         180  177  1.9 46632060 1290796 ?    Rl   20:33   0:18 ember
+root         284 81.4  0.2 1404200 181232 ?      Rsl  20:33   0:04 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         290 77.0  0.2 1392700 168776 ?      Rsl  20:33   0:03 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         296 65.6  0.2 1402332 178880 ?      Rsl  20:33   0:03 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         303 65.5  0.2 1406432 182620 ?      Rsl  20:33   0:03 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         310 52.2  0.2 1377528 155052 ?      Rsl  20:33   0:02 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         321 56.2  0.2 1385200 162124 ?      Rsl  20:33   0:02 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         328 70.2  0.2 1393420 171000 ?      Rsl  20:33   0:03 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         343 48.7  0.2 1380636 156604 ?      Rsl  20:33   0:02 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         355 60.6  0.2 1379216 155720 ?      Ssl  20:33   0:03 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         362 64.0  0.2 1381732 159284 ?      Rsl  20:33   0:03 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         377 58.2  0.2 1379108 155612 ?      Rsl  20:33   0:02 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         387 56.7  0.2 1379332 154892 ?      Rsl  20:33   0:02 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         399 56.5  0.2 1376612 152940 ?      Rsl  20:33   0:02 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         410 51.1  0.2 1374768 151828 ?      Rsl  20:33   0:02 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         424 62.4  0.2 1385964 161792 ?      Rsl  20:33   0:03 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         432 51.6  0.2 1374344 151420 ?      Rsl  20:33   0:02 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         442 50.8  0.2 1376528 151640 ?      Rsl  20:33   0:02 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         454 55.6  0.2 1376768 152620 ?      Rsl  20:33   0:02 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         465 60.3  0.2 1396900 172528 ?      Rsl  20:33   0:02 /usr/bin/node /app/node_modules/.pnpm/thread-loader@3.0.4_webpack@5.99.9_@swc+core@1.15.24_esbuild@0.28.0_/node_modules/thread-loader/dist/worker.js 20
+root         493 50.0  0.0   8684  4748 ?        Rs   20:33   0:00 ps aux
+
+Container stdout/stderr (last 50 lines):
+[1] 	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:231:in 'block in TSort.tsort_each'
+[1] 	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:353:in 'block (2 levels) in TSort.each_strongly_connected_component'
+[1] 	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:434:in 'TSort.each_strongly_connected_component_from'
+[1] 	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:352:in 'block in TSort.each_strongly_connected_component'
+[1] 	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'Rails::Initializable::Collection#each'
+[1] 	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'Method#call'
+[1] 	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'TSort.each_strongly_connected_component'
+[1] 	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:229:in 'TSort.tsort_each'
+[1] 	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:208:in 'TSort#tsort_each'
+[1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:60:in 'Rails::Initializable#run_initializers'
+[1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/application.rb:444:in 'Rails::Application#initialize!'
+[1] 	from /app/config/environment.rb:7:in '<main>'
+[1] 	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'Kernel.require'
+[1] 	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'block (2 levels) in Kernel#replace_require'
+[1] 	from /bundle/ruby/3.4.0/gems/bootsnap-1.23.0/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:33:in 'Kernel#require'
+[1] 	from /bundle/ruby/3.4.0/gems/zeitwerk-2.7.5/lib/zeitwerk/core_ext/kernel.rb:34:in 'Kernel#require'
+[1] 	from config.ru:6:in 'block in <main>'
+[1] 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/builder.rb:116:in 'Kernel#eval'
+[1] 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/builder.rb:116:in 'Rack::Builder.new_from_string'
+[1] 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/builder.rb:105:in 'Rack::Builder.load_file'
+[1] 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/builder.rb:66:in 'Rack::Builder.parse_file'
+[1] 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/server.rb:349:in 'Rack::Server#build_app_and_options_from_config'
+[1] 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/server.rb:249:in 'Rack::Server#app'
+[1] 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/server.rb:422:in 'Rack::Server#wrapped_app'
+[1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/server/server_command.rb:76:in 'Rails::Server#log_to_stdout'
+[1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/server/server_command.rb:36:in 'Rails::Server#start'
+[1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/server/server_command.rb:145:in 'block in Rails::Command::ServerCommand#perform'
+[1] 	from <internal:kernel>:91:in 'Kernel#tap'
+[1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/server/server_command.rb:136:in 'Rails::Command::ServerCommand#perform'
+[1] 	from /bundle/ruby/3.4.0/gems/thor-1.5.0/lib/thor/command.rb:28:in 'Thor::Command#run'
+[1] 	from /bundle/ruby/3.4.0/gems/thor-1.5.0/lib/thor/invocation.rb:127:in 'Thor::Invocation#invoke_command'
+[1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command/base.rb:178:in 'Rails::Command::Base#invoke_command'
+[1] 	from /bundle/ruby/3.4.0/gems/thor-1.5.0/lib/thor.rb:538:in 'Thor.dispatch'
+[1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command/base.rb:73:in 'Rails::Command::Base.perform'
+[1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:65:in 'block in Rails::Command.invoke'
+[1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:143:in 'Rails::Command.with_argv'
+[1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:63:in 'Rails::Command.invoke'
+[1] 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands.rb:18:in '<main>'
+[1] 	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'Kernel.require'
+[1] 	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'block (2 levels) in Kernel#replace_require'
+[1] 	from /bundle/ruby/3.4.0/gems/bootsnap-1.23.0/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:33:in 'Kernel#require'
+[1] 	from bin/rails:18:in '<main>'
+[1] RAILS_ENV=development bin/rails server exited with code 1
+[0] ...[ConfigLoader]
+[0] ...[Babel: ember-tracked-storage-polyfill > applyPatches]
+[0] ...[Babel: pretty-text > applyPatches]
+[0] ...[Babel: @ember/render-modifiers > applyPatches]
+[0] ...[Babel: ember-this-fallback > applyPatches]
+[0] ...[@embroider/compat/app]
+[0] ...[@embroider/webpack]
+
+Application logs inside container:
+=== /app/log/development.log ===
+=== /app/log/production.log ===
+Migrating to RenameAutomationApiKeyScopeResource (20260316071735)
+Migrating to RenameAiApiKeyScopeResource (20260316071736)
+Migrating to RenameDataExplorerApiKeyScopeResource (20260316071737)
+Migrating to AddImageUploadIdToEvents (20260316154328)
+Migrating to CreateAiMcpServers (20260319000000)
+Migrating to CreateAiAgentMcpServers (20260319000001)
+Migrating to AddOauthFieldsToAiMcpServers (20260319033623)
+Migrating to AddPostingReviewModesToCategorySettings (20260319054026)
+Migrating to DeleteRedundantEveryonePostingReviewGroups (20260319054730)
+Migrating to DropPermissionFromCategoryPostingReviewGroups (20260319054731)
+Migrating to CreateAiMcpOauthTokens (20260319055039)
+Migrating to AddSelectedToolNamesToAiAgentMcpServers (20260319070000)
+Migrating to AddNotifyOnSolvedToUserOptions (20260319120000)
+Migrating to AddLimitColorSchemesToThemeModifier (20260323145627)
+Migrating to RemoveFlowdockChatIntegration (20260324004457)
+Migrating to AddTopicIdCreatedAtIndexToTopicVotingVotes (20260324200000)
+Migrating to AddRegistrationEndpointToAiMcpServers (20260326000000)
+Migrating to AddOauthAdvancedOptionsToAiMcpServers (20260327040745)
+Migrating to SplitTranslationPublicContentSetting (20260331024139)
+Migrating to AddShowOriginalContentToUserOptions (20260407093145)
