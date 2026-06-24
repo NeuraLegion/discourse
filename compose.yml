@@ -1,0 +1,46 @@
+services:
+  db:
+    image: pgvector/pgvector:0.8.0-pg16
+    environment:
+      POSTGRES_USER: discourse
+      POSTGRES_PASSWORD: discourse
+      POSTGRES_DB: discourse_development
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U discourse -d discourse_development"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-bookworm
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: "development"
+      NODE_ENV: "development"
+      DISCOURSE_DEV_DB: "discourse_development"
+      PGHOST: "db"
+      PGUSER: "discourse"
+      PGPASSWORD: "discourse"
+      PGDATABASE: "discourse_development"
+      RAILS_DB: "discourse_development"
+      DISCOURSE_REDIS_HOST: "redis"
+      DISCOURSE_MESSAGE_BUS_REDIS_HOST: "redis"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

@@ -1,0 +1,173 @@
+Application on port 3000 returned HTTP 200 but response is not healthy: The response body is nearly empty and does not show a real application UI, data, or interactive page for users.
+
+HTTP response body:
+ok
+
+Container logs:
+redis-1  | 1:C 20 Apr 2026 12:51:21.679 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+redis-1  | 1:C 20 Apr 2026 12:51:21.680 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 1:C 20 Apr 2026 12:51:21.680 * Redis version=7.4.8, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1  | 1:C 20 Apr 2026 12:51:21.680 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis-1  | 1:M 20 Apr 2026 12:51:21.680 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+redis-1  | 1:M 20 Apr 2026 12:51:21.680 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 20 Apr 2026 12:51:21.680 * Running mode=standalone, port=6379.
+redis-1  | 1:M 20 Apr 2026 12:51:21.681 * Server initialized
+redis-1  | 1:M 20 Apr 2026 12:51:21.681 * Ready to accept connections tcp
+redis-1  | 1:M 20 Apr 2026 12:52:22.070 * 10000 changes in 60 seconds. Saving...
+redis-1  | 1:M 20 Apr 2026 12:52:22.071 * Background saving started by pid 87
+redis-1  | 87:C 20 Apr 2026 12:52:22.093 * DB saved on disk
+redis-1  | 87:C 20 Apr 2026 12:52:22.093 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+redis-1  | 1:M 20 Apr 2026 12:52:22.171 * Background saving terminated with success
+redis-1  | 1:M 20 Apr 2026 12:53:23.011 * 10000 changes in 60 seconds. Saving...
+redis-1  | 1:M 20 Apr 2026 12:53:23.011 * Background saving started by pid 165
+db-1     | The files belonging to this database system will be owned by user "postgres".
+redis-1  | 165:C 20 Apr 2026 12:53:23.048 * DB saved on disk
+db-1     | This user must also own the server process.
+db-1     | 
+db-1     | The database cluster will be initialized with locale "en_US.utf8".
+db-1     | The default database encoding has accordingly been set to "UTF8".
+db-1     | The default text search configuration will be set to "english".
+db-1     | 
+db-1     | Data page checksums are disabled.
+db-1     | 
+db-1     | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+db-1     | creating subdirectories ... ok
+db-1     | selecting dynamic shared memory implementation ... posix
+db-1     | selecting default max_connections ... 100
+db-1     | selecting default shared_buffers ... 128MB
+db-1     | selecting default time zone ... Etc/UTC
+db-1     | creating configuration files ... ok
+db-1     | running bootstrap script ... ok
+db-1     | performing post-bootstrap initialization ... ok
+db-1     | syncing data to disk ... ok
+db-1     | 
+db-1     | 
+db-1     | Success. You can now start the database server using:
+db-1     | 
+
+... (17297 lines omitted) ...
+
+app-1    | == 20260327040745 AddOauthAdvancedOptionsToAiMcpServers: migrating ============
+app-1    | -- add_column(:ai_mcp_servers, :oauth_authorization_params, :jsonb, {null: false, default: {}})
+app-1    |    -> 0.0012s
+app-1    | -- add_column(:ai_mcp_servers, :oauth_token_params, :jsonb, {null: false, default: {}})
+app-1    |    -> 0.0011s
+app-1    | -- add_column(:ai_mcp_servers, :oauth_require_refresh_token, :boolean, {null: false, default: false})
+app-1    |    -> 0.0013s
+app-1    | == 20260327040745 AddOauthAdvancedOptionsToAiMcpServers: migrated (0.0049s) ===
+app-1    | 
+app-1    | == 20260331024139 SplitTranslationPublicContentSetting: migrating =============
+app-1    | -- execute("DELETE FROM site_settings WHERE name = 'ai_translation_backfill_limit_to_public_content'\n")
+app-1    |    -> 0.0004s
+app-1    | == 20260331024139 SplitTranslationPublicContentSetting: migrated (0.0015s) ====
+app-1    | 
+app-1    | == 20260407093145 AddShowOriginalContentToUserOptions: migrating ==============
+app-1    | -- add_column(:user_options, :show_original_content, :boolean, {default: false, null: false})
+app-1    |    -> 0.0017s
+app-1    | == 20260407093145 AddShowOriginalContentToUserOptions: migrated (0.0029s) =====
+app-1    | 
+app-1    | => Booting Puma
+app-1    | => Rails 8.0.5 application starting in development 
+app-1    | => Run `bin/rails server --help` for more startup options
+app-1    | Starting CSS change watcher
+app-1    | Puma starting in single mode...
+app-1    | * Puma version: 7.1.0 ("Neon Witch")
+app-1    | * Ruby version: ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [x86_64-linux]
+app-1    | *  Min threads: 0
+app-1    | *  Max threads: 5
+app-1    | *  Environment: development
+app-1    | *          PID: 1
+app-1    | * Listening on http://0.0.0.0:3000
+app-1    | Use Ctrl-C to stop
+app-1    | Started GET "/srv/status" for 172.18.0.1 at 2026-04-20 12:55:17 +0000
+app-1    |   ActiveRecord::SchemaMigration Load (1.2ms)  SELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC
+app-1    | Processing by ForumsController#status as */*
+app-1    |   Rendering text template
+app-1    |   Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+app-1    | Completed 200 OK in 11ms (Views: 6.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.2ms)
+app-1    | 
+app-1    |
+
+Container diagnostics:
+Port mappings:
+3000/tcp -> 0.0.0.0:3000
+3000/tcp -> [::]:3000
+
+Network port config:
+{"3000/tcp":[{"HostIp":"0.0.0.0","HostPort":"3000"},{"HostIp":"::","HostPort":"3000"}]}
+
+Processes inside container:
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  2.3  0.4 2770784 294536 ?      Ssl  12:51   0:05 puma 7.1.0 (tcp://0.0.0.0:3000) [app]
+root         470 33.3  0.0   8552  4640 ?        Rs   12:55   0:00 ps aux
+
+Container stdout/stderr (last 50 lines):
+-> 0.0024s
+-- add_index(:topic_voting_votes, [:topic_id, :created_at], {algorithm: :concurrently})
+   -> 0.0041s
+== 20260324200000 AddTopicIdCreatedAtIndexToTopicVotingVotes: migrated (0.0088s) 
+
+== 20260326000000 AddRegistrationEndpointToAiMcpServers: migrating ============
+-- add_column(:ai_mcp_servers, :oauth_registration_endpoint, :string, {limit: 1000})
+   -> 0.0005s
+== 20260326000000 AddRegistrationEndpointToAiMcpServers: migrated (0.0014s) ===
+
+== 20260327040745 AddOauthAdvancedOptionsToAiMcpServers: migrating ============
+-- add_column(:ai_mcp_servers, :oauth_authorization_params, :jsonb, {null: false, default: {}})
+   -> 0.0012s
+-- add_column(:ai_mcp_servers, :oauth_token_params, :jsonb, {null: false, default: {}})
+   -> 0.0011s
+-- add_column(:ai_mcp_servers, :oauth_require_refresh_token, :boolean, {null: false, default: false})
+   -> 0.0013s
+== 20260327040745 AddOauthAdvancedOptionsToAiMcpServers: migrated (0.0049s) ===
+
+== 20260331024139 SplitTranslationPublicContentSetting: migrating =============
+-- execute("DELETE FROM site_settings WHERE name = 'ai_translation_backfill_limit_to_public_content'\n")
+   -> 0.0004s
+== 20260331024139 SplitTranslationPublicContentSetting: migrated (0.0015s) ====
+
+== 20260407093145 AddShowOriginalContentToUserOptions: migrating ==============
+-- add_column(:user_options, :show_original_content, :boolean, {default: false, null: false})
+   -> 0.0017s
+== 20260407093145 AddShowOriginalContentToUserOptions: migrated (0.0029s) =====
+
+=> Booting Puma
+=> Rails 8.0.5 application starting in development 
+=> Run `bin/rails server --help` for more startup options
+Starting CSS change watcher
+Puma starting in single mode...
+* Puma version: 7.1.0 ("Neon Witch")
+* Ruby version: ruby 3.4.9 (2026-03-11 revision 76cca827ab) +PRISM [x86_64-linux]
+*  Min threads: 0
+*  Max threads: 5
+*  Environment: development
+*          PID: 1
+* Listening on http://0.0.0.0:3000
+Use Ctrl-C to stop
+Started GET "/srv/status" for 172.18.0.1 at 2026-04-20 12:55:17 +0000
+  ActiveRecord::SchemaMigration Load (1.2ms)  SELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC
+Processing by ForumsController#status as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 11ms (Views: 6.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.2ms)
+
+Application logs inside container:
+=== /app/log/development.log ===
+  TRANSACTION (1.6ms)  COMMIT
+  SiteSetting Load (2.9ms)  SELECT "site_settings".* FROM "site_settings" WHERE "site_settings"."name" = 'vapid_base_url' LIMIT 1
+  PushSubscription Delete All (0.4ms)  DELETE FROM "push_subscriptions"
+  SiteSetting Load (0.4ms)  SELECT "site_settings".* FROM "site_settings" WHERE "site_settings"."name" = 'send_welcome_message' LIMIT 1
+  TRANSACTION (1.3ms)  BEGIN
+  SiteSetting Create (2.1ms)  INSERT INTO "site_settings" ("name", "data_type", "value", "created_at", "updated_at") VALUES ('send_welcome_message', 5, 'f', '2026-04-20 12:55:15.536358', '2026-04-20 12:55:15.536358') RETURNING "id"
+  TRANSACTION (8.7ms)  COMMIT
+  SiteSetting Load (1.6ms)  SELECT "site_settings".* FROM "site_settings" WHERE "site_settings"."name" = 'allowed_iframes' LIMIT 1
+  TRANSACTION (1.4ms)  BEGIN
+  SiteSetting Create (1.2ms)  INSERT INTO "site_settings" ("name", "data_type", "value", "created_at", "updated_at") VALUES ('allowed_iframes', 8, 'https://www.google.com/maps/embed?|https://www.openstreetmap.org/export/embed.html?|https://calendar.google.com/calendar/embed?|https://codepen.io/*/embed/preview/|https://www.instagram.com/|https://open.spotify.com/|http://localhost:3000/discobot/certificate.svg', '2026-04-20 12:55:15.554063', '2026-04-20 12:55:15.554063') RETURNING "id"
+  TRANSACTION (1.3ms)  COMMIT
+  TranslationOverride Pluck (0.6ms)  SELECT "translation_overrides"."translation_key", "translation_overrides"."value" FROM "translation_overrides" WHERE "translation_overrides"."locale" = 'en'
+Started GET "/srv/status" for 172.18.0.1 at 2026-04-20 12:55:17 +0000
+  ActiveRecord::SchemaMigration Load (1.2ms)  SELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC
+Processing by ForumsController#status as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 11ms (Views: 6.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.2ms)
