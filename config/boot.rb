@@ -13,7 +13,11 @@ require "rubygems"
 # Set up gems listed in the Gemfile.
 ENV["BUNDLE_GEMFILE"] ||= File.expand_path("../../Gemfile", __FILE__)
 
-require "bundler/setup" if File.exist?(ENV["BUNDLE_GEMFILE"])
+begin
+  require "bundler/setup" if File.exist?(ENV["BUNDLE_GEMFILE"])
+rescue LoadError
+  # Bundler is not installed in this environment; fall back to the installed gems
+end
 
 if (ENV["DISABLE_BOOTSNAP"] != "1")
   begin
