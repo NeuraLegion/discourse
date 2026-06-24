@@ -1,0 +1,88 @@
+FROM ruby:3.4-bookworm
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    BUNDLE_PATH=/bundle \
+    BUNDLE_WITHOUT="development:test" \
+    RAILS_ENV=production \
+    RACK_ENV=production \
+    NODE_ENV=production \
+    LOAD_PLUGINS=1 \
+    RAILS_LOG_TO_STDOUT=1 \
+    DISCOURSE_HOSTNAME=localhost \
+    DISCOURSE_DB_HOST=db \
+    DISCOURSE_DB_PORT=5432 \
+    DISCOURSE_DB_NAME=discourse \
+    DISCOURSE_DB_USERNAME=discourse \
+    DISCOURSE_DB_PASSWORD=discourse \
+    DISCOURSE_REDIS_HOST=redis \
+    DISCOURSE_REDIS_PORT=6379 \
+    DISCOURSE_SERVE_STATIC_ASSETS=true \
+    DISCOURSE_SECRET_KEY_BASE=0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef \
+    PATH="/usr/local/share/pnpm:${PATH}"
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      build-essential \
+      ca-certificates \
+      curl \
+      git \
+      gnupg \
+      pkg-config \
+      shared-mime-info \
+      libc6-dev \
+      libffi-dev \
+      libgdbm-dev \
+      libyaml-dev \
+      libssl-dev \
+      libreadline-dev \
+      zlib1g-dev \
+      libxml2-dev \
+      libxslt1-dev \
+      libpq-dev \
+      libvips42 \
+      libvips-tools \
+      imagemagick \
+      ffmpeg \
+      ghostscript \
+      poppler-utils \
+      wkhtmltopdf \
+      fonts-noto \
+      fonts-liberation \
+      libjemalloc2 \
+      sqlite3 \
+      brotli \
+    && ln -sf /usr/bin/convert /usr/local/bin/magick \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get update && apt-get install -y --no-install-recommends nodejs \
+    && rm -rf /var/lib/apt/lists/* \
+    && corepack enable \
+    && corepack prepare pnpm@10.28.0 --activate
+
+COPY Gemfile Gemfile.lock ./
+RUN bundle config set without "${BUNDLE_WITHOUT}" \
+    && bundle config set path "${BUNDLE_PATH}" \
+    && bundle install -j"$(nproc)" --retry 3 \
+    && rm -f /bundle/ruby/*/bin/puma
+
+COPY .npmrc package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY patches ./patches
+COPY frontend ./frontend
+COPY plugins ./plugins
+COPY themes ./themes
+COPY app ./app
+COPY config ./config
+COPY lib ./lib
+COPY script ./script
+
+RUN pnpm install --no-frozen-lockfile --config.strict-peer-dependencies=false
+
+COPY . .
+
+RUN SKIP_DB_AND_REDIS=1 bundle exec rake assets:precompile
+
+EXPOSE 3000
+
+CMD ["bash", "-lc", "UNICORN_BIND_ALL=true bundle exec pitchfork -c config/pitchfork.conf.rb"]
