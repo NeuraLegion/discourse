@@ -1,0 +1,63 @@
+Compose container "discourse-app-1" crashed (state: exited, exit code: 127)
+
+Container diagnostics:
+Network port config:
+{}
+
+Processes inside container:
+Error response from daemon: container ae7145f99abe44470240453bf71071f22fded018b570c3fb842b58491a85084a is not running
+
+Container stdout/stderr (last 50 lines):
+-> 0.0025s
+== 20260319070000 AddSelectedToolNamesToAiAgentMcpServers: migrated (0.0029s) =
+
+== 20260319120000 AddNotifyOnSolvedToUserOptions: migrating ===================
+-- add_column(:user_options, :notify_on_solved, :boolean, {default: true, null: false})
+   -> 0.0007s
+== 20260319120000 AddNotifyOnSolvedToUserOptions: migrated (0.0010s) ==========
+
+== 20260323145627 AddLimitColorSchemesToThemeModifier: migrating ==============
+-- add_column(:theme_modifier_sets, :only_theme_color_schemes, :boolean, {null: true})
+   -> 0.0003s
+== 20260323145627 AddLimitColorSchemesToThemeModifier: migrated (0.0006s) =====
+
+== 20260324004457 RemoveFlowdockChatIntegration: migrating ====================
+-- execute("DELETE FROM site_settings WHERE name = 'chat_integration_flowdock_enabled';\nDELETE FROM site_settings WHERE name = 'chat_integration_flowdock_excerpt_length';\n")
+   -> 0.0002s
+== 20260324004457 RemoveFlowdockChatIntegration: migrated (0.0004s) ===========
+
+== 20260324200000 AddTopicIdCreatedAtIndexToTopicVotingVotes: migrating =======
+-- remove_index(:topic_voting_votes, [:topic_id, :created_at], {if_exists: true})
+   -> 0.0008s
+-- add_index(:topic_voting_votes, [:topic_id, :created_at], {algorithm: :concurrently})
+   -> 0.0030s
+== 20260324200000 AddTopicIdCreatedAtIndexToTopicVotingVotes: migrated (0.0045s) 
+
+== 20260326000000 AddRegistrationEndpointToAiMcpServers: migrating ============
+-- add_column(:ai_mcp_servers, :oauth_registration_endpoint, :string, {limit: 1000})
+   -> 0.0004s
+== 20260326000000 AddRegistrationEndpointToAiMcpServers: migrated (0.0007s) ===
+
+== 20260327040745 AddOauthAdvancedOptionsToAiMcpServers: migrating ============
+-- add_column(:ai_mcp_servers, :oauth_authorization_params, :jsonb, {null: false, default: {}})
+   -> 0.0004s
+-- add_column(:ai_mcp_servers, :oauth_token_params, :jsonb, {null: false, default: {}})
+   -> 0.0005s
+-- add_column(:ai_mcp_servers, :oauth_require_refresh_token, :boolean, {null: false, default: false})
+   -> 0.0002s
+== 20260327040745 AddOauthAdvancedOptionsToAiMcpServers: migrated (0.0015s) ===
+
+== 20260331024139 SplitTranslationPublicContentSetting: migrating =============
+-- execute("DELETE FROM site_settings WHERE name = 'ai_translation_backfill_limit_to_public_content'\n")
+   -> 0.0002s
+== 20260331024139 SplitTranslationPublicContentSetting: migrated (0.0010s) ====
+
+== 20260407093145 AddShowOriginalContentToUserOptions: migrating ==============
+-- add_column(:user_options, :show_original_content, :boolean, {default: false, null: false})
+   -> 0.0008s
+== 20260407093145 AddShowOriginalContentToUserOptions: migrated (0.0010s) =====
+
+bash: line 1: pnpm: command not found
+
+Application logs inside container:
+Error response from daemon: container ae7145f99abe44470240453bf71071f22fded018b570c3fb842b58491a85084a is not running
