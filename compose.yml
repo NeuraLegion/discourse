@@ -1,0 +1,35 @@
+name: discourse
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command:
+      - bash
+      - -lc
+      - bundle exec rails db:migrate && bundle exec rails server -b 0.0.0.0 -p 3000
+    depends_on:
+      db:
+        condition: service_started
+      redis:
+        condition: service_started
+    environment:
+      DISCOURSE_DEV_DB: discourse_development
+      DISCOURSE_HOSTNAME: localhost
+      DISCOURSE_REDIS_HOST: redis
+      NODE_ENV: development
+      PGDATABASE: discourse_development
+      PGHOST: db
+      PGPASSWORD: discourse
+      PGUSER: discourse
+      RAILS_ENV: development
+    ports:
+      - "3000:3000"
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: discourse_development
+      POSTGRES_PASSWORD: discourse
+      POSTGRES_USER: discourse
+  redis:
+    image: redis:7-alpine
