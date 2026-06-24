@@ -9,6 +9,10 @@ development:
   prepared_statements: false
   adapter: postgresql
   database: <%= ENV['DISCOURSE_DEV_DB'] || 'discourse_development' %>
+  host: <%= ENV['DISCOURSE_DB_HOST'] if ENV['DISCOURSE_DB_HOST'].present? %>
+  port: <%= ENV['DISCOURSE_DB_PORT'] if ENV['DISCOURSE_DB_PORT'].present? %>
+  username: <%= ENV['DISCOURSE_DB_USERNAME'] if ENV['DISCOURSE_DB_USERNAME'].present? %>
+  password: <%= ENV['DISCOURSE_DB_PASSWORD'] if ENV['DISCOURSE_DB_PASSWORD'].present? %>
   min_messages: warning
   pool: 5
   checkout_timeout: <%= ENV['CHECKOUT_TIMEOUT'] || 5 %>

@@ -1,0 +1,70 @@
+Application failed on port 3000: The app logs say it is listening on 0.0.0.0:3000, but the host has never reached port 3000 after 21 seconds and 10 failed attempts, indicating a likely port-mapping or binding mismatch that will not r
+
+Container logs:
+app-1  | Starting CSS change watcher
+app-1  | I, [2026-04-25T09:41:24.218443 #230]  INFO -- : listening on addr=0.0.0.0:3000 fd=28
+db-1   | 
+db-1   | PostgreSQL Database directory appears to contain a database; Skipping initialization
+db-1   | 
+db-1   | 2026-04-25 09:41:01.303 UTC [1] LOG:  starting PostgreSQL 16.13 (Debian 16.13-1.pgdg12+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+db-1   | 2026-04-25 09:41:01.303 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+db-1   | 2026-04-25 09:41:01.303 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+db-1   | 2026-04-25 09:41:01.305 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1   | 2026-04-25 09:41:01.308 UTC [29] LOG:  database system was shut down at 2026-04-25 09:40:53 UTC
+db-1   | 2026-04-25 09:41:01.312 UTC [1] LOG:  database system is ready to accept connections
+redis-1  | 1:C 25 Apr 2026 09:41:01.289 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+redis-1  | 1:C 25 Apr 2026 09:41:01.289 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 1:C 25 Apr 2026 09:41:01.289 * Redis version=7.4.8, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1  | 1:C 25 Apr 2026 09:41:01.289 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis-1  | 1:M 25 Apr 2026 09:41:01.289 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+redis-1  | 1:M 25 Apr 2026 09:41:01.289 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 25 Apr 2026 09:41:01.289 * Running mode=standalone, port=6379.
+redis-1  | 1:M 25 Apr 2026 09:41:01.289 * Server initialized
+redis-1  | 1:M 25 Apr 2026 09:41:01.289 * Loading RDB produced by version 7.4.8
+redis-1  | 1:M 25 Apr 2026 09:41:01.289 * RDB age 8 seconds
+redis-1  | 1:M 25 Apr 2026 09:41:01.289 * RDB memory usage when created 35.04 Mb
+redis-1  | 1:M 25 Apr 2026 09:41:01.337 * Done loading RDB, keys loaded: 1409, keys expired: 0.
+redis-1  | 1:M 25 Apr 2026 09:41:01.337 * DB loaded from disk: 0.048 seconds
+redis-1  | 1:M 25 Apr 2026 09:41:01.337 * Ready to accept connections tcp
+
+Container diagnostics:
+Port mappings:
+3000/tcp -> 0.0.0.0:3000
+3000/tcp -> [::]:3000
+
+Network port config:
+{"3000/tcp":[{"HostIp":"0.0.0.0","HostPort":"3000"},{"HostIp":"::","HostPort":"3000"}]}
+
+Processes inside container:
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  1.1  0.0 473420 25560 pts/0    Ssl+ 09:41   0:00 bin/pitchfork
+root         227  0.7  0.0 478164 28980 pts/0    Sl+  09:41   0:00 pitchfork monitor - 
+root         230  104  0.6 8381264 458520 pts/0  Sl+  09:41   0:10 pitchfork (gen:0) mold - init
+root         810 50.0  0.0   8552  4696 ?        Rs   09:41   0:00 ps aux
+
+Container stdout/stderr (last 50 lines):
+Starting CSS change watcher
+I, [2026-04-25T09:41:24.218443 #230]  INFO -- : listening on addr=0.0.0.0:3000 fd=28
+
+Application logs inside container:
+=== /app/log/development.log ===
+  ThemeModifierSet Pluck (0.8ms)  SELECT "theme_modifier_sets"."theme_id" FROM "theme_modifier_sets" WHERE "theme_modifier_sets"."theme_id" = -1 AND "theme_modifier_sets"."only_theme_color_schemes" = TRUE
+  ThemeModifierSet Pluck (1.4ms)  SELECT "theme_modifier_sets"."theme_id" FROM "theme_modifier_sets" WHERE "theme_modifier_sets"."only_theme_color_schemes" = TRUE
+  ColorScheme Load (0.4ms)  SELECT "color_schemes".* FROM "color_schemes" WHERE "color_schemes"."remote_copy" = FALSE AND ("color_schemes"."user_selectable" = TRUE OR 1=0) ORDER BY "color_schemes"."name" ASC
+  Theme Load (0.9ms)  SELECT "themes".* FROM "themes" WHERE "themes"."id" = -1 LIMIT 1
+  ColorScheme Load (1.0ms)  SELECT "color_schemes".* FROM "color_schemes" WHERE "color_schemes"."remote_copy" = FALSE AND "color_schemes"."id" IS NULL LIMIT 1
+  Theme Load (1.0ms)  SELECT "themes".* FROM "themes" WHERE "themes"."id" = -1 LIMIT 1
+  ColorScheme Load (0.8ms)  SELECT "color_schemes".* FROM "color_schemes" WHERE "color_schemes"."remote_copy" = FALSE AND "color_schemes"."id" = 13 LIMIT 1
+  ColorSchemeColor Load (0.7ms)  SELECT "color_scheme_colors"."id", "color_scheme_colors"."name", "color_scheme_colors"."hex", "color_scheme_colors"."color_scheme_id", "color_scheme_colors"."created_at", "color_scheme_colors"."updated_at" FROM "color_scheme_colors" WHERE "color_scheme_colors"."color_scheme_id" = 13 ORDER BY id ASC
+  ColorScheme Load (0.7ms)  SELECT "color_schemes".* FROM "color_schemes" WHERE "color_schemes"."id" = 13
+  UserField Load (0.9ms)  SELECT "user_fields"."id", "user_fields"."name", "user_fields"."created_at", "user_fields"."updated_at", "user_fields"."editable", "user_fields"."description", "user_fields"."required", "user_fields"."show_on_profile", "user_fields"."position", "user_fields"."show_on_user_card", "user_fields"."external_name", "user_fields"."external_type", "user_fields"."searchable", "user_fields"."requirement", "user_fields"."field_type_enum", "user_fields"."show_on_signup" FROM "user_fields" ORDER BY "user_fields"."position" ASC
+  SidebarSection Load (1.4ms)  SELECT "sidebar_sections".* FROM "sidebar_sections" WHERE (public) ORDER BY (section_type IS NOT NULL) DESC, (public IS TRUE) DESC
+  SidebarSectionLink Load (0.7ms)  SELECT "sidebar_section_links".* FROM "sidebar_section_links" WHERE "sidebar_section_links"."linkable_type" = 'SidebarUrl' AND "sidebar_section_links"."sidebar_section_id" = 1 ORDER BY position
+  SidebarUrl Load (0.6ms)  SELECT "sidebar_urls".* FROM "sidebar_urls" WHERE "sidebar_urls"."id" IN (1, 2, 11, 3, 4, 10, 5, 6, 7, 8, 9, 12)
+  Upload Load (0.6ms)  SELECT "uploads".* FROM "uploads" WHERE "uploads"."id" = -5 LIMIT 1
+  Upload Load (1.4ms)  SELECT "uploads".* FROM "uploads" WHERE "uploads"."id" = -6 LIMIT 1
+  Group Pluck (2.0ms)  SELECT "groups"."flair_icon" FROM "groups"
+  Badge Pluck (1.5ms)  SELECT "badges"."icon" FROM "badges"
+  OptimizedImage Load (1.3ms)  SELECT "optimized_images".* FROM "optimized_images" WHERE "optimized_images"."upload_id" = -6 AND "optimized_images"."height" = 32 AND "optimized_images"."width" = 32 LIMIT 1
+  Permalink Exists? (105.7ms)  SELECT 1 AS one FROM "permalinks" WHERE "permalinks"."url" = 'abc' LIMIT 1
+  Permalink Exists? (77.6ms)  SELECT 1 AS one FROM "permalinks" WHERE "permalinks"."url" = 'abc' LIMIT 1
