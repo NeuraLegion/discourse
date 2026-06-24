@@ -1,0 +1,63 @@
+Container "discourse-local" exited unexpectedly (status: exited)
+
+Container diagnostics:
+Network port config:
+{}
+
+Processes inside container:
+Error response from daemon: container 0191c764e61a481c75c661aadd507b273d24d95f67c8b768d6a4e26de49fe203 is not running
+
+Container stdout/stderr (last 50 lines):
+from /usr/local/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:32:in 'Rails::Initializable::Initializer#run'
+	from /usr/local/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:61:in 'block in Rails::Initializable#run_initializers'
+	from /usr/local/bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:231:in 'block in TSort.tsort_each'
+	from /usr/local/bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:353:in 'block (2 levels) in TSort.each_strongly_connected_component'
+	from /usr/local/bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:425:in 'block (2 levels) in TSort.each_strongly_connected_component_from'
+	from /usr/local/bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:434:in 'TSort.each_strongly_connected_component_from'
+	from /usr/local/bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:424:in 'block in TSort.each_strongly_connected_component_from'
+	from /usr/local/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:50:in 'Array#each'
+	from /usr/local/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:50:in 'Rails::Initializable::Collection#tsort_each_child'
+	from /usr/local/bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:418:in 'Method#call'
+	from /usr/local/bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:418:in 'TSort.each_strongly_connected_component_from'
+	from /usr/local/bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:352:in 'block in TSort.each_strongly_connected_component'
+	from /usr/local/bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'Rails::Initializable::Collection#each'
+	from /usr/local/bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'Method#call'
+	from /usr/local/bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'TSort.each_strongly_connected_component'
+	from /usr/local/bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:229:in 'TSort.tsort_each'
+	from /usr/local/bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:208:in 'TSort#tsort_each'
+	from /usr/local/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:60:in 'Rails::Initializable#run_initializers'
+	from /usr/local/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/application.rb:444:in 'Rails::Application#initialize!'
+	from /app/config/environment.rb:7:in '<main>'
+	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'Kernel.require'
+	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'block (2 levels) in Kernel#replace_require'
+	from /usr/local/bundle/ruby/3.4.0/gems/bootsnap-1.23.0/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:33:in 'Kernel#require'
+	from /usr/local/bundle/ruby/3.4.0/gems/zeitwerk-2.7.5/lib/zeitwerk/core_ext/kernel.rb:34:in 'Kernel#require'
+	from config.ru:6:in 'block in <main>'
+	from /usr/local/bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/builder.rb:116:in 'Kernel#eval'
+	from /usr/local/bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/builder.rb:116:in 'Rack::Builder.new_from_string'
+	from /usr/local/bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/builder.rb:105:in 'Rack::Builder.load_file'
+	from /usr/local/bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/builder.rb:66:in 'Rack::Builder.parse_file'
+	from /usr/local/bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/server.rb:349:in 'Rack::Server#build_app_and_options_from_config'
+	from /usr/local/bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/server.rb:249:in 'Rack::Server#app'
+	from /usr/local/bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/server.rb:422:in 'Rack::Server#wrapped_app'
+	from /usr/local/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/server/server_command.rb:76:in 'Rails::Server#log_to_stdout'
+	from /usr/local/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/server/server_command.rb:36:in 'Rails::Server#start'
+	from /usr/local/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/server/server_command.rb:145:in 'block in Rails::Command::ServerCommand#perform'
+	from <internal:kernel>:91:in 'Kernel#tap'
+	from /usr/local/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/server/server_command.rb:136:in 'Rails::Command::ServerCommand#perform'
+	from /usr/local/bundle/ruby/3.4.0/gems/thor-1.5.0/lib/thor/command.rb:28:in 'Thor::Command#run'
+	from /usr/local/bundle/ruby/3.4.0/gems/thor-1.5.0/lib/thor/invocation.rb:127:in 'Thor::Invocation#invoke_command'
+	from /usr/local/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command/base.rb:178:in 'Rails::Command::Base#invoke_command'
+	from /usr/local/bundle/ruby/3.4.0/gems/thor-1.5.0/lib/thor.rb:538:in 'Thor.dispatch'
+	from /usr/local/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command/base.rb:73:in 'Rails::Command::Base.perform'
+	from /usr/local/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:65:in 'block in Rails::Command.invoke'
+	from /usr/local/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:143:in 'Rails::Command.with_argv'
+	from /usr/local/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:63:in 'Rails::Command.invoke'
+	from /usr/local/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands.rb:18:in '<main>'
+	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'Kernel.require'
+	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'block (2 levels) in Kernel#replace_require'
+	from /usr/local/bundle/ruby/3.4.0/gems/bootsnap-1.23.0/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:33:in 'Kernel#require'
+	from bin/rails:18:in '<main>'
+
+Application logs inside container:
+Error response from daemon: container 0191c764e61a481c75c661aadd507b273d24d95f67c8b768d6a4e26de49fe203 is not running
