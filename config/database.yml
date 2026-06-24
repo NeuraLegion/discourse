@@ -9,6 +9,10 @@ development:
   prepared_statements: false
   adapter: postgresql
   database: <%= ENV['DISCOURSE_DEV_DB'] || 'discourse_development' %>
+  host: <%= ENV['DISCOURSE_DB_HOST'] || 'db' %>
+  port: <%= ENV['DISCOURSE_DB_PORT'] || 5432 %>
+  username: <%= ENV['DISCOURSE_DB_USERNAME'] || 'postgres' %>
+  password: <%= ENV['DISCOURSE_DB_PASSWORD'] || 'postgres' %>
   min_messages: warning
   pool: 5
   checkout_timeout: <%= ENV['CHECKOUT_TIMEOUT'] || 5 %>
@@ -40,6 +44,10 @@ test:
   prepared_statements: false
   adapter: postgresql
   database: <%= test_db %>
+  host: <%= ENV['DISCOURSE_DB_HOST'] || 'db' %>
+  port: <%= ENV['DISCOURSE_DB_PORT'] || 5432 %>
+  username: <%= ENV['DISCOURSE_DB_USERNAME'] || 'postgres' %>
+  password: <%= ENV['DISCOURSE_DB_PASSWORD'] || 'postgres' %>
   min_messages: warning
   pool: 2
   reaping_frequency: 0
@@ -53,6 +61,10 @@ profile:
   prepared_statements: false
   adapter: postgresql
   database: discourse_profile
+  host: <%= ENV['DISCOURSE_DB_HOST'] || 'db' %>
+  port: <%= ENV['DISCOURSE_DB_PORT'] || 5432 %>
+  username: <%= ENV['DISCOURSE_DB_USERNAME'] || 'postgres' %>
+  password: <%= ENV['DISCOURSE_DB_PASSWORD'] || 'postgres' %>
   min_messages: warning
   pool: 5
   host_names:
