@@ -1,0 +1,181 @@
+Application failed on port 3000: The app has an unrecoverable boot failure because the initial Pitchfork server process exited with code 1 and the server process stopped.
+
+Container logs:
+redis-1  | 1:C 19 Apr 2026 18:21:34.631 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+redis-1  | 1:C 19 Apr 2026 18:21:34.631 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 1:C 19 Apr 2026 18:21:34.631 * Redis version=7.4.8, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1  | 1:C 19 Apr 2026 18:21:34.631 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis-1  | 1:M 19 Apr 2026 18:21:34.632 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+redis-1  | 1:M 19 Apr 2026 18:21:34.632 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 19 Apr 2026 18:21:34.633 * Running mode=standalone, port=6379.
+redis-1  | 1:M 19 Apr 2026 18:21:34.633 * Server initialized
+redis-1  | 1:M 19 Apr 2026 18:21:34.633 * Ready to accept connections tcp
+redis-1  | 1:M 19 Apr 2026 18:22:35.003 * 10000 changes in 60 seconds. Saving...
+redis-1  | 1:M 19 Apr 2026 18:22:35.003 * Background saving started by pid 21
+redis-1  | 21:C 19 Apr 2026 18:22:35.043 * DB saved on disk
+redis-1  | 21:C 19 Apr 2026 18:22:35.044 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+redis-1  | 1:M 19 Apr 2026 18:22:35.104 * Background saving terminated with success
+db-1     | The files belonging to this database system will be owned by user "postgres".
+db-1     | This user must also own the server process.
+db-1     | 
+db-1     | The database cluster will be initialized with locale "en_US.utf8".
+db-1     | The default database encoding has accordingly been set to "UTF8".
+db-1     | The default text search configuration will be set to "english".
+db-1     | 
+db-1     | Data page checksums are disabled.
+db-1     | 
+db-1     | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+db-1     | creating subdirectories ... ok
+db-1     | selecting dynamic shared memory implementation ... posix
+db-1     | selecting default max_connections ... 100
+db-1     | selecting default shared_buffers ... 128MB
+db-1     | selecting default time zone ... Etc/UTC
+db-1     | creating configuration files ... ok
+db-1     | running bootstrap script ... ok
+db-1     | performing post-bootstrap initialization ... ok
+db-1     | syncing data to disk ... ok
+db-1     | 
+db-1     | 
+db-1     | Success. You can now start the database server using:
+db-1     | 
+db-1     |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+db-1     | 
+db-1     | initdb: warning: enabling "trust" authentication for local connections
+
+... (730 lines omitted) ...
+
+app-1    | 	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:428:in 'ActiveRecord::ModelSchema::ClassMethods#columns_hash'
+app-1    | 	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:1997:in 'ActiveRecord::QueryMethods#arel_column'
+app-1    | 	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2155:in 'ActiveRecord::QueryMethods#order_column'
+app-1    | 	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2097:in 'block in ActiveRecord::QueryMethods#preprocess_order_args'
+app-1    | 	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2094:in 'Array#map!'
+app-1    | 	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2094:in 'ActiveRecord::QueryMethods#preprocess_order_args'
+app-1    | 	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:665:in 'ActiveRecord::QueryMethods#order!'
+app-1    | 	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:660:in 'ActiveRecord::QueryMethods#order'
+app-1    | 	from /app/app/models/emoji.rb:266:in 'Emoji.load_custom'
+app-1    | 	from /app/app/models/emoji.rb:61:in 'block in Emoji.custom'
+app-1    | 	from /app/lib/cache.rb:93:in 'Cache#fetch'
+app-1    | 	from /app/app/models/emoji.rb:61:in 'Emoji.custom'
+app-1    | 	from /app/lib/pretty_text.rb:201:in 'block in PrettyText.markdown'
+app-1    | 	from /app/lib/pretty_text.rb:706:in 'block in PrettyText.protect'
+app-1    | 	from /app/lib/pretty_text.rb:705:in 'Thread::Mutex#synchronize'
+app-1    | 	from /app/lib/pretty_text.rb:705:in 'PrettyText.protect'
+app-1    | 	from /app/lib/pretty_text.rb:197:in 'PrettyText.markdown'
+app-1    | 	from /app/lib/pretty_text.rb:323:in 'PrettyText.cook'
+app-1    | 	from /app/lib/discourse.rb:1296:in 'block in Discourse.preload_rails!'
+app-1    | E, [2026-04-19T18:22:38.996028 #46] ERROR -- : mold gen=0 pid=50 reaped (#<Process::Status: pid 50 exit 1>)
+app-1    | /bundle/ruby/3.4.0/gems/pitchfork-0.18.2/lib/pitchfork/http_server.rb:179:in 'Pitchfork::HttpServer#start': The initial mold failed to boot (Pitchfork::BootFailure)
+app-1    | 	from /bundle/ruby/3.4.0/gems/pitchfork-0.18.2/exe/pitchfork:110:in '<top (required)>'
+app-1    | 	from /app/bin/pitchfork:58:in 'Kernel#load'
+app-1    | 	from /app/bin/pitchfork:58:in 'block in <main>'
+app-1    | 	from /app/bin/pitchfork:58:in 'Kernel#fork'
+app-1    | 	from /app/bin/pitchfork:58:in '<main>'
+app-1    | Ember CLI running on PID: 19
+app-1    | [ember-cli] Proxying to http://0.0.0.0:3000
+app-1    | [ember-cli] building... 
+app-1    | [ember-cli] ...[BroccoliMergeFiles]
+app-1    | [ember-cli] ...[ConfigLoader]
+app-1    | [ember-cli] ...[Babel: ember-tracked-storage-polyfill > applyPatches]
+app-1    | [ember-cli] ...[Babel: pretty-text > applyPatches]
+app-1    | [ember-cli] ...[@embroider/compat/app]
+app-1    | [ember-cli] ...[@embroider/webpack]
+app-1    | [ember-cli] ...[@embroider/webpack]
+app-1    | [ember-cli] ...[@embroider/webpack]
+app-1    | [bin/ember-cli] server process stopped. Terminating ember-cli.
+app-1    | Plugin name is 'discourse-ai', but plugin directory is named 'discourse-ai.disabled'
+app-1    | Starting CSS change watcher
+
+Container diagnostics:
+Port mappings:
+3000/tcp -> 0.0.0.0:3000
+3000/tcp -> [::]:3000
+4200/tcp -> 0.0.0.0:4200
+4200/tcp -> [::]:4200
+
+Network port config:
+{"3000/tcp":[{"HostIp":"0.0.0.0","HostPort":"3000"},{"HostIp":"::","HostPort":"3000"}],"4200/tcp":[{"HostIp":"0.0.0.0","HostPort":"4200"},{"HostIp":"::","HostPort":"4200"}]}
+
+Processes inside container:
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  3.9  0.0 597988 15560 ?        Ssl  18:22   0:00 ruby bin/ember-cli -u
+root           8 14.7  0.0 471108 23328 ?        Sl   18:22   0:00 ruby /app/bin/pitchfork
+root          10 14.3  0.1 1356344 103780 ?      Sl   18:22   0:00 node /usr/bin/pnpm --dir=frontend/discourse ember server --proxy http://0.0.0.0:3000
+root          25  126  0.3 22232776 210420 ?     Rl   18:22   0:02 ember
+root          37  7.5  0.0 477932 28736 ?        Sl   18:22   0:00 pitchfork monitor - 
+root          40 97.8  0.2 1460800 163236 ?      Sl   18:22   0:01 pitchfork monitor - booting
+root         109  100  0.0   8552  4640 ?        Rs   18:22   0:00 ps aux
+
+Container stdout/stderr (last 50 lines):
+from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:353:in 'Hash#fetch'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:353:in 'ActiveRecord::ConnectionAdapters::SchemaCache#columns_hash'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:54:in 'ActiveRecord::ConnectionAdapters::SchemaReflection#columns_hash'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/connection_adapters/schema_cache.rb:198:in 'ActiveRecord::ConnectionAdapters::BoundSchemaReflection#columns_hash'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:592:in 'ActiveRecord::ModelSchema::ClassMethods#load_schema!'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/counter_cache.rb:187:in 'ActiveRecord::CounterCache::ClassMethods#load_schema!'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/encryption/encryptable_record.rb:127:in 'ActiveRecord::Encryption::EncryptableRecord::ClassMethods#load_schema!'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:539:in 'block in ActiveRecord::ModelSchema::ClassMethods#load_schema'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:536:in 'Monitor#synchronize'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:536:in 'ActiveRecord::ModelSchema::ClassMethods#load_schema'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/model_schema.rb:428:in 'ActiveRecord::ModelSchema::ClassMethods#columns_hash'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:1997:in 'ActiveRecord::QueryMethods#arel_column'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2155:in 'ActiveRecord::QueryMethods#order_column'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2097:in 'block in ActiveRecord::QueryMethods#preprocess_order_args'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2094:in 'Array#map!'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:2094:in 'ActiveRecord::QueryMethods#preprocess_order_args'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:665:in 'ActiveRecord::QueryMethods#order!'
+	from /bundle/ruby/3.4.0/gems/activerecord-8.0.5/lib/active_record/relation/query_methods.rb:660:in 'ActiveRecord::QueryMethods#order'
+	from /app/app/models/emoji.rb:266:in 'Emoji.load_custom'
+	from /app/app/models/emoji.rb:61:in 'block in Emoji.custom'
+	from /app/lib/cache.rb:93:in 'Cache#fetch'
+	from /app/app/models/emoji.rb:61:in 'Emoji.custom'
+	from /app/lib/pretty_text.rb:201:in 'block in PrettyText.markdown'
+	from /app/lib/pretty_text.rb:706:in 'block in PrettyText.protect'
+	from /app/lib/pretty_text.rb:705:in 'Thread::Mutex#synchronize'
+	from /app/lib/pretty_text.rb:705:in 'PrettyText.protect'
+	from /app/lib/pretty_text.rb:197:in 'PrettyText.markdown'
+	from /app/lib/pretty_text.rb:323:in 'PrettyText.cook'
+	from /app/lib/discourse.rb:1296:in 'block in Discourse.preload_rails!'
+E, [2026-04-19T18:22:38.996028 #46] ERROR -- : mold gen=0 pid=50 reaped (#<Process::Status: pid 50 exit 1>)
+/bundle/ruby/3.4.0/gems/pitchfork-0.18.2/lib/pitchfork/http_server.rb:179:in 'Pitchfork::HttpServer#start': The initial mold failed to boot (Pitchfork::BootFailure)
+	from /bundle/ruby/3.4.0/gems/pitchfork-0.18.2/exe/pitchfork:110:in '<top (required)>'
+	from /app/bin/pitchfork:58:in 'Kernel#load'
+	from /app/bin/pitchfork:58:in 'block in <main>'
+	from /app/bin/pitchfork:58:in 'Kernel#fork'
+	from /app/bin/pitchfork:58:in '<main>'
+Ember CLI running on PID: 19
+[ember-cli] Proxying to http://0.0.0.0:3000
+[ember-cli] building... 
+[ember-cli] ...[BroccoliMergeFiles]
+[ember-cli] ...[ConfigLoader]
+[ember-cli] ...[Babel: ember-tracked-storage-polyfill > applyPatches]
+[ember-cli] ...[Babel: pretty-text > applyPatches]
+[ember-cli] ...[@embroider/compat/app]
+[ember-cli] ...[@embroider/webpack]
+[ember-cli] ...[@embroider/webpack]
+[ember-cli] ...[@embroider/webpack]
+[bin/ember-cli] server process stopped. Terminating ember-cli.
+Plugin name is 'discourse-ai', but plugin directory is named 'discourse-ai.disabled'
+Starting CSS change watcher
+
+Application logs inside container:
+=== /app/log/development.log ===
+  TRANSACTION (8.8ms)  COMMIT
+  SiteSetting Load (28.1ms)  SELECT "site_settings".* FROM "site_settings" WHERE "site_settings"."name" = 'allowed_iframes' LIMIT 1
+  TRANSACTION (1.4ms)  BEGIN
+  SiteSetting Create (3.7ms)  INSERT INTO "site_settings" ("name", "data_type", "value", "created_at", "updated_at") VALUES ('allowed_iframes', 8, 'https://www.google.com/maps/embed?|https://www.openstreetmap.org/export/embed.html?|https://calendar.google.com/calendar/embed?|https://codepen.io/*/embed/preview/|https://www.instagram.com/|https://open.spotify.com/|http://0.0.0.0:3000/discobot/certificate.svg', '2026-04-19 18:22:20.975463', '2026-04-19 18:22:20.975463') RETURNING "id"
+  TRANSACTION (2.0ms)  COMMIT
+  SQL (0.2ms)  SET search_path TO public
+   (33.7ms)  CREATE DATABASE "discourse_development" ENCODING = 'utf8'
+  SQL (1.1ms)  SET search_path TO public
+   (99.4ms)  CREATE DATABASE "discourse_test" ENCODING = 'utf8'
+  TranslationOverride Pluck (1.2ms)  SELECT "translation_overrides"."translation_key", "translation_overrides"."value" FROM "translation_overrides" WHERE "translation_overrides"."locale" = 'en'
+  Group Load (1.1ms)  SELECT "groups"."id", "groups"."name", "flair_icon", "flair_upload_id", "groups"."flair_bg_color", "groups"."flair_color", "groups"."automatic" FROM "groups" WHERE (groups.visibility_level = 0) ORDER BY groups.name ASC, "groups"."name" ASC
+  Permalink Exists? (159.3ms)  SELECT 1 AS one FROM "permalinks" WHERE "permalinks"."url" = 'abc' LIMIT 1
+  Permalink Exists? (32.2ms)  SELECT 1 AS one FROM "permalinks" WHERE "permalinks"."url" = 'abc' LIMIT 1
+  User Count (1.2ms)  SELECT COUNT(*) FROM (SELECT 1 AS one FROM "users" LIMIT 20) subquery_for_count
+  User Count (3.5ms)  SELECT COUNT(*) FROM "users" WHERE "users"."admin" = TRUE AND (users.id > 0)
+  SiteSetting Load (1.6ms)  SELECT "site_settings".* FROM "site_settings" WHERE "site_settings"."name" = 'global_notice' LIMIT 1
+  SiteSetting Load (0.6ms)  SELECT "site_settings".* FROM "site_settings" WHERE "site_settings"."name" = 'has_login_hint' LIMIT 1
+  ActiveRecord::SchemaMigration Load (1.6ms)  SELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC
+  SiteSetting Load (0.6ms)  SELECT "site_settings".* FROM "site_settings" WHERE "site_settings"."name" = 'send_welcome_message' LIMIT 1
+  TranslationOverride Pluck (0.8ms)  SELECT "translation_overrides"."translation_key", "translation_overrides"."value" FROM "translation_overrides" WHERE "translation_overrides"."locale" = 'en'
