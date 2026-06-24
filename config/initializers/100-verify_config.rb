@@ -3,14 +3,16 @@
 # Check that the app is configured correctly. Raise some helpful errors if something is wrong.
 
 if defined?(Rails::Server) && Rails.env.production? # Only run these checks when starting up a production server
-  if %w[localhost production.localhost].include?(Discourse.current_hostname)
+  current_hostname = defined?(::SiteSetting) ? Discourse.current_hostname : ENV["DISCOURSE_HOSTNAME"].presence
+
+  if current_hostname.present? && %w[localhost production.localhost].include?(current_hostname)
     puts <<~TEXT
 
-      Discourse.current_hostname = '#{Discourse.current_hostname}'
+      Discourse.current_hostname = '#{current_hostname}'
 
       Please update the host_names property in config/database.yml
       so that it uses the hostname of your site. Otherwise you will
-      experience problems, like links in emails using #{Discourse.current_hostname}.
+      experience problems, like links in emails using #{current_hostname}.
 
     TEXT
 

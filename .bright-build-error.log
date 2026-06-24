@@ -1,0 +1,123 @@
+Application failed on port 9292: The logs show a Ruby/Rails stack trace during server boot, indicating the app crashed on startup rather than progressing toward readiness.
+
+Container logs:
+app-1  | 	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'Rails::Initializable::Collection#each'
+app-1  | 	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'Method#call'
+app-1  | 	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'TSort.each_strongly_connected_component'
+app-1  | 	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:229:in 'TSort.tsort_each'
+app-1  | 	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:208:in 'TSort#tsort_each'
+app-1  | 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:60:in 'Rails::Initializable#run_initializers'
+app-1  | 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/application.rb:444:in 'Rails::Application#initialize!'
+app-1  | 	from /app/config/environment.rb:7:in '<main>'
+app-1  | 	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'Kernel.require'
+app-1  | 	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'block (2 levels) in Kernel#replace_require'
+app-1  | 	from /bundle/ruby/3.4.0/gems/bootsnap-1.23.0/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:33:in 'Kernel#require'
+app-1  | 	from /bundle/ruby/3.4.0/gems/zeitwerk-2.7.5/lib/zeitwerk/core_ext/kernel.rb:34:in 'Kernel#require'
+app-1  | 	from config.ru:6:in 'block in <main>'
+app-1  | 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/builder.rb:116:in 'Kernel#eval'
+app-1  | 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/builder.rb:116:in 'Rack::Builder.new_from_string'
+app-1  | 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/builder.rb:105:in 'Rack::Builder.load_file'
+app-1  | 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/builder.rb:66:in 'Rack::Builder.parse_file'
+app-1  | 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/server.rb:349:in 'Rack::Server#build_app_and_options_from_config'
+app-1  | 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/server.rb:249:in 'Rack::Server#app'
+app-1  | 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/server.rb:422:in 'Rack::Server#wrapped_app'
+app-1  | 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/server.rb:312:in 'block in Rack::Server#start'
+app-1  | 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/server.rb:379:in 'Rack::Server#handle_profiling'
+app-1  | 	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/server.rb:311:in 'Rack::Server#start'
+app-1  | 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/server/server_command.rb:38:in 'Rails::Server#start'
+app-1  | 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/server/server_command.rb:145:in 'block in Rails::Command::ServerCommand#perform'
+app-1  | 	from <internal:kernel>:91:in 'Kernel#tap'
+app-1  | 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/server/server_command.rb:136:in 'Rails::Command::ServerCommand#perform'
+app-1  | 	from /bundle/ruby/3.4.0/gems/thor-1.5.0/lib/thor/command.rb:28:in 'Thor::Command#run'
+app-1  | 	from /bundle/ruby/3.4.0/gems/thor-1.5.0/lib/thor/invocation.rb:127:in 'Thor::Invocation#invoke_command'
+app-1  | 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command/base.rb:178:in 'Rails::Command::Base#invoke_command'
+app-1  | 	from /bundle/ruby/3.4.0/gems/thor-1.5.0/lib/thor.rb:538:in 'Thor.dispatch'
+app-1  | 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command/base.rb:73:in 'Rails::Command::Base.perform'
+app-1  | 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:65:in 'block in Rails::Command.invoke'
+app-1  | 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:143:in 'Rails::Command.with_argv'
+app-1  | 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:63:in 'Rails::Command.invoke'
+app-1  | 	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands.rb:18:in '<main>'
+app-1  | 	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'Kernel.require'
+app-1  | 	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'block (2 levels) in Kernel#replace_require'
+app-1  | 	from /bundle/ruby/3.4.0/gems/bootsnap-1.23.0/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:33:in 'Kernel#require'
+app-1  | 	from bin/rails:18:in '<main>'
+redis-1  | 1:C 19 Apr 2026 06:56:29.677 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+redis-1  | 1:C 19 Apr 2026 06:56:29.677 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+postgres-1  | 
+postgres-1  | PostgreSQL Database directory appears to contain a database; Skipping initialization
+postgres-1  | 
+postgres-1  | 2026-04-19 06:56:29.711 UTC [1] LOG:  starting PostgreSQL 17.9 (Debian 17.9-1.pgdg12+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+postgres-1  | 2026-04-19 06:56:29.712 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgres-1  | 2026-04-19 06:56:29.712 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgres-1  | 2026-04-19 06:56:29.713 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+redis-1     | 1:C 19 Apr 2026 06:56:29.677 * Redis version=7.4.8, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1     | 1:C 19 Apr 2026 06:56:29.677 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis-1     | 1:M 19 Apr 2026 06:56:29.678 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+redis-1     | 1:M 19 Apr 2026 06:56:29.678 * monotonic clock: POSIX clock_gettime
+redis-1     | 1:M 19 Apr 2026 06:56:29.678 * Running mode=standalone, port=6379.
+redis-1     | 1:M 19 Apr 2026 06:56:29.678 * Server initialized
+redis-1     | 1:M 19 Apr 2026 06:56:29.678 * Ready to accept connections tcp
+postgres-1  | 2026-04-19 06:56:29.717 UTC [29] LOG:  database system was shut down at 2026-04-19 06:56:21 UTC
+postgres-1  | 2026-04-19 06:56:29.720 UTC [1] LOG:  database system is ready to accept connections
+
+Container diagnostics:
+Network port config:
+{}
+
+Processes inside container:
+Error response from daemon: container a401c909125acfe37dae6e2d0d0a7658401b7ed91a4118934c2313b865be32b4 is not running
+
+Container stdout/stderr (last 50 lines):
+from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:231:in 'block in TSort.tsort_each'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:353:in 'block (2 levels) in TSort.each_strongly_connected_component'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:425:in 'block (2 levels) in TSort.each_strongly_connected_component_from'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:434:in 'TSort.each_strongly_connected_component_from'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:424:in 'block in TSort.each_strongly_connected_component_from'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:50:in 'Array#each'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:50:in 'Rails::Initializable::Collection#tsort_each_child'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:418:in 'Method#call'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:418:in 'TSort.each_strongly_connected_component_from'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:352:in 'block in TSort.each_strongly_connected_component'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'Rails::Initializable::Collection#each'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'Method#call'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'TSort.each_strongly_connected_component'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:229:in 'TSort.tsort_each'
+	from /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:208:in 'TSort#tsort_each'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:60:in 'Rails::Initializable#run_initializers'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/application.rb:444:in 'Rails::Application#initialize!'
+	from /app/config/environment.rb:7:in '<main>'
+	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'Kernel.require'
+	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'block (2 levels) in Kernel#replace_require'
+	from /bundle/ruby/3.4.0/gems/bootsnap-1.23.0/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:33:in 'Kernel#require'
+	from /bundle/ruby/3.4.0/gems/zeitwerk-2.7.5/lib/zeitwerk/core_ext/kernel.rb:34:in 'Kernel#require'
+	from config.ru:6:in 'block in <main>'
+	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/builder.rb:116:in 'Kernel#eval'
+	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/builder.rb:116:in 'Rack::Builder.new_from_string'
+	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/builder.rb:105:in 'Rack::Builder.load_file'
+	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/builder.rb:66:in 'Rack::Builder.parse_file'
+	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/server.rb:349:in 'Rack::Server#build_app_and_options_from_config'
+	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/server.rb:249:in 'Rack::Server#app'
+	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/server.rb:422:in 'Rack::Server#wrapped_app'
+	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/server.rb:312:in 'block in Rack::Server#start'
+	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/server.rb:379:in 'Rack::Server#handle_profiling'
+	from /bundle/ruby/3.4.0/gems/rack-2.2.23/lib/rack/server.rb:311:in 'Rack::Server#start'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/server/server_command.rb:38:in 'Rails::Server#start'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/server/server_command.rb:145:in 'block in Rails::Command::ServerCommand#perform'
+	from <internal:kernel>:91:in 'Kernel#tap'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands/server/server_command.rb:136:in 'Rails::Command::ServerCommand#perform'
+	from /bundle/ruby/3.4.0/gems/thor-1.5.0/lib/thor/command.rb:28:in 'Thor::Command#run'
+	from /bundle/ruby/3.4.0/gems/thor-1.5.0/lib/thor/invocation.rb:127:in 'Thor::Invocation#invoke_command'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command/base.rb:178:in 'Rails::Command::Base#invoke_command'
+	from /bundle/ruby/3.4.0/gems/thor-1.5.0/lib/thor.rb:538:in 'Thor.dispatch'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command/base.rb:73:in 'Rails::Command::Base.perform'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:65:in 'block in Rails::Command.invoke'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:143:in 'Rails::Command.with_argv'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/command.rb:63:in 'Rails::Command.invoke'
+	from /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/commands.rb:18:in '<main>'
+	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'Kernel.require'
+	from /usr/local/lib/ruby/3.4.0/bundled_gems.rb:82:in 'block (2 levels) in Kernel#replace_require'
+	from /bundle/ruby/3.4.0/gems/bootsnap-1.23.0/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:33:in 'Kernel#require'
+	from bin/rails:18:in '<main>'
+
+Application logs inside container:
+Error response from daemon: container a401c909125acfe37dae6e2d0d0a7658401b7ed91a4118934c2313b865be32b4 is not running
