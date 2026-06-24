@@ -1,0 +1,145 @@
+Application failed on port 3000: The Rails app is failing during initialization while running the db:create task, showing a stack trace with no indication of successful startup progress.
+
+Container logs:
+redis-1  | 1:C 19 Apr 2026 09:34:44.646 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+redis-1  | 1:C 19 Apr 2026 09:34:44.646 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 1:C 19 Apr 2026 09:34:44.646 * Redis version=7.4.8, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1  | 1:C 19 Apr 2026 09:34:44.646 * Configuration loaded
+redis-1  | 1:M 19 Apr 2026 09:34:44.647 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+redis-1  | 1:M 19 Apr 2026 09:34:44.647 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 19 Apr 2026 09:34:44.647 * Running mode=standalone, port=6379.
+redis-1  | 1:M 19 Apr 2026 09:34:44.647 * Server initialized
+redis-1  | 1:M 19 Apr 2026 09:34:44.647 * Ready to accept connections tcp
+app-1    | Errno::EEXIST: File exists - /app/public/images/emoji (Errno::EEXIST)
+app-1    | /app/lib/discourse.rb:116:in 'Discourse::Utils.atomic_ln_s'
+app-1    | /bundle/ruby/3.4.0/gems/discourse-emojis-1.0.45/lib/discourse_emojis/railtie.rb:9:in 'block in <class:Railtie>'
+app-1    | /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:32:in 'BasicObject#instance_exec'
+app-1    | /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:32:in 'Rails::Initializable::Initializer#run'
+app-1    | /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:61:in 'block in Rails::Initializable#run_initializers'
+app-1    | /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:231:in 'block in TSort.tsort_each'
+app-1       | /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:353:in 'block (2 levels) in TSort.each_strongly_connected_component'
+postgres-1  | running bootstrap script ... ok
+postgres-1  | performing post-bootstrap initialization ... ok
+app-1       | /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:434:in 'TSort.each_strongly_connected_component_from'
+postgres-1  | syncing data to disk ... ok
+postgres-1  | 
+app-1       | /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:352:in 'block in TSort.each_strongly_connected_component'
+postgres-1  | 
+app-1       | /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'Rails::Initializable::Collection#each'
+postgres-1  | Success. You can now start the database server using:
+postgres-1  | 
+postgres-1  |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+app-1       | /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'Method#call'
+app-1       | /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'TSort.each_strongly_connected_component'
+app-1       | /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:229:in 'TSort.tsort_each'
+app-1       | /bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:208:in 'TSort#tsort_each'
+app-1       | /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:60:in 'Rails::Initializable#run_initializers'
+app-1       | /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/application.rb:444:in 'Rails::Application#initialize!'
+app-1       | /app/config/environment.rb:7:in '<main>'
+postgres-1  | 
+postgres-1  | initdb: warning: enabling "trust" authentication for local connections
+app-1       | /bundle/ruby/3.4.0/gems/bootsnap-1.23.0/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:33:in 'Kernel#require'
+postgres-1  | initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+postgres-1  | waiting for server to start....2026-04-19 09:34:45.066 UTC [48] LOG:  starting PostgreSQL 16.13 (Debian 16.13-1.pgdg12+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+app-1       | /bundle/ruby/3.4.0/gems/zeitwerk-2.7.5/lib/zeitwerk/core_ext/kernel.rb:34:in 'Kernel#require'
+app-1       | /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/application.rb:420:in 'Rails::Application#require_environment!'
+app-1       | /bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/application.rb:571:in 'block in Rails::Application#run_tasks_blocks'
+app-1       | /bundle/ruby/3.4.0/gems/rake-13.3.1/exe/rake:27:in '<top (required)>'
+app-1       | /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli/exec.rb:59:in 'Kernel.load'
+app-1       | /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli/exec.rb:59:in 'Bundler::CLI::Exec#kernel_load'
+app-1       | /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli/exec.rb:23:in 'Bundler::CLI::Exec#run'
+app-1       | /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli.rb:452:in 'Bundler::CLI#exec'
+app-1       | /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor/command.rb:28:in 'Bundler::Thor::Command#run'
+app-1       | /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor/invocation.rb:127:in 'Bundler::Thor::Invocation#invoke_command'
+app-1       | /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor.rb:538:in 'Bundler::Thor.dispatch'
+app-1       | /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli.rb:35:in 'Bundler::CLI.dispatch'
+app-1       | /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor/base.rb:584:in 'Bundler::Thor::Base::ClassMethods#start'
+app-1       | /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli.rb:29:in 'Bundler::CLI.start'
+app-1       | /bundle/ruby/3.4.0/gems/bundler-2.6.4/exe/bundle:28:in 'block in <top (required)>'
+postgres-1  | 2026-04-19 09:34:45.066 UTC [48] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres-1  | 2026-04-19 09:34:45.069 UTC [51] LOG:  database system was shut down at 2026-04-19 09:34:44 UTC
+postgres-1  | 2026-04-19 09:34:45.073 UTC [48] LOG:  database system is ready to accept connections
+postgres-1  |  done
+postgres-1  | server started
+postgres-1  | CREATE DATABASE
+postgres-1  | 
+postgres-1  | 
+postgres-1  | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+postgres-1  | 
+postgres-1  | 2026-04-19 09:34:45.242 UTC [48] LOG:  received fast shutdown request
+postgres-1  | waiting for server to shut down....2026-04-19 09:34:45.243 UTC [48] LOG:  aborting any active transactions
+postgres-1  | 2026-04-19 09:34:45.244 UTC [48] LOG:  background worker "logical replication launcher" (PID 54) exited with exit code 1
+postgres-1  | 2026-04-19 09:34:45.244 UTC [49] LOG:  shutting down
+app-1       | /bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/friendly_errors.rb:117:in 'Bundler.with_friendly_errors'
+app-1       | /bundle/ruby/3.4.0/gems/bundler-2.6.4/exe/bundle:20:in '<top (required)>'
+app-1       | /usr/local/bin/bundle:25:in 'Kernel#load'
+app-1       | /usr/local/bin/bundle:25:in '<main>'
+app-1       | Tasks: TOP => db:create => db:load_config => environment
+app-1       | (See full trace by running task with --trace)
+postgres-1  | 2026-04-19 09:34:45.245 UTC [49] LOG:  checkpoint starting: shutdown immediate
+postgres-1  | 2026-04-19 09:34:45.270 UTC [49] LOG:  checkpoint complete: wrote 922 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.007 s, sync=0.016 s, total=0.027 s; sync files=301, longest=0.001 s, average=0.001 s; distance=4255 kB, estimate=4255 kB; lsn=0/1912120, redo lsn=0/1912120
+postgres-1  | 2026-04-19 09:34:45.272 UTC [48] LOG:  database system is shut down
+postgres-1  |  done
+postgres-1  | server stopped
+postgres-1  | 
+postgres-1  | PostgreSQL init process complete; ready for start up.
+postgres-1  | 
+postgres-1  | 2026-04-19 09:34:45.359 UTC [1] LOG:  starting PostgreSQL 16.13 (Debian 16.13-1.pgdg12+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+postgres-1  | 2026-04-19 09:34:45.359 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgres-1  | 2026-04-19 09:34:45.359 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgres-1  | 2026-04-19 09:34:45.361 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres-1  | 2026-04-19 09:34:45.363 UTC [64] LOG:  database system was shut down at 2026-04-19 09:34:45 UTC
+postgres-1  | 2026-04-19 09:34:45.367 UTC [1] LOG:  database system is ready to accept connections
+
+Container diagnostics:
+Network port config:
+{}
+
+Processes inside container:
+Error response from daemon: container 316133b63ed86ef411de940dc06da0e35ecda1bc04994b00a69cc6b675da3965 is not running
+
+Container stdout/stderr (last 50 lines):
+rake aborted!
+Errno::EEXIST: File exists - /app/public/images/emoji (Errno::EEXIST)
+/app/lib/discourse.rb:116:in 'Discourse::Utils.atomic_ln_s'
+/bundle/ruby/3.4.0/gems/discourse-emojis-1.0.45/lib/discourse_emojis/railtie.rb:9:in 'block in <class:Railtie>'
+/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:32:in 'BasicObject#instance_exec'
+/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:32:in 'Rails::Initializable::Initializer#run'
+/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:61:in 'block in Rails::Initializable#run_initializers'
+/bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:231:in 'block in TSort.tsort_each'
+/bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:353:in 'block (2 levels) in TSort.each_strongly_connected_component'
+/bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:434:in 'TSort.each_strongly_connected_component_from'
+/bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:352:in 'block in TSort.each_strongly_connected_component'
+/bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'Rails::Initializable::Collection#each'
+/bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'Method#call'
+/bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:350:in 'TSort.each_strongly_connected_component'
+/bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:229:in 'TSort.tsort_each'
+/bundle/ruby/3.4.0/gems/tsort-0.2.0/lib/tsort.rb:208:in 'TSort#tsort_each'
+/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/initializable.rb:60:in 'Rails::Initializable#run_initializers'
+/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/application.rb:444:in 'Rails::Application#initialize!'
+/app/config/environment.rb:7:in '<main>'
+/bundle/ruby/3.4.0/gems/bootsnap-1.23.0/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:33:in 'Kernel#require'
+/bundle/ruby/3.4.0/gems/zeitwerk-2.7.5/lib/zeitwerk/core_ext/kernel.rb:34:in 'Kernel#require'
+/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/application.rb:420:in 'Rails::Application#require_environment!'
+/bundle/ruby/3.4.0/gems/railties-8.0.5/lib/rails/application.rb:571:in 'block in Rails::Application#run_tasks_blocks'
+/bundle/ruby/3.4.0/gems/rake-13.3.1/exe/rake:27:in '<top (required)>'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli/exec.rb:59:in 'Kernel.load'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli/exec.rb:59:in 'Bundler::CLI::Exec#kernel_load'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli/exec.rb:23:in 'Bundler::CLI::Exec#run'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli.rb:452:in 'Bundler::CLI#exec'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor/command.rb:28:in 'Bundler::Thor::Command#run'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor/invocation.rb:127:in 'Bundler::Thor::Invocation#invoke_command'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor.rb:538:in 'Bundler::Thor.dispatch'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli.rb:35:in 'Bundler::CLI.dispatch'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/vendor/thor/lib/thor/base.rb:584:in 'Bundler::Thor::Base::ClassMethods#start'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/cli.rb:29:in 'Bundler::CLI.start'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/exe/bundle:28:in 'block in <top (required)>'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/lib/bundler/friendly_errors.rb:117:in 'Bundler.with_friendly_errors'
+/bundle/ruby/3.4.0/gems/bundler-2.6.4/exe/bundle:20:in '<top (required)>'
+/usr/local/bin/bundle:25:in 'Kernel#load'
+/usr/local/bin/bundle:25:in '<main>'
+Tasks: TOP => db:create => db:load_config => environment
+(See full trace by running task with --trace)
+
+Application logs inside container:
+Error response from daemon: container 316133b63ed86ef411de940dc06da0e35ecda1bc04994b00a69cc6b675da3965 is not running

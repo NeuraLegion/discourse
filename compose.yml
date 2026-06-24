@@ -1,0 +1,43 @@
+services:
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "no"]
+
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: discourse_development
+
+  app:
+    build: .
+    depends_on:
+      - redis
+      - postgres
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: "development"
+      NODE_ENV: "development"
+      UNICORN_PORT: "3000"
+      DISCOURSE_HOSTNAME: "127.0.0.1"
+      DISCOURSE_DEV_DB: "discourse_development"
+      PGHOST: "postgres"
+      PGUSER: "postgres"
+      PGPASSWORD: "postgres"
+      PGDATABASE: "discourse_development"
+      DISCOURSE_REDIS_HOST: "redis"
+      DISCOURSE_REDIS_PORT: "6379"
+      DISCOURSE_DEVELOPER_EMAILS: "admin@example.com"
+      DISCOURSE_SMTP_ADDRESS: ""
+      DISCOURSE_SMTP_PORT: ""
+      DISCOURSE_SMTP_USER_NAME: ""
+      DISCOURSE_SMTP_PASSWORD: ""
+    command:
+      - bash
+      - -lc
+      - |
+        rm -rf public/images/emoji &&
+        bundle exec rake db:create db:migrate &&
+        bundle exec rails server -b 0.0.0.0 -p 3000
