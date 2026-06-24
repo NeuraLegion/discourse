@@ -1,0 +1,54 @@
+services:
+  app:
+    build: .
+    command: bash -lc "bundle exec rails db:create db:migrate && UNICORN_BIND_ALL=1 bundle exec pitchfork -E production -p 3000 -c config/pitchfork.conf.rb"
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: production
+      DISCOURSE_DB_HOST: db
+      DISCOURSE_DB_NAME: discourse
+      DISCOURSE_DB_USERNAME: postgres
+      DISCOURSE_DB_PASSWORD: postgres
+      DISCOURSE_REDIS_HOST: redis
+      DISCOURSE_MESSAGE_BUS_REDIS_HOST: redis
+      DISCOURSE_HOSTNAME: discourse.local
+      LOAD_PLUGINS: "0"
+      RAILS_LOG_TO_STDOUT: "1"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
+volumes:
+  db-data:
+  redis-data:

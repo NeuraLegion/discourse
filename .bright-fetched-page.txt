@@ -1,0 +1,967 @@
+Is there an option to prevent pnpm from using a `pnpm-workspace.yaml` file? · pnpm · Discussion #4735 · GitHub
+
+Skip to content
+
+Navigation Menu
+
+Toggle navigation
+
+Sign in
+
+Appearance settings
+
+pnpm
+
+PlatformAI CODE CREATIONGitHub CopilotWrite better code with AI
+
+GitHub SparkBuild and deploy intelligent apps
+
+GitHub ModelsManage and compare prompts
+
+MCP RegistryNewIntegrate external tools
+
+DEVELOPER WORKFLOWSActionsAutomate any workflow
+
+CodespacesInstant dev environments
+
+IssuesPlan and track work
+
+Code ReviewManage code changes
+
+APPLICATION SECURITYGitHub Advanced SecurityFind and fix vulnerabilities
+
+Code securitySecure your code as you build
+
+Secret protectionStop leaks before they start
+
+EXPLOREWhy GitHub
+Documentation
+Blog
+Changelog
+Marketplace
+
+View all features
+
+SolutionsBY COMPANY SIZEEnterprises
+Small and medium teams
+Startups
+Nonprofits
+
+BY USE CASEApp Modernization
+DevSecOps
+DevOps
+CI/CD
+View all use cases
+
+BY INDUSTRYHealthcare
+Financial services
+Manufacturing
+Government
+View all industries
+
+View all solutions
+
+ResourcesEXPLORE BY TOPICAI
+Software Development
+DevOps
+Security
+View all topics
+
+EXPLORE BY TYPECustomer stories
+Events & webinars
+Ebooks & reports
+Business insights
+GitHub Skills
+
+SUPPORT & SERVICESDocumentation
+Customer support
+Community forum
+Trust center
+Partners
+
+View all resources
+
+Open SourceCOMMUNITYGitHub SponsorsFund open source developers
+
+PROGRAMSSecurity Lab
+Maintainer Community
+Accelerator
+GitHub Stars
+Archive Program
+
+REPOSITORIESTopics
+Trending
+Collections
+
+EnterpriseENTERPRISE SOLUTIONSEnterprise platformAI-powered developer platform
+
+AVAILABLE ADD-ONSGitHub Advanced SecurityEnterprise-grade security features
+
+Copilot for BusinessEnterprise-grade AI features
+
+Premium SupportEnterprise-grade 24/7 support
+
+Pricing
+
+Search or jump to...
+
+Search code, repositories, users, issues, pull requests...
+
+-->
+
+Search
+
+Clear
+
+Search syntax tips 
+
+Provide feedback
+
+-->
+We read every piece of feedback, and take your input very seriously.
+
+Include my email address so I can be contacted
+
+Cancel
+
+Submit feedback
+
+Saved searches
+
+Use saved searches to filter your results more quickly
+
+-->
+
+Name
+
+Query
+
+To see all available qualifiers, see our documentation.
+
+Cancel
+
+Create saved search
+
+Sign in
+
+Sign up
+
+Appearance settings
+
+Resetting focus
+
+You signed in with another tab or window. Reload to refresh your session.
+You signed out in another tab or window. Reload to refresh your session.
+You switched accounts on another tab or window. Reload to refresh your session.
+
+Dismiss alert
+
+{{ message }}
+
+pnpm
+
+Overview
+
+Repositories
+
+Discussions
+
+Projects
+
+Packages
+
+People
+
+More
+
+Overview
+
+Repositories
+
+Discussions
+
+Projects
+
+Packages
+
+People
+
+Is there an option to prevent pnpm from using a pnpm-workspace.yaml file?
+
+#4735
+
+Answered
+
+by
+leonsilicon
+
+leonsilicon
+
+asked this question in
+Q&A
+
+Is there an option to prevent pnpm from using a `pnpm-workspace.yaml` file?
+
+#4735
+
+leonsilicon
+
+May 14, 2022
+&middot;
+2 comments
+&middot;
+10 replies
+
+Answered
+
+by
+leonsilicon
+
+Return to top
+
+Discussion options
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+{{title}}
+
+Something went wrong.
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+Quote reply
+
+leonsilicon
+
+May 14, 2022
+
+-
+
+Use case: When testing my packages, I have folders for mini-projects which each contain a package.json file which contain the project to test as one of the package.json dependencies:
+
+File structure:
+
+project-monorepo/
+- packages/
+- my-project/
+- src/
+- test/
+- fixtures/
+- my-project-test/
+- package.json // Contains `"my-project": "link:../../../my-project"`
+- test.js // import myProject from 'my-project'; myProject.functionToTest()
+- pnpm-workspace.yaml // packages: ['package/*']
+
+When running pnpm install from within one of these mini-projects (e.g. project-monorepo/packages/test/fixtures/my-project-test), pnpm currently tries to install all the workspace dependencies based on the pnpm-workspace.yaml file. I'm looking for an option to force pnpm to only install the mini-package's dependencies and ignore the pnpm-workspace.yaml file in the root of project-monorepo (i.e. to install the dependencies of the mini-project as if the pnpm-workspace.yaml didn't exist). I tried browsing through pnpm install --help but couldn't find an option for this.
+
+Currently, my workaround is to specify the fixtures path in my pnpm-workspace.yaml file and use pnpm install --filter ., but it would be optimal to not have to specify these fixture folders in my pnpm-workspace.yaml file.
+
+Beta
+Was this translation helpful?
+Give feedback.
+
+9
+You must be logged in to vote
+
+All reactions
+
+Answered by
+
+leonsilicon
+
+May 17, 2022
+
+After browsing through the source code, I think I've found the option I'm looking for: --ignore-workspace (e.g. pnpm --ignore-workspace install)
+
+Perhaps it might be a good idea to make this more visible in the documentation/help commands? (since pnpm install --help didn't make any mention of this command)
+
+View full answer 
+
+Replies: 
+
+2 comments
+
+&middot;
+
+10 replies
+
+Oldest
+
+Newest
+
+Top
+
+Comment options
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+{{title}}
+
+Something went wrong.
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+Quote reply
+
+edited
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+{{editor}}'s edit
+
+{{actor}} deleted this content
+.
+
+{{editor}}'s edit
+
+Something went wrong.
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+leonsilicon
+
+May 17, 2022
+
+Author
+
+-
+
+After browsing through the source code, I think I've found the option I'm looking for: --ignore-workspace (e.g. pnpm --ignore-workspace install)
+
+Perhaps it might be a good idea to make this more visible in the documentation/help commands? (since pnpm install --help didn't make any mention of this command)
+
+Beta
+Was this translation helpful?
+Give feedback.
+
+Marked as answer
+
+22
+You must be logged in to vote
+
+👍
+40
+
+All reactions
+
+👍
+40
+
+6 replies
+
+-->
+
+Show 1 previous reply
+
+Comment options
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+{{title}}
+
+Something went wrong.
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+Quote reply
+
+edited
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+{{editor}}'s edit
+
+{{actor}} deleted this content
+.
+
+{{editor}}'s edit
+
+Something went wrong.
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+astahmer
+
+Aug 7, 2023
+
+-
+
+thank you for this. I spent lots of hours trying to replicate that behaviour (tried yarn, bun, and finally by removing node_modules / re-installing with npm which kinda worked but was so slow) but this is so much easier.
+
+context:
+
+my use-case was publishing a VSCode extension while keeping the package inside a pnpm workspace AND being able to bundle some dependencies (= can't use the --no-dependencies vsce flag). Basically had to fork the vsce CLI, then having a bundledDepdendencies field in the VSCode extension package.json and finally replace workspace:* dependencies with link:/path/to/workspace/package right before building the extension .
+
+Here's the complete github CI workflow for reference: https://github.com/chakra-ui/panda/blob/386e5098b338e22cb2d1236f08d7ef3973a07c01/.github/workflows/release.yml#L115-L148
+
+Beta
+Was this translation helpful?
+Give feedback.
+
+All reactions
+
+Comment options
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+{{title}}
+
+Something went wrong.
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+Quote reply
+
+samzuercher
+
+May 20, 2025
+
+-
+
+Would be nice to have this in .npmrc (ignore-workspace=true)
+
+Beta
+Was this translation helpful?
+Give feedback.
+
+All reactions
+
+Comment options
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+{{title}}
+
+Something went wrong.
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+Quote reply
+
+zkochan
+
+May 20, 2025
+
+Maintainer
+
+-
+
+pnpm will stop reading settings from .npmrc because npm CLI doesn't allow anymore third party settings in .npmrc. All pnpm-related settings except auth settings should be moved to pnpm-workspace.yaml.
+
+Beta
+Was this translation helpful?
+Give feedback.
+
+All reactions
+
+Comment options
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+{{title}}
+
+Something went wrong.
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+Quote reply
+
+samzuercher
+
+May 26, 2025
+
+-
+
+ok. but could pnpm-workspace.yaml filtering be extended? e.g.
+
+packages:
+- "lib/**"
+- !"lib/*package1*/**.*"
+
+to exclude certain packages? this package.json
+
+"scripts": {
+"i": "pnpm --ignore-workspace i",
+
+would also be nice, but does not work.
+
+Beta
+Was this translation helpful?
+Give feedback.
+
+All reactions
+
+Comment options
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+{{title}}
+
+Something went wrong.
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+Quote reply
+
+zkochan
+
+May 26, 2025
+
+Maintainer
+
+-
+
+Excluding works. But ! should probably be in the quotes:
+
+packages:
+- "lib/**"
+- "!lib/*package1*/**.*"
+
+Beta
+Was this translation helpful?
+Give feedback.
+
+All reactions
+
+Answer selected by
+leonsilicon
+
+Comment options
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+{{title}}
+
+Something went wrong.
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+Quote reply
+
+edited
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+{{editor}}'s edit
+
+{{actor}} deleted this content
+.
+
+{{editor}}'s edit
+
+Something went wrong.
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+raulfdm
+
+Oct 30, 2023
+
+-
+
+I was having a similar issue: I had a published library and an app that consume this package from the registry (not using workspace: protocol) and I realized when I installed the dependencies, pnpm was linking the package anyways.
+
+While reading the docks to understand why the hack is that, I found this option:
+
+link-workspace-packages
+
+Default: true
+
+Type: true, false, deep
+
+If this is enabled, locally available packages are linked to node_modules instead of being downloaded from the registry. This is very convenient in a monorepo. If you need local packages to also be linked to subdependencies, you can use the deep setting.
+
+Else, packages are downloaded and installed from the registry. However, workspace packages can still be linked by using the workspace: range protocol.
+
+source: https://pnpm.io/npmrc#link-workspace-packages
+
+In other words, if the app and the package is in the same repository, pnpm will link the package in the app no matter if we're using the workspace protocol or not.
+
+When I set --link-workspace-packages=false in my .npmrc, I finally was able to get it from registry.
+
+@zkochan please don't get me wrong for what I'm about to say. I do understand the idea behind doing this automatically but IHMO (nobody asked but here we're), this is a terrible default behavior. I'd rather to explicitly inform pnpm about if I want the packages being linked or not using the workspace protocol explicitly instead having both workspace protocol AND versioned behaving the same.
+
+Beta
+Was this translation helpful?
+Give feedback.
+
+1
+You must be logged in to vote
+
+All reactions
+
+4 replies
+
+Comment options
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+{{title}}
+
+Something went wrong.
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+Quote reply
+
+zkochan
+
+Oct 31, 2023
+
+Maintainer
+
+-
+
+This will be changed in the next major version.
+
+Beta
+Was this translation helpful?
+Give feedback.
+
+❤️
+3
+
+All reactions
+
+❤️
+3
+
+Comment options
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+{{title}}
+
+Something went wrong.
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+Quote reply
+
+edited
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+{{editor}}'s edit
+
+{{actor}} deleted this content
+.
+
+{{editor}}'s edit
+
+Something went wrong.
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+johndunderhill
+
+Dec 31, 2023
+
+-
+
+@zkochan Please don't do that. You will break dozens of our production workflows in monorepos. We rely on this behavior to use packages in a monorepo, and also publish them, under exactly the same name.
+
+If we're relying on the documented default, so are thousands of others. This is out there. It can be overriden (and I will do that if I have to), but if you change this now, you're going to break a lot of things. That would be a disaster, IMHO, or else there aren't nearly as many pnpm users as I think there are.
+
+pnpm has a learning curve. We think it's worth it, so we learned.
+
+Beta
+Was this translation helpful?
+Give feedback.
+
+👍
+1
+👎
+2
+
+All reactions
+
+👍
+1
+
+👎
+2
+
+Comment options
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+{{title}}
+
+Something went wrong.
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+Quote reply
+
+edited
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+{{editor}}'s edit
+
+{{actor}} deleted this content
+.
+
+{{editor}}'s edit
+
+Something went wrong.
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+raulfdm
+
+Dec 31, 2023
+
+-
+
+@johndunderhill don't you pin the pnpm version? 🤔
+
+Beta
+Was this translation helpful?
+Give feedback.
+
+👍
+1
+
+All reactions
+
+👍
+1
+
+Comment options
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+{{title}}
+
+Something went wrong.
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+Quote reply
+
+johndunderhill
+
+Jan 3, 2024
+
+-
+
+@raulfdm Yes, but we generally upgrade our dev tools fairly agressively. Sometimes they break if we don't upgrade them. We're much more conservative about our runtime dependencies.
+
+Moreover, I can't be stuck on the current version forever. I will manage but I think this change will cause more harm than good, unless you know that it's already causing more confusion for others than changing the default after the fact will. I don't actually have a good impression of how many people are relying on this setting. I'm relying on it. There are a lot of pnpm users.
+
+Beta
+Was this translation helpful?
+Give feedback.
+
+All reactions
+
+-->
+
+Sign up for free
+to join this conversation on GitHub.
+Already have an account?
+Sign in to comment
+
+Category
+
+🙏
+
+Q&A
+
+Labels
+
+None yet
+
+7 participants
+
+Heading
+
+Bold
+
+Italic
+
+Quote
+
+Code
+
+Link
+
+---
+
+Numbered list
+
+Unordered list
+
+Task list
+
+---
+
+Attach files
+
+Mention
+
+Reference
+
+Menu
+
+Heading
+
+Bold
+
+Italic
+
+Quote
+
+Code
+
+Link
+
+Numbered list
+
+Unordered list
+
+Task list
+
+Attach files
+
+Mention
+
+Reference
+
+Select a reply
+
+Loading
+
+Uh oh!
+
+There was an error while loading. Please reload this page.
+
+Create a new saved reply
+
+👍
+1
+reacted with thumbs up emoji
+
+👎
+1
+reacted with thumbs down emoji
+
+😄
+1
+reacted with laugh emoji
+
+🎉
+1
+reacted with hooray emoji
+
+😕
+1
+reacted with confused emoji
+
+❤️
+1
+reacted with heart emoji
+
+🚀
+1
+reacted with rocket emoji
+
+👀
+1
+reacted with eyes emoji
+
+Footer
+
+&copy; 2026 GitHub, Inc.
+
+Footer navigation
+
+Terms
+
+Privacy
+
+Security
+
+Status
+
+Community
+
+Docs
+
+Contact
+
+Manage cookies
+
+Do not share my personal information
+
+You can’t perform that action at this time.

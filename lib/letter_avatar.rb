@@ -114,7 +114,21 @@ class LetterAvatar
             sleep 2
             cleanup_old
           end
-          Digest::MD5.hexdigest(`magick --version` << `magick -list font`)
+
+          command = if system("command -v magick >/dev/null 2>&1")
+            "magick"
+          else
+            "convert"
+          end
+
+          version_output = `#{command} --version`
+          font_output = if command == "magick"
+            `magick -list font`
+          else
+            `convert -list font`
+          end
+
+          Digest::MD5.hexdigest(version_output << font_output)
         end
     end
 
