@@ -1,0 +1,138 @@
+Command failed: docker compose build
+time="2026-04-18T09:21:18+03:00" level=warning msg="Found multiple config files with supported names: /tmp/workspace/NeuraLegion/discourse/compose.yml, /tmp/workspace/NeuraLegion/discourse/docker-compose.yml"
+time="2026-04-18T09:21:18+03:00" level=warning msg="Using /tmp/workspace/NeuraLegion/discourse/compose.yml"
+ Image discourse-app:local Building 
+Dockerfile:61
+
+--------------------
+
+  59 |         LOAD_PLUGINS=0
+
+  60 |     
+
+  61 | >>> RUN bundle exec rake assets:precompile
+
+  62 |     
+
+  63 |     FROM ruby:3.4-bookworm AS runtime
+
+--------------------
+
+failed to solve: process "/bin/sh -c bundle exec rake assets:precompile" did not complete successfully: exit code: 1
+
+
+1 [frontend-build 5/6] RUN pnpm install --frozen-lockfile --ignore-scripts
+#21 0.195 ! Corepack is about to download https://registry.npmjs.org/pnpm/-/pnpm-10.28.0.tgz
+#21 0.825 Scope: all 55 workspace projects
+#21 0.898 Lockfile is up to date, resolution step is skipped
+#21 0.964 Progress: resolved 1, reused 0, downloaded 0, added 0
+#21 1.069 Packages: +1910
+#21 1.069 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#21 1.965 Progress: resolved 1910, reused 0, downloaded 321, added 320
+#21 2.965 Progress: resolved 1910, reused 0, downloaded 876, added 876
+#21 3.965 Progress: resolved 1910, reused 0, downloaded 1431, added 1431
+#21 4.965 Progress: resolved 1910, reused 0, downloaded 1746, added 1746
+#21 5.966 Progress: resolved 1910, reused 0, downloaded 1906, added 1906
+#21 6.225 Progress: resolved 1910, reused 0, downloaded 1910, added 1910, done
+#21 6.755 
+#21 6.755 devDependencies:
+#21 6.755 + @babel/plugin-proposal-decorators 7.29.0
+#21 6.755 + @discourse/lint-configs 2.45.0
+#21 6.755 + @discourse/moment-timezone-names-translations 1.0.0
+#21 6.755 + @fortawesome/fontawesome-free 7.2.0
+#21 6.755 + @glint/ember-tsc 1.2.3
+#21 6.755 + @glint/tsserver-plugin 2.2.4
+#21 6.755 + @rdil/parallel-prettier 3.0.0
+#21 6.755 + @swc/core 1.15.24
+#21 6.755 + chrome-launcher 1.2.1
+#21 6.755 + chrome-remote-interface 0.34.0
+#21 6.755 + concurrently 9.2.1
+#21 6.755 + ember-template-lint 7.9.3
+#21 6.755 + esbuild 0.28.0
+#21 6.755 + eslint 9.39.2
+#21 6.755 + jsdoc 4.0.5
+#21 6.755 + lefthook 2.1.5
+#21 6.755 + licensee 11.1.1
+#21 6.755 + lint-to-the-future 2.6.4
+#21 6.755 + lint-to-the-future-ember-template 4.1.0
+#21 6.755 + lint-to-the-future-eslint 3.3.0
+#21 6.755 + playwright 1.59.1
+#21 6.755 + prettier 3.8.1
+#21 6.755 + puppeteer-core 24.40.0
+#21 6.755 + stylelint 17.4.0
+#21 6.755 + terser 5.46.1
+#21 6.755 + typescript 5.9.3
+#21 6.755 
+#21 6.791 Done in 6.2s using pnpm v10.28.0
+#21 DONE 7.2s
+
+#22 [frontend-build 6/6] RUN pnpm --dir=frontend/discourse build
+#22 0.314 
+#22 0.314 > discourse@0.0.0 build /app/frontend/discourse
+#22 0.314 > ember build
+#22 0.314 
+#22 1.034 - Building
+#22 1.035 Environment: development
+#22 1.035 - Building
+#22 1.890 - building... 
+#22 29.58 - cleaning up
+#22 29.58 cleaning up...
+#22 29.58 - cleaning up
+#22 29.73 Built project successfully. Stored in "dist/".
+#22 DONE 30.0s
+
+#23 [ruby-build 4/8] COPY --from=frontend-build /app/public /app/public
+#23 DONE 0.0s
+
+#24 [ruby-build 5/8] COPY --from=frontend-build /app/app/assets /app/app/assets
+#24 DONE 0.0s
+
+#25 [ruby-build 6/8] COPY --from=frontend-build /app/lib /app/lib
+#25 DONE 0.1s
+
+#26 [ruby-build 7/8] COPY --from=frontend-build /app/config /app/config
+#26 DONE 0.0s
+
+#27 [ruby-build 8/8] RUN bundle exec rake assets:precompile
+#27 2.315 Couldn't connect to Redis
+#27 3.092 /usr/local/lib/ruby/3.4.0/open3.rb:534:in 'Kernel#spawn': No such file or directory - node (Errno::ENOENT)
+#27 3.092 	from /usr/local/lib/ruby/3.4.0/open3.rb:534:in 'Open3.popen_run'
+#27 3.092 	from /usr/local/lib/ruby/3.4.0/open3.rb:379:in 'Open3.popen2'
+#27 3.092 	from /usr/local/lib/ruby/3.4.0/open3.rb:785:in 'Open3.capture2'
+#27 3.092 	from /app/script/assemble_ember_build.rb:30:in 'Object#capture'
+#27 3.092 	from /app/script/assemble_ember_build.rb:59:in 'Object#node_heap_size_limit'
+#27 3.092 	from /app/script/assemble_ember_build.rb:63:in 'Object#low_memory_environment?'
+#27 3.092 	from /app/script/assemble_ember_build.rb:147:in '<main>'
+#27 ERROR: process "/bin/sh -c bundle exec rake assets:precompile" did not complete successfully: exit code: 1
+------
+ > [ruby-build 8/8] RUN bundle exec rake assets:precompile:
+2.315 Couldn't connect to Redis
+3.092 /usr/local/lib/ruby/3.4.0/open3.rb:534:in 'Kernel#spawn': No such file or directory - node (Errno::ENOENT)
+3.092 	from /usr/local/lib/ruby/3.4.0/open3.rb:534:in 'Open3.popen_run'
+3.092 	from /usr/local/lib/ruby/3.4.0/open3.rb:379:in 'Open3.popen2'
+3.092 	from /usr/local/lib/ruby/3.4.0/open3.rb:785:in 'Open3.capture2'
+3.092 	from /app/script/assemble_ember_build.rb:30:in 'Object#capture'
+3.092 	from /app/script/assemble_ember_build.rb:59:in 'Object#node_heap_size_limit'
+3.092 	from /app/script/assemble_ember_build.rb:63:in 'Object#low_memory_environment?'
+3.092 	from /app/script/assemble_ember_build.rb:147:in '<main>'
+------
+time="2026-04-18T09:21:18+03:00" level=warning msg="Found multiple config files with supported names: /tmp/workspace/NeuraLegion/discourse/compose.yml, /tmp/workspace/NeuraLegion/discourse/docker-compose.yml"
+time="2026-04-18T09:21:18+03:00" level=warning msg="Using /tmp/workspace/NeuraLegion/discourse/compose.yml"
+ Image discourse-app:local Building 
+Dockerfile:61
+
+--------------------
+
+  59 |         LOAD_PLUGINS=0
+
+  60 |     
+
+  61 | >>> RUN bundle exec rake assets:precompile
+
+  62 |     
+
+  63 |     FROM ruby:3.4-bookworm AS runtime
+
+--------------------
+
+failed to solve: process "/bin/sh -c bundle exec rake assets:precompile" did not complete successfully: exit code: 1
