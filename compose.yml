@@ -1,0 +1,68 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: discourse_development
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+      - "4200:4200"
+    environment:
+      RAILS_ENV: development
+      DISCOURSE_HOSTNAME: localhost
+      DISCOURSE_DB_HOST: db
+      DISCOURSE_DB_NAME: discourse_development
+      DISCOURSE_DB_USERNAME: postgres
+      DISCOURSE_DB_PASSWORD: postgres
+      DISCOURSE_REDIS_HOST: redis
+      DISCOURSE_MESSAGE_BUS_REDIS_ENABLED: "true"
+      DISCOURSE_MESSAGE_BUS_REDIS_HOST: redis
+      DISCOURSE_SECRET_KEY_BASE: "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+      PGHOST: db
+      PGDATABASE: discourse_development
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      SKIP_ENFORCE_HOSTNAME: "1"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+    command: >-
+      bash -lc "bundle exec rails db:prepare &&
+      pnpm exec concurrently
+      \"bundle exec rails server -b 0.0.0.0 -p 3000\"
+      \"pnpm --dir=frontend/discourse ember serve --port 4200 --host 0.0.0.0\""
+
+volumes:
+  db-data:
+  redis-data:
