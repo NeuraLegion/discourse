@@ -1,0 +1,247 @@
+pgvector/pgvector - Docker Image
+Degraded Hub performance - Service is improving but Docker Hub still has some latency issues. We keep investigate. See dockerstatus.com⁠ for updates.
+
+Search Docker Hub
+K
+
+Help
+
+Back
+Documentation
+⁠Forums
+⁠Contact support
+System status
+⁠
+
+System theme
+
+Sign inSign up
+
+Back
+
+Back
+
+Help
+
+Back
+Documentation
+⁠Forums
+⁠Contact support
+System status
+⁠
+
+System theme
+
+Docker Suite
+
+Explore
+/
+pgvector
+/
+pgvector
+
+pgvector/pgvector
+
+By pgvector
+•Updated about 2 months ago
+
+Open-source vector similarity search for Postgres
+Image
+
+Databases & storage
+
+99
+50M+
+
+OverviewTags
+
+Tags for pgvector/pgvector
+Sort by
+Newest
+​
+
+​
+
+​
+
+TAG
+0.8.2-pg18-trixie
+
+Last pushed about 2 months by ankane
+
+docker pull pgvector/pgvector:0.8.2-pg18-trixie
+Copy
+
+DigestOS/ARCHCompressed size 
+4b11293842df
+linux/amd64
+156.28 MB
+
+13a363dd0a84
+linux/arm64
+154.9 MB
+
+TAG
+pg18-trixie
+
+Last pushed about 2 months by ankane
+
+docker pull pgvector/pgvector:pg18-trixie
+Copy
+
+DigestOS/ARCHCompressed size 
+4b11293842df
+linux/amd64
+156.28 MB
+
+13a363dd0a84
+linux/arm64
+154.9 MB
+
+TAG
+0.8.2-pg17-trixie
+
+Last pushed about 2 months by ankane
+
+docker pull pgvector/pgvector:0.8.2-pg17-trixie
+Copy
+
+DigestOS/ARCHCompressed size 
+46208a45558f
+linux/amd64
+155.2 MB
+
+a1d7661acf74
+linux/arm64
+153.82 MB
+
+TAG
+pg17-trixie
+
+Last pushed about 2 months by ankane
+
+docker pull pgvector/pgvector:pg17-trixie
+Copy
+
+DigestOS/ARCHCompressed size 
+46208a45558f
+linux/amd64
+155.2 MB
+
+a1d7661acf74
+linux/arm64
+153.82 MB
+
+TAG
+0.8.2-pg16-trixie
+
+Last pushed about 2 months by ankane
+
+docker pull pgvector/pgvector:0.8.2-pg16-trixie
+Copy
+
+DigestOS/ARCHCompressed size 
+fd11d26ebf29
+linux/amd64
+153.71 MB
+
+eef42748a134
+linux/arm64
+152.33 MB
+
+TAG
+pg16-trixie
+
+Last pushed about 2 months by ankane
+
+docker pull pgvector/pgvector:pg16-trixie
+Copy
+
+DigestOS/ARCHCompressed size 
+fd11d26ebf29
+linux/amd64
+153.71 MB
+
+eef42748a134
+linux/arm64
+152.33 MB
+
+TAG
+0.8.2-pg15-trixie
+
+Last pushed about 2 months by ankane
+
+docker pull pgvector/pgvector:0.8.2-pg15-trixie
+Copy
+
+DigestOS/ARCHCompressed size 
+a2aa4d5c4242
+linux/amd64
+151.67 MB
+
+7af3a19c74d9
+linux/arm64
+150.3 MB
+
+TAG
+pg15-trixie
+
+Last pushed about 2 months by ankane
+
+docker pull pgvector/pgvector:pg15-trixie
+Copy
+
+DigestOS/ARCHCompressed size 
+a2aa4d5c4242
+linux/amd64
+151.67 MB
+
+7af3a19c74d9
+linux/arm64
+150.3 MB
+
+TAG
+0.8.2-pg14-trixie
+
+Last pushed about 2 months by ankane
+
+docker pull pgvector/pgvector:0.8.2-pg14-trixie
+Copy
+
+DigestOS/ARCHCompressed size 
+b3eeda457256
+linux/amd64
+150.64 MB
+
+dbbfe6a96d6c
+linux/arm64
+149.28 MB
+
+TAG
+pg14-trixie
+
+Last pushed about 2 months by ankane
+
+docker pull pgvector/pgvector:pg14-trixie
+Copy
+
+DigestOS/ARCHCompressed size 
+b3eeda457256
+linux/amd64
+150.64 MB
+
+dbbfe6a96d6c
+linux/arm64
+149.28 MB
+
+1 of 5
+
+WhyOverviewWhat is a Container
+ProductsProduct OverviewProduct OfferingsDocker DesktopDocker HubFeaturesContainer RuntimeDeveloper ToolsDocker AppKubernetes
+DevelopersGetting StartedPlay with DockerCommunityOpen SourceDocumentation
+CompanyAbout UsResourcesBlogCustomersPartnersNewsroomEvents and WebinarsCareersContact UsSystem Status⁠
+
+---
+© 2026 Docker, Inc. All rights reserved. | Terms of Service | Subscription Service Agreement | Privacy | Legal
+
+Cookies Settings

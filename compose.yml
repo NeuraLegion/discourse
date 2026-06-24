@@ -1,0 +1,96 @@
+services:
+  app:
+    build: .
+    command: bash -lc "corepack enable >/dev/null 2>&1 || true; bundle exec rails server -b 0.0.0.0 -p 3000"
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: development
+      DISCOURSE_DEV_DB: discourse_development
+      DISCOURSE_HOSTNAME: localhost
+      SKIP_ENFORCE_HOSTNAME: "1"
+      DATABASE_URL: postgres://postgres:postgres@db:5432/discourse_development
+      PGHOST: db
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: discourse_development
+      DISCOURSE_REDIS_HOST: redis
+      DISCOURSE_REDIS_PORT: "6379"
+      DISCOURSE_REDIS_DB: "0"
+      DISCOURSE_MESSAGE_BUS_REDIS_HOST: redis
+      DISCOURSE_MESSAGE_BUS_REDIS_PORT: "6379"
+      DISCOURSE_MESSAGE_BUS_REDIS_DB: "0"
+      SMTP_ADDRESS: host.docker.internal
+      SMTP_PORT: "1025"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+
+  worker:
+    build: .
+    command: bash -lc "corepack enable >/dev/null 2>&1 || true; bundle exec sidekiq"
+    environment:
+      RAILS_ENV: development
+      DISCOURSE_DEV_DB: discourse_development
+      DISCOURSE_HOSTNAME: localhost
+      SKIP_ENFORCE_HOSTNAME: "1"
+      DATABASE_URL: postgres://postgres:postgres@db:5432/discourse_development
+      PGHOST: db
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: discourse_development
+      DISCOURSE_REDIS_HOST: redis
+      DISCOURSE_REDIS_PORT: "6379"
+      DISCOURSE_REDIS_DB: "0"
+      DISCOURSE_MESSAGE_BUS_REDIS_HOST: redis
+      DISCOURSE_MESSAGE_BUS_REDIS_PORT: "6379"
+      DISCOURSE_MESSAGE_BUS_REDIS_DB: "0"
+      SMTP_ADDRESS: host.docker.internal
+      SMTP_PORT: "1025"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+
+  db:
+    image: pgvector/pgvector:pg16-trixie
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: discourse_development
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
+volumes:
+  db-data:
+  redis-data:
