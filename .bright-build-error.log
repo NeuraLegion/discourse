@@ -1,0 +1,86 @@
+Command failed: docker compose build
+ Image discourse-app Building 
+Dockerfile:46
+
+--------------------
+
+  44 |     COPY . .
+
+  45 |     
+
+  46 | >>> RUN bundle _2.6.4_ install && pnpm install --frozen-lockfile
+
+  47 |     
+
+  48 |     EXPOSE 3000
+
+--------------------
+
+failed to solve: process "/bin/sh -c bundle _2.6.4_ install && pnpm install --frozen-lockfile" did not complete successfully: exit code: 15
+
+
+#1 [internal] load local bake definitions
+#1 reading from stdin 516B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.21kB done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/ruby:3.4-bookworm
+#3 DONE 0.6s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 96B done
+#4 DONE 0.0s
+
+#5 [1/8] FROM docker.io/library/ruby:3.4-bookworm@sha256:452e79730a5770eba0d9914e151183d40966ac1855fffc17e4b0c371ebf3b178
+#5 DONE 0.0s
+
+#6 [2/8] WORKDIR /app
+#6 CACHED
+
+#7 [3/8] RUN apt-get update && apt-get install -y --no-install-recommends     build-essential     git     curl     ca-certificates     pkg-config     libpq-dev     libyaml-dev     libxml2-dev     libxslt1-dev     zlib1g-dev     libffi-dev     libssl-dev     libreadline-dev     libgdbm-dev     libncurses5-dev     libjemalloc2     shared-mime-info     sqlite3     && rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [4/8] RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash -     && apt-get update && apt-get install -y --no-install-recommends     nodejs     && rm -rf /var/lib/apt/lists/*
+#8 CACHED
+
+#9 [5/8] RUN corepack enable && corepack prepare pnpm@10.28.0 --activate
+#9 CACHED
+
+#10 [6/8] RUN gem install bundler:2.6.4
+#10 CACHED
+
+#11 [internal] load build context
+#11 transferring context: 1.88MB 0.6s done
+#11 DONE 0.6s
+
+#12 [7/8] COPY . .
+#12 DONE 0.9s
+
+#13 [8/8] RUN bundle _2.6.4_ install && pnpm install --frozen-lockfile
+#13 0.223 Could not find command "_2.6.4_".
+#13 ERROR: process "/bin/sh -c bundle _2.6.4_ install && pnpm install --frozen-lockfile" did not complete successfully: exit code: 15
+------
+ > [8/8] RUN bundle _2.6.4_ install && pnpm install --frozen-lockfile:
+0.223 Could not find command "_2.6.4_".
+------
+Image discourse-app Building 
+Dockerfile:46
+
+--------------------
+
+  44 |     COPY . .
+
+  45 |     
+
+  46 | >>> RUN bundle _2.6.4_ install && pnpm install --frozen-lockfile
+
+  47 |     
+
+  48 |     EXPOSE 3000
+
+--------------------
+
+failed to solve: process "/bin/sh -c bundle _2.6.4_ install && pnpm install --frozen-lockfile" did not complete successfully: exit code: 15
