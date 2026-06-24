@@ -47,7 +47,7 @@
     "yarn": "please-use-pnpm",
     "pnpm": "^10"
   },
-  "packageManager": "pnpm@10.28.0",
+  "packageManager": "pnpm@10.33.0",
   "pnpm": {
     "patchedDependencies": {
       "ember-this-fallback@0.4.0": "patches/ember-this-fallback@0.4.0.patch",
@@ -65,9 +65,7 @@
         "ember-this-fallback>ember-cli-htmlbars": "*",
         "@fullcalendar/moment-timezone>moment-timezone": "*"
       },
-      "ignoreMissing": [
-        "webpack"
-      ]
+      "ignoreMissing": ["webpack"]
     },
     "overrides": {
       "@ember/test-waiters": "4.1.1",
