@@ -1,0 +1,4 @@
+Command failed: pnpm install
+/bin/sh: line 1: pnpm: command not found
+
+/bin/sh: line 1: pnpm: command not found
