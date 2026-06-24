@@ -1,0 +1,8 @@
+docker compose --wait failed and port 3000 is not reachable. Original error: Process exited with code 1.
+
+Output:
+ERR: yaml: line 7, column 23: block sequence entries are not allowed in this context
+
+Container logs:
+=== discourse-redis-1 ===
+1:C 22 Apr 2026 14:08:46.228 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under l
