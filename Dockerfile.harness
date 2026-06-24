@@ -1,0 +1,43 @@
+FROM ruby:3.4-slim
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    BUNDLE_GEMFILE="" \
+    RUBYLIB=/app/lib \
+    PORT=3001
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      build-essential \
+      git \
+      ca-certificates \
+      libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN gem install --no-document \
+      sinatra \
+      json \
+      activesupport \
+      activerecord \
+      nokogiri \
+      mini_mime \
+      addressable \
+      pg \
+      excon \
+      loofah \
+      mini_racer \
+      onebox \
+      rate_limiter \
+      rails \
+      rack
+
+COPY . /app
+COPY harness.rb /app/harness.rb
+
+RUN ruby -e 'p="/app/harness.rb"; s=File.read(p); unless s.include?("require \"pathname\""); s.sub!("require \"json\"\n", "require \"json\"\nrequire \"pathname\"\n"); File.write(p, s); end'
+
+RUN ruby -e 'p="/app/harness.rb"; s=File.read(p); s.gsub!(/run! if app_file == \\$0\\n?/, "run! if __FILE__ == $0\n"); File.write(p, s)'
+
+EXPOSE 3001
+
+CMD ["ruby", "harness.rb"]
