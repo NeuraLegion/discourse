@@ -1,0 +1,21 @@
+FROM bright-app-local
+
+WORKDIR /app
+
+ENV RAILS_ENV=production \
+    RACK_ENV=production \
+    BUNDLE_WITHOUT="development:test" \
+    BUNDLE_FROZEN=false \
+    SKIP_DB_AND_REDIS=1 \
+    DISABLE_BOOTSNAP=1 \
+    PORT=3001
+
+COPY harness.rb /app/harness.rb
+
+RUN bundle config set without 'development:test' \
+ && grep -q 'gem "sinatra"' Gemfile || echo 'gem "sinatra"' >> Gemfile \
+ && bundle install
+
+EXPOSE 3001
+
+CMD ["bundle", "exec", "ruby", "harness.rb"]
