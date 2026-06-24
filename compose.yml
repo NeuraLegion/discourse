@@ -1,0 +1,42 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: discourse
+      POSTGRES_USER: discourse
+      POSTGRES_PASSWORD: discourse
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U discourse -d discourse"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-bookworm
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: "production"
+      DISCOURSE_HOSTNAME: "localhost"
+      DISCOURSE_SKIP_CSS_WATCHER: "1"
+      DISCOURSE_DB_HOST: "db"
+      DISCOURSE_DB_NAME: "discourse"
+      DISCOURSE_DB_USERNAME: "discourse"
+      DISCOURSE_DB_PASSWORD: "discourse"
+      DISCOURSE_REDIS_HOST: "redis"
+      DISCOURSE_MESSAGE_BUS_REDIS_HOST: "redis"
+      DISCOURSE_SECRET_KEY_BASE: "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+      SKIP_ENFORCE_HOSTNAME: "1"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy

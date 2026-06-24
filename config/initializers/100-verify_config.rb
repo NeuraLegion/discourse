@@ -3,18 +3,20 @@
 # Check that the app is configured correctly. Raise some helpful errors if something is wrong.
 
 if defined?(Rails::Server) && Rails.env.production? # Only run these checks when starting up a production server
-  if %w[localhost production.localhost].include?(Discourse.current_hostname)
-    puts <<~TEXT
+  unless ENV["SKIP_ENFORCE_HOSTNAME"] == "1"
+    if %w[localhost production.localhost].include?(Discourse.current_hostname)
+      puts <<~TEXT
 
-      Discourse.current_hostname = '#{Discourse.current_hostname}'
+        Discourse.current_hostname = '#{Discourse.current_hostname}'
 
-      Please update the host_names property in config/database.yml
-      so that it uses the hostname of your site. Otherwise you will
-      experience problems, like links in emails using #{Discourse.current_hostname}.
+        Please update the host_names property in config/database.yml
+        so that it uses the hostname of your site. Otherwise you will
+        experience problems, like links in emails using #{Discourse.current_hostname}.
 
-    TEXT
+      TEXT
 
-    raise "Invalid host_names in database.yml"
+      raise "Invalid host_names in database.yml"
+    end
   end
 
   if !Dir.glob(File.join(Rails.root, "public", "assets", "application*.js")).present?
