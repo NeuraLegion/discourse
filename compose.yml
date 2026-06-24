@@ -1,0 +1,35 @@
+services:
+  app:
+    build: .
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: "production"
+      NODE_ENV: "development"
+      DISCOURSE_HOSTNAME: "localhost"
+      DISCOURSE_DB_HOST: "postgres"
+      DISCOURSE_DB_PORT: "5432"
+      DISCOURSE_DB_NAME: "discourse"
+      DISCOURSE_DB_USERNAME: "discourse"
+      DISCOURSE_DB_PASSWORD: "discourse"
+      DISCOURSE_REDIS_HOST: "redis"
+      DISCOURSE_REDIS_PORT: "6379"
+      DISCOURSE_SECRET_KEY_BASE: "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+      SKIP_ENFORCE_HOSTNAME: "1"
+    command: bash -lc "bundle exec rake db:create db:migrate && bin/rails server -e production -b 0.0.0.0 -p 3000"
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: "discourse"
+      POSTGRES_USER: "discourse"
+      POSTGRES_PASSWORD: "discourse"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  redis:
+    image: redis:7-bookworm
+
+volumes:
+  postgres-data:
