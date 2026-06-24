@@ -1,0 +1,52 @@
+FROM ruby:3.4-slim
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    BUNDLE_GEMFILE="" \
+    RUBYLIB=/app/lib:/app/app/services \
+    RACK_ENV=production \
+    PORT=3001
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      build-essential \
+      git \
+      ca-certificates \
+      curl \
+      pkg-config \
+      libpq-dev \
+      libxml2-dev \
+      libxslt1-dev \
+      zlib1g-dev \
+      libv8-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN gem install --no-document \
+      sinatra \
+      rackup \
+      puma \
+      addressable \
+      activesupport \
+      activemodel \
+      activerecord \
+      actionview \
+      railties \
+      rails_multisite \
+      pg \
+      mini_mime \
+      nokogiri \
+      loofah \
+      sanitize \
+      mustache \
+      multi_json \
+      mini_racer \
+      image_optim \
+      erb \
+      cgi
+
+COPY . /app
+COPY harness.rb /app/harness.rb
+
+EXPOSE 3001
+
+CMD ["ruby", "harness.rb"]
