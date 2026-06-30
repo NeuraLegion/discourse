@@ -82,7 +82,7 @@
     "rrule": "^2.8.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.5",
+    "@babel/core": "^7.29.6",
     "@babel/standalone": "^7.29.4",
     "@colors/colors": "^1.6.0",
     "@discourse/itsatrap": "^2.0.10",
